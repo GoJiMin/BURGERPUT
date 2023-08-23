@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
-import { getMachines } from "../api/Products";
+import { getMachines, setCustomMachines } from "../api/Products";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
@@ -12,7 +12,18 @@ export default function InputMachines() {
   const handleClick = () => {
     handleHidden();
     navigate("/");
+    s;
   };
+  const queryClient = useQueryClient();
+  const addCustomMachines = useMutation(
+    ({ products }) => setCustomMachines(products),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["machines"]);
+      },
+    }
+  );
+
   const {
     isLoading,
     error,
@@ -24,7 +35,7 @@ export default function InputMachines() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(products);
+    addCustomMachines.mutate(product);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
@@ -13,6 +13,16 @@ export default function CustomFoods() {
     handleHidden();
     navigate("/");
   };
+  const queryClient = useQueryClient();
+  const addCustomFoods = useMutation(
+    ({ products }) => setCustomFoods(products),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["foods"]);
+      },
+    }
+  );
+
   const {
     isLoading,
     error,
@@ -24,8 +34,7 @@ export default function CustomFoods() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(products);
-    setCustomFoods(products);
+    addCustomFoods.mutate(products);
   };
 
   return (
