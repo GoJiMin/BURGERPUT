@@ -43,6 +43,9 @@ public class SelectMachineController {
     @PostMapping("back/select/machines")//선택한 기기의 값
     @ResponseBody
     public void selected(@RequestBody ArrayList<Map> param) {
+        ArrayList<Map> result = printData.zenputMachine();
+
+
         log.info("Selected Machine param ={}", param.toString());
         //임시로 다지우고 시작 -> 변경해야하는 로직
 //        saveData.customMachineDataSave(param);

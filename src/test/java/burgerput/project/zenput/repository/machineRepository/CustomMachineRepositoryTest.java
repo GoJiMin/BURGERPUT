@@ -2,11 +2,9 @@ package burgerput.project.zenput.repository.machineRepository;
 
 import burgerput.project.BurgerputProjectApplication;
 import burgerput.project.zenput.Config;
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
 import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Machine;
-import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

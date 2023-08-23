@@ -1,14 +1,10 @@
 package burgerput.project.zenput.Services.loadData;
 
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenputV1;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import static java.util.Collections.replaceAll;
 
 @Slf4j
 class MachineLoadingZenputV1Test {
