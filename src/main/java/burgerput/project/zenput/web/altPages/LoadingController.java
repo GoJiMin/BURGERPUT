@@ -34,8 +34,6 @@ public class LoadingController {
     @GetMapping
     public void loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-
-
         //Start Loading Logic
         //loading zenput Page's Data first
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
@@ -54,18 +52,32 @@ public class LoadingController {
         saveData.macihneZenputDataSave(machineInfo);
         saveData.foodZenputDataSave(foodInfo);
 
-
         response.sendRedirect(BURGERPUTSITE);
-
     }
 
     @GetMapping("/test")
     @ResponseBody
     public void loadingTest() {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
+        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
+        //addMachine Logic=================================================
         ArrayList<Map> maps = alertLoading.addMachine(machineInfo);
         //if insert all then code is all
         log.info("maps info - added value ={}", maps);
+        Map<String, String> map = maps.get(0);
+        //save data to DB
+        if (map.get("code").equals("all")) {
+            saveData.macihneZenputDataSave(machineInfo);
+        }else{
+            //save to cookie?
+
+        }
     }
+
+
+    private class AlertCookie{
+
+    }
+
 }

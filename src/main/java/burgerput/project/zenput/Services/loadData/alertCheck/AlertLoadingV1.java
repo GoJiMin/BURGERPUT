@@ -68,6 +68,7 @@ public class AlertLoadingV1 implements AlertLoading {
                     log.info("has diff value ={}", zenputMachineData.get(zenputMachineDatum));
                 }
             }
+
         }else{
             //Db data is null then upload all
             Map<String, String> tempMap = new HashMap<>();
