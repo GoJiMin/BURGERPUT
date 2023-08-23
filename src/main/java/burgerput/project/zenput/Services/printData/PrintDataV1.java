@@ -8,10 +8,12 @@ import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
 @RequiredArgsConstructor
+@Slf4j
 public class PrintDataV1 implements PrintData {
 
     private final MachineRepository machineRepository;
@@ -73,7 +75,8 @@ public class PrintDataV1 implements PrintData {
         List<CustomMachine> customId = customMachineRepository.findAll();
 
         for (CustomMachine customMachine : customId) {
-            Machine foundMachine = machineRepository.findById(customMachine.getId()).get();
+            log.info("custommachine id ={}", customMachine.getId());
+            Machine foundMachine = machineRepository.findCustomMachineById(Integer.toString(customMachine.getId()));
             Map<String, String> customMachineMap = new LinkedHashMap<>();
             customMachineMap.put("id", Integer.toString(foundMachine.getId()));
             customMachineMap.put("name", foundMachine.getName());

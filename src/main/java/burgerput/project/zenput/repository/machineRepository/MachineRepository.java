@@ -4,6 +4,7 @@ import burgerput.project.zenput.domain.Machine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -15,4 +16,7 @@ public interface MachineRepository extends JpaRepository<Machine, Integer> {
     @Modifying
     @Query(value = "alter table machine auto_increment=1", nativeQuery = true)
     public void initIncrement();
+
+    @Query(value = "select * from Machine where id = :id ", nativeQuery = true)
+    public Machine findCustomMachineById(@Param("id") String id);
 }
