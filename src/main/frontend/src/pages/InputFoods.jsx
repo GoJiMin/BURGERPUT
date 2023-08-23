@@ -4,12 +4,22 @@ import { getCustomFoods } from "../api/GetProducts";
 import InputProducts from "../components/InputProducts";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "./InputFoods.module.css";
+import { useCustomFoods } from "../hooks/useProducts";
 
 export default function InputFoods() {
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [warning, setWarning] = useState(false);
+
+  const {
+    productsQuery: { isLoading, error, data: customFoods },
+    setProductsTemp,
+  } = useCustomFoods();
+
+  useEffect(() => {
+    setProducts(customFoods);
+  }, [customFoods]);
 
   const handleWarning = () => {
     setWarning(true);
@@ -22,16 +32,6 @@ export default function InputFoods() {
     navigate("/");
   };
 
-  const { data: customFoods } = useQuery(
-    ["customFoods"],
-    () => getCustomFoods(),
-    { staleTime: Infinity, cacheTime: Infinity }
-  );
-
-  useEffect(() => {
-    setProducts(customFoods);
-  }, [customFoods]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasEmptyTemp = products.some((product) => !product.temp);
@@ -40,7 +40,7 @@ export default function InputFoods() {
       handleWarning();
       return;
     } else {
-      console.log(products);
+      setProductsTemp(products);
     }
   };
   return (

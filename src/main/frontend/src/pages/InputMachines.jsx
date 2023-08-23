@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCustomMachines } from "../api/GetProducts";
 import InputProducts from "../components/InputProducts";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "./InputMachines.module.css";
+import { useCustomMachines } from "../hooks/useProducts";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [warning, setWarning] = useState(false);
+
+  const {
+    productsQuery: { isLoading, error, data: customMachines },
+    setProductsTemp,
+  } = useCustomMachines();
+
+  useEffect(() => {
+    setProducts(customMachines);
+  }, [customMachines]);
 
   const handleWarning = () => {
     setWarning(true);
@@ -23,16 +31,6 @@ export default function InputMachines() {
     navigate("/");
   };
 
-  const { isLoading, data: customMachines } = useQuery(
-    ["CustomMachines"],
-    () => getCustomMachines(),
-    { staleTime: Infinity, cacheTime: Infinity }
-  );
-
-  useEffect(() => {
-    setProducts(customMachines);
-  }, [customMachines]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasEmptyTemp = products.some((product) => !product.temp);
@@ -41,7 +39,7 @@ export default function InputMachines() {
       handleWarning();
       return;
     } else {
-      console.log(products);
+      setProductsTemp(products);
     }
   };
   return (
