@@ -12,7 +12,6 @@ export default function InputMachines() {
   const handleClick = () => {
     handleHidden();
     navigate("/");
-    s;
   };
 
   const {

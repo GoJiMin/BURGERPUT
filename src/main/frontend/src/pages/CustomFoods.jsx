@@ -7,6 +7,7 @@ import { useFoods } from "../hooks/useProducts";
 export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
+  const [success, setSuccess] = useState();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
