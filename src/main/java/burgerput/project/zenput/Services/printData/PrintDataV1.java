@@ -1,5 +1,6 @@
 package burgerput.project.zenput.Services.printData;
 
+import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;
 import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
@@ -8,10 +9,7 @@ import burgerput.project.zenput.repository.machineRepository.CustomMachineReposi
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class PrintDataV1 implements PrintData {
@@ -68,8 +66,24 @@ public class PrintDataV1 implements PrintData {
 
     @Override
     public ArrayList<Map> customMachine() {
+        //for Saving Result
+        ArrayList<Map> result = new ArrayList<>();
 
-        return null;
+        //Get the customId
+        List<CustomMachine> customId = customMachineRepository.findAll();
+
+        for (CustomMachine customMachine : customId) {
+            Machine foundMachine = machineRepository.findById(customMachine.getId()).get();
+            Map<String, String> customMachineMap = new LinkedHashMap<>();
+            customMachineMap.put("id", Integer.toString(foundMachine.getId()));
+            customMachineMap.put("name", foundMachine.getName());
+            customMachineMap.put("min", String.valueOf(foundMachine.getMin()));
+            customMachineMap.put("max", String.valueOf(foundMachine.getMax()));
+
+            result.add(customMachineMap);
+        }
+
+        return result;
     }
 
     @Override

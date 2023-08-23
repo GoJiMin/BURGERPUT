@@ -71,10 +71,8 @@ public class LoadingController {
             saveData.macihneZenputDataSave(machineInfo);
         }else{
             //save to cookie?
-
         }
     }
-
 
     private class AlertCookie{
 
