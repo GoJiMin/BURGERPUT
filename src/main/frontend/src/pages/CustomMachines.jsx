@@ -1,30 +1,38 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
-import { getMachines } from "../api/Products";
+import { useMachines } from "../hooks/useProducts";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
+  const [success, setSuccess] = useState();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
     navigate("/");
+    s;
   };
+
   const {
-    isLoading,
-    error,
-    data: machines,
-  } = useQuery(["machines"], () => getMachines(), {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
+    productsQuery: { isLoading, error, data: machines },
+    addCustomMachines,
+  } = useMachines();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(products);
+    addCustomMachines.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess("기기 선택이 완료되었습니다.");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
   };
 
   return (

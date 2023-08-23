@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
-import { getCustomFoods, getFoods, setCustomFoods } from "../api/Products";
+import { useFoods } from "../hooks/useProducts";
 
 export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
@@ -13,19 +12,25 @@ export default function CustomFoods() {
     handleHidden();
     navigate("/");
   };
+
   const {
-    isLoading,
-    error,
-    data: foods,
-  } = useQuery(["foods"], () => getFoods(), {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
+    productsQuery: { isLoading, error, data: foods },
+    addCustomFoods,
+  } = useFoods();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(products);
-    setCustomFoods(products);
+    addCustomFoods.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess("식품 선택이 완료되었습니다.");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
   };
 
   return (

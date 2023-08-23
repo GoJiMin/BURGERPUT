@@ -18,15 +18,11 @@ export async function getMachines() {
 }
 
 // 식품 목록을 받아오는 api
-// export async function getFoods() {
-//   return await axios
-//     .get("/back/select/foods")
-//     .then((res) => res.data)
-//     .catch((error) => console.log(error));
-// }
-
 export async function getFoods() {
-  return fetch("/data/foods.json").then((res) => res.json());
+  return await axios
+    .get("/back/select/foods")
+    .then((res) => res.data)
+    .catch((error) => console.log(error));
 }
 
 // 선택한 기기 목록을 전송하는 api
