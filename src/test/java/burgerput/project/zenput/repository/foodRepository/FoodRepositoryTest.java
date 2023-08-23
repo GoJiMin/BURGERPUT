@@ -2,7 +2,7 @@ package burgerput.project.zenput.repository.foodRepository;
 
 import burgerput.project.BurgerputProjectApplication;
 import burgerput.project.zenput.Config;
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
 import burgerput.project.zenput.domain.CustomFood;
 import burgerput.project.zenput.domain.Food;
 import lombok.RequiredArgsConstructor;

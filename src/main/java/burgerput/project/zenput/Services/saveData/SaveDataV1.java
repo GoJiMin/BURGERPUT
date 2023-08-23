@@ -1,7 +1,7 @@
 package burgerput.project.zenput.Services.saveData;
 
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
 import burgerput.project.zenput.domain.CustomFood;
 import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Food;
@@ -12,8 +12,6 @@ import burgerput.project.zenput.repository.machineRepository.CustomMachineReposi
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,30 +30,30 @@ public class SaveDataV1 implements SaveData {
     //Zenput Page Food Machine Loading and
     //save data to Database
     @Override
-    public void macihneZenputDataSave() {
+    public Map<Integer, Machine> macihneZenputDataSave(Map<Integer, Machine> machineInfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         machineRepository.deleteAll();
         machineRepository.initIncrement();
 
-        Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
         for (Integer key : machineInfo.keySet()) {
             Machine machine = machineInfo.get(key);
 
             machineRepository.save(machine);
         }
+        return machineInfo;
     }
 
     @Override
-    public void foodZenputDataSave() {
+    public Map<Integer, Food> foodZenputDataSave( Map<Integer, Food> foodinfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         foodRepository.deleteAll();
         foodRepository.initIncrement();
-        Map<Integer, Food> foodinfo = foodLoadingZenput.getInfo();
         for (Integer key : foodinfo.keySet()) {
             Food food = foodinfo.get(key);
 
             foodRepository.save(food);
         }
+        return foodinfo;
     }
 
     @Override

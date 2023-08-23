@@ -1,12 +1,11 @@
 package burgerput.project.zenput.Services.loadData;
 
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
 import burgerput.project.zenput.domain.Food;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 @Slf4j

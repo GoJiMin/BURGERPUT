@@ -1,7 +1,7 @@
 package burgerput.project.zenput.web;
 
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;
 import burgerput.project.zenput.intercepter.checkSession.CreateSession;
@@ -10,7 +10,6 @@ import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
