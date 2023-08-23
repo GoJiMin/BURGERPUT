@@ -13,12 +13,20 @@ class MovePageServiceV1Test {
         move.gotoListWithLogin();
 
     }
+
     @Test
     @DisplayName("[PM] foodList click")
     void pmFoodlistClick() {
         move.clickPmFood();
 
     }
+
+    @Test
+    @DisplayName("[AM] foodList click")
+    void amFoodlistClick() {
+        move.clickAmFood();
+    }
+
 
     @Test
     @DisplayName("[PM] MachineList click")

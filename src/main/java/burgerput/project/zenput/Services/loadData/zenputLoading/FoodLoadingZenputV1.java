@@ -1,7 +1,6 @@
-package burgerput.project.zenput.Services.loadData;
+package burgerput.project.zenput.Services.loadData.zenputLoading;
 
 import burgerput.project.zenput.domain.Food;
-import burgerput.project.zenput.domain.Machine;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

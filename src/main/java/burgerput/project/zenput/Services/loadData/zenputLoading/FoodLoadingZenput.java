@@ -1,4 +1,4 @@
-package burgerput.project.zenput.Services.loadData;
+package burgerput.project.zenput.Services.loadData.zenputLoading;
 
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;

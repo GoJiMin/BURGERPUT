@@ -1,7 +1,9 @@
 package burgerput.project.zenput;
 
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.FoodLoadingZenputV1;
+import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoading;
+import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoadingV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenputV1;
 import burgerput.project.zenput.Services.printData.PrintData;
 import burgerput.project.zenput.Services.printData.PrintDataV1;
 import burgerput.project.zenput.Services.saveData.SaveData;
@@ -13,8 +15,8 @@ import burgerput.project.zenput.repository.machineRepository.CustomMachineReposi
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
-import burgerput.project.zenput.Services.loadData.MachineLoadingZenputV1;
-import burgerput.project.zenput.Services.loadData.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenputV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -40,8 +42,8 @@ public class Config implements WebMvcConfigurer {
         registry.addInterceptor(checkSessionInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns( "/*.ico", "/error", "/loading", "/back/**", "/manifest.json", "/delCookie"
-                ,"/index.html", "/static/**", "/logo/*","/logo192.png" );
+                .excludePathPatterns("/*.ico", "/error", "/loading", "/back/**", "/manifest.json", "/delCookie"
+                        , "/index.html", "/static/**", "/logo/*", "/logo192.png","/loading/*");
 
     }
 
@@ -89,6 +91,15 @@ public class Config implements WebMvcConfigurer {
                 customMachineRepository,
                 foodRepository,
                 customFoodRepository);
+    }
+
+    @Bean
+    AlertLoading alertLoading(MachineRepository machineRepository,
+                              FoodRepository foodRepository,
+                              PrintData printdata) {
+        return new AlertLoadingV1(machineRepository,
+                foodRepository,
+                printdata);
     }
 
 }
