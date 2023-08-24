@@ -16,7 +16,6 @@ public class Machine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//생성을 Db에 위임
     private Long num;
 
-
     private int id;
     private String name;
     private int max;
