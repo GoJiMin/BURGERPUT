@@ -3,9 +3,11 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
 import { useFoods } from "../hooks/useProducts";
+import Banner from "../components/Banner";
 
 export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
+  const [success, setSuccess] = useState();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -24,7 +26,7 @@ export default function CustomFoods() {
       { products },
       {
         onSuccess: () => {
-          setSuccess("식품 선택이 완료되었습니다.");
+          setSuccess(true);
           setTimeout(() => {
             setSuccess(null);
           }, 4000);
@@ -46,6 +48,7 @@ export default function CustomFoods() {
               className={styles.form}
               onSubmit={handleSubmit}
             >
+              {success && <Banner text={"식품 선택이 완료되었습니다."} />}
               <div className={styles.products}>
                 {foods &&
                   foods.map((food) => (

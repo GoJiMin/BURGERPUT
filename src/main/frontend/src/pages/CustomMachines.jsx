@@ -3,6 +3,7 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
 import { useMachines } from "../hooks/useProducts";
+import Banner from "../components/Banner";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
@@ -12,7 +13,6 @@ export default function InputMachines() {
   const handleClick = () => {
     handleHidden();
     navigate("/");
-    s;
   };
 
   const {
@@ -26,7 +26,7 @@ export default function InputMachines() {
       { products },
       {
         onSuccess: () => {
-          setSuccess("기기 선택이 완료되었습니다.");
+          setSuccess(true);
           setTimeout(() => {
             setSuccess(null);
           }, 4000);
@@ -48,6 +48,7 @@ export default function InputMachines() {
               className={styles.form}
               onSubmit={handleSubmit}
             >
+              {success && <Banner text={"기기 선택이 완료되었습니다."} />}
               <div className={styles.products}>
                 {machines &&
                   machines.map((machine) => (

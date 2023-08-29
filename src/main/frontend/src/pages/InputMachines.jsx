@@ -3,6 +3,7 @@ import InputProducts from "../components/InputProducts";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "./InputMachines.module.css";
 import { useCustomMachines } from "../hooks/useProducts";
+import Banner from "../components/Banner";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
@@ -53,9 +54,7 @@ export default function InputMachines() {
             id='inputMachine'
             onSubmit={handleSubmit}
           >
-            {warning && (
-              <p className={styles.warning}>비어있는 항목이 존재합니다.</p>
-            )}
+            {warning && <Banner text={"비어있는 항목이 존재합니다."} />}
             <div>
               {products &&
                 products.map((product) => (

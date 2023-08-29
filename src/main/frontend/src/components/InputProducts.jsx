@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./InputProducts.module.css";
+import Banner from "./Banner";
 
 export default function InputProducts({
   product: { name, min, max },
@@ -35,9 +36,7 @@ export default function InputProducts({
         </p>
       </div>
 
-      {warning && (
-        <p className={styles.warning}>지정된 온도 범위가 아닙니다.</p>
-      )}
+      {warning && <Banner text={"지정된 온도 범위가 아닙니다."} />}
       <div className={styles.container}>
         <input
           className={styles.input}
