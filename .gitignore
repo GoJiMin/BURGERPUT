@@ -38,3 +38,6 @@ out/
 
 #Const.java
 src/main/java/burgerput/project/zenput/Const.java
+
+#zenput.html (machine)
+src/main/resources/static/zenput/zenput_machine/Zenput.html

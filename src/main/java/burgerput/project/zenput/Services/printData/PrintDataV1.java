@@ -76,7 +76,7 @@ public class PrintDataV1 implements PrintData {
 
         for (CustomMachine customMachine : customId) {
             log.info("custommachine id ={}", customMachine.getId());
-            Machine foundMachine = machineRepository.findCustomMachineById(Integer.toString(customMachine.getId()));
+            Machine foundMachine = machineRepository.findMachineById(Integer.toString(customMachine.getId()));
             Map<String, String> customMachineMap = new LinkedHashMap<>();
             customMachineMap.put("id", Integer.toString(foundMachine.getId()));
             customMachineMap.put("name", foundMachine.getName());

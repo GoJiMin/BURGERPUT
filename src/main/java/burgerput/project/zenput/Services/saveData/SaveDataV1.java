@@ -30,7 +30,7 @@ public class SaveDataV1 implements SaveData {
     //Zenput Page Food Machine Loading and
     //save data to Database
     @Override
-    public Map<Integer, Machine> macihneZenputDataSave(Map<Integer, Machine> machineInfo) {
+    public Map<Integer, Machine> machinezenputdatasave(Map<Integer, Machine> machineInfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         machineRepository.deleteAll();
         machineRepository.initIncrement();

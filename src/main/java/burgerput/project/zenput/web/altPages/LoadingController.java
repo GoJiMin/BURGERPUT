@@ -39,17 +39,10 @@ public class LoadingController {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
         Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
-        log.info("loadingController = {}", machineInfo.toString());
-        log.info("loadginFood ={}", foodInfo.toString());
-
-        //check add alert
-        alertLoading.addMachine(machineInfo);
-        alertLoading.addFood(foodInfo);
-
         log.info("request URL ={}", request.getRequestURL());
         log.info("loading Controller={}", LocalTime.now().toString() );
 
-        saveData.macihneZenputDataSave(machineInfo);
+        saveData.machinezenputdatasave(machineInfo);
         saveData.foodZenputDataSave(foodInfo);
 
         response.sendRedirect(BURGERPUTSITE);
@@ -59,19 +52,37 @@ public class LoadingController {
     @ResponseBody
     public void loadingTest() {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+//        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
-        //addMachine Logic=================================================
+////        addMachine Logic=================================================
         ArrayList<Map> maps = alertLoading.addMachine(machineInfo);
         //if insert all then code is all
         log.info("maps info - added value ={}", maps);
-        Map<String, String> map = maps.get(0);
+        //모두 다 똑같은 경우 에러남 (아무것도 안들어 있음)
         //save data to DB
-        if (map.get("code").equals("all")) {
-            saveData.macihneZenputDataSave(machineInfo);
-        }else{
+        if (maps.size() ==0) {
+            log.info("nothing to save[Not added ]");
+        } else if (maps.get(0).get("code").equals("all")) {
+            log.info("save all data");
+            saveData.machinezenputdatasave(machineInfo);
+        } else {
+            log.info("added to cookie?");
             //save to cookie?
         }
+
+
+        //del Machine logic
+        ArrayList<Map> maps1 = alertLoading.delMachine(machineInfo);
+        log.info("del machine result ={}", maps1);
+
+        //editMachine logic=====================================
+        ArrayList<Map> mapsedit = alertLoading.editMachine(machineInfo);
+
+        log.info("editmachine Result ={}", mapsedit);
+
+        //machine data를 로딩한 것으로 변경함
+        saveData.machinezenputdatasave(machineInfo);
+
     }
 
     private class AlertCookie{
