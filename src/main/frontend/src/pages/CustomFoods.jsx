@@ -9,7 +9,6 @@ export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
   const [success, setSuccess] = useState();
   const [products, setProducts] = useState([]);
-  const [success, setSuccess] = useState();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
