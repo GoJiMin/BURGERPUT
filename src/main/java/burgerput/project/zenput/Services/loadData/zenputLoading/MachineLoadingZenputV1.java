@@ -60,12 +60,12 @@ public class MachineLoadingZenputV1 implements MachineLoadingZenput {
                     if (contents.getName() == null) {
                         //if map is empty then not save the data
                     } else {
-                        //log.info("contents =?", contents);
                         result.put(contents.getId(), contents);
                     }
                 }
             }
             //End process
+            driver.close();
             driver.quit();
 
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class MachineLoadingZenputV1 implements MachineLoadingZenput {
                         machine.setMax(185);
                         break;
                 }
-                log.info("name ={}", machine);
+//                log.info("name ={}", machine);
 
 
             } else if (temps.length == 2) {

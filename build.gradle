@@ -1,10 +1,9 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.0'
-	id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
 //
 //	id 'com.github.node-gradle.node' version '3.4.0'	// add for npm
-
 
 
 }
@@ -13,50 +12,52 @@ group = 'sample'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	//selenium setting
+    //selenium setting
+//	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version:
+    // https://mavenlibs.com/maven/dependency/org.seleniumhq.selenium/selenium-devtools-v86
+//Thanks for using https://jar-download.com
 	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
-	//Spring test Sl4fj
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+    //Spring test Sl4fj
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
-	//JSON Data parsing dependency
-	implementation('org.springframework.boot:spring-boot-starter-web')
+    //JSON Data parsing dependency
+    implementation('org.springframework.boot:spring-boot-starter-web')
 
-	//=========DB셋
-	//JPA, 스프링 데이터 JPA 추가
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //=========DB셋
+    //JPA, 스프링 데이터 JPA 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	//H2 데이터베이스 추가
-	runtimeOnly 'com.h2database:h2'
+    //H2 데이터베이스 추가
+    runtimeOnly 'com.h2database:h2'
 
 //	//For using mysql
-	implementation 'mysql:mysql-connector-java:8.0.33'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 
 //	//For using mysql
@@ -65,7 +66,7 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 //jar Settings
@@ -77,55 +78,55 @@ tasks.named('test') {
 
 def reactDir = "$projectDir/src/main/frontend";
 
-sourceSets{
-	main{
-		resources{
-			srcDirs = ["$projectDir/src/main/resources"]
-		}
-	}
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["$projectDir/src/main/resources"]
+        }
+    }
 }
 
-processResources{
-	dependsOn "copyReactBuildFiles"
+processResources {
+    dependsOn "copyReactBuildFiles"
 }
 
-task installReact(type:Exec){
-	workingDir "$reactDir"
-	inputs.dir "$reactDir"
-	group = BasePlugin.BUILD_GROUP
+task installReact(type: Exec) {
+    workingDir "$reactDir"
+    inputs.dir "$reactDir"
+    group = BasePlugin.BUILD_GROUP
 
-	if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine 'npm.cmd', 'install'
-	}else{
-		commandLine "npm", "audit", "fix"
-		commandLine 'npm', 'install'
-	}
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "audit", "fix"
+        commandLine 'npm.cmd', 'install'
+    } else {
+        commandLine "npm", "audit", "fix"
+        commandLine 'npm', 'install'
+    }
 }
 
-task buildReact(type:Exec){
-	dependsOn "installReact"
-	workingDir "$reactDir"
-	inputs.dir "$reactDir"
-	group = BasePlugin.BUILD_GROUP
+task buildReact(type: Exec) {
+    dependsOn "installReact"
+    workingDir "$reactDir"
+    inputs.dir "$reactDir"
+    group = BasePlugin.BUILD_GROUP
 
-	if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
 //		commandLine "npm.cmd", "audit", "fix" // added
-		commandLine "npm.cmd", "run-script", "build"
-	}else{
+        commandLine "npm.cmd", "run-script", "build"
+    } else {
 //		commandLine "npm.cmd", "audit", "fix" //added
-		commandLine "npm", "run-script", "build"
-	}
+        commandLine "npm", "run-script", "build"
+    }
 }
 
-task copyReactBuildFiles(type:Copy){
-	dependsOn "buildReact"
-	from "$reactDir/build"
-	into "$projectDir/src/main/resources/static"
+task copyReactBuildFiles(type: Copy) {
+    dependsOn "buildReact"
+    from "$reactDir/build"
+    into "$projectDir/src/main/resources/static"
 }
 
 tasks.bootJar {
-	dependsOn "copyReactBuildFiles"
+    dependsOn "copyReactBuildFiles"
 }
 
 //node {
