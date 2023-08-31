@@ -52,7 +52,7 @@ public class AlertLoadingV1 implements AlertLoading {
                 //store for edited data
                 Map<String, String> tempMap = new LinkedHashMap<>();
                 //name check start
-                log.info("key value  = {}", key);
+//                log.info("key value  = {}", key);
                 if (!(zenputMachine == null)) {
                     if (!dbMachine.getName().equals(zenputMachine.getName())) {
                         //if the name value was different?
@@ -160,7 +160,7 @@ public class AlertLoadingV1 implements AlertLoading {
 
                     addResult.add(tempMap);
                     //DB에서 해당 id 값을 갖고 있지 않은 경우
-                    log.info("has diff value ={}", zenputMachineData.get(zenputMachineDatum));
+//                    log.info("has diff value ={}", zenputMachineData.get(zenputMachineDatum));
                 }
             }
 
@@ -201,11 +201,11 @@ public class AlertLoadingV1 implements AlertLoading {
 
                 //del check start
                 if (zenputMachineData.get(key) == null ? true : false) {
-                    log.info("key value = {}", key);
+//                    log.info("key value = {}", key);
                     //true -> it's deleted (zenputPage delete the entity)
                     Machine deletedMachine = machineRepository.findMachineById(Integer.toString(key));
                     tempMap.put("id", Integer.toString(deletedMachine.getId()));
-                    tempMap.put("name", deletedMachine.toString());
+                    tempMap.put("name", deletedMachine.getName());
                     tempMap.put("min", Integer.toString(deletedMachine.getMin()));
                     tempMap.put("max", Integer.toString(deletedMachine.getMax()));
                     tempMap.put("code", "del");

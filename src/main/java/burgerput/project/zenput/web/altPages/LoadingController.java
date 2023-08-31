@@ -30,7 +30,7 @@ public class LoadingController {
     private final MachineLoadingZenput machineLoadingZenput;
     private final FoodLoadingZenput foodLoadingZenput;
 
-//ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
+    //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
     @GetMapping
     public void loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -40,7 +40,7 @@ public class LoadingController {
         Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
         log.info("request URL ={}", request.getRequestURL());
-        log.info("loading Controller={}", LocalTime.now().toString() );
+        log.info("loading Controller={}", LocalTime.now().toString());
 
         saveData.machinezenputdatasave(machineInfo);
         saveData.foodZenputDataSave(foodInfo);
@@ -55,37 +55,53 @@ public class LoadingController {
 //        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
 ////        addMachine Logic=================================================
-        ArrayList<Map> maps = alertLoading.addMachine(machineInfo);
-        //if insert all then code is all
-        log.info("maps info - added value ={}", maps);
-        //모두 다 똑같은 경우 에러남 (아무것도 안들어 있음)
-        //save data to DB
-        if (maps.size() ==0) {
-            log.info("nothing to save[Not added ]");
-        } else if (maps.get(0).get("code").equals("all")) {
-            log.info("save all data");
-            saveData.machinezenputdatasave(machineInfo);
-        } else {
-            log.info("added to cookie?");
-            //save to cookie?
-        }
-
+        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
 
         //del Machine logic
-        ArrayList<Map> maps1 = alertLoading.delMachine(machineInfo);
-        log.info("del machine result ={}", maps1);
+        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
 
         //editMachine logic=====================================
-        ArrayList<Map> mapsedit = alertLoading.editMachine(machineInfo);
+        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
 
-        log.info("editmachine Result ={}", mapsedit);
 
         //machine data를 로딩한 것으로 변경함
-        saveData.machinezenputdatasave(machineInfo);
+//        saveData.machinezenputdatasave(machineInfo);
+
+        ArrayList<Map> maps = alertInfo(addMap, delMap, editMap);
+
+        log.info("machine alert info list ={}", maps);
 
     }
 
-    private class AlertCookie{
+    private ArrayList<Map> alertInfo(ArrayList<Map> addMap, ArrayList<Map> delMap, ArrayList<Map> editMap) {
+
+        //addMap logic
+        ArrayList<Map> result = new ArrayList<>();
+        if (!addMap.isEmpty() && !addMap.get(0).get("code").equals("all")) {
+
+            for (Map map : addMap) {
+                result.add(map);
+            }
+        }
+
+        //edtiMap Logic
+        if (!editMap.isEmpty()) {
+            for (Map map : editMap) {
+                result.add(map);
+            }
+        }
+
+        //delMap logic
+        if (!delMap.isEmpty()) {
+            for (Map map : delMap) {
+                result.add(map);
+            }
+        }
+
+        return result;
+    }
+
+    private class AlertCookie {
 
     }
 
