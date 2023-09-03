@@ -1,0 +1,7 @@
+.email__valid {
+  width: 10rem;
+}
+
+.email__invalid {
+  width: 20rem;
+}
