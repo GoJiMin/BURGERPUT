@@ -31,10 +31,12 @@
 .temp {
   font-size: small;
   padding-right: 0.3rem;
+  font-weight: 700;
 }
 
 .text {
   font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .text__temp {
