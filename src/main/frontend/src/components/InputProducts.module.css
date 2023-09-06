@@ -22,7 +22,7 @@
   border: none;
   background-color: transparent;
   text-align: end;
-  width: 5rem;
+  width: 7rem;
   padding-right: 0.2rem;
   color: var(--navbar-background-color);
   font-size: large;
@@ -36,7 +36,6 @@
 
 .text {
   font-size: 1.3rem;
-  font-weight: 700;
 }
 
 .text__temp {

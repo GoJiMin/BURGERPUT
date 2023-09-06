@@ -13,7 +13,6 @@ input[type="checkbox"] + label {
   position: relative;
   padding-left: 35px;
   margin-bottom: 20px;
-  font-weight: 700;
   color: var(--navbar-background-color);
   cursor: pointer;
 }
