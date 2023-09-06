@@ -63,6 +63,11 @@
   top: 50%;
   transform: translateY(-60%);
   font-size: 1.5rem;
+  transition: all 250ms ease;
+}
+
+.toggleButton:hover {
+  transform: translateY(-60%) scale(115%);
 }
 
 .input {
