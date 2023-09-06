@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Admins.module.css";
 import { useForm } from "react-hook-form";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export default function Admins() {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isSubmitted, errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
+  const [hide, setHide] = useState(true);
   const { handleHidden } = useOutletContext();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
     navigate("/");
   };
+  console.log("re-render");
 
   return (
     <section className={styles.section}>
@@ -94,17 +97,32 @@ export default function Admins() {
             <input
               className={styles.input}
               id='password'
-              type='password'
+              type={hide ? `password` : "text"}
               placeholder='********'
               autoComplete='off'
               {...register("password", {
                 required: "비밀번호는 필수 입력 사항입니다.",
-                pattern: {
+                minLength: {
                   value: 8,
                   message: "비밀번호 형식에 맞지 않습니다.",
                 },
               })}
             />
+            {hide ? (
+              <button
+                className={styles.toggleButton}
+                onClick={() => setHide(false)}
+              >
+                <AiOutlineEye />
+              </button>
+            ) : (
+              <button
+                className={styles.toggleButton}
+                onClick={() => setHide(true)}
+              >
+                <AiOutlineEyeInvisible />
+              </button>
+            )}
           </div>
           {errors.password && (
             <small className={styles.error} role='alert'>

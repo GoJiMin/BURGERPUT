@@ -1,6 +1,6 @@
 @keyframes dropdown {
   0% {
-    transform: translateX(-80%);
+    transform: translateX(-75%);
   }
   100% {
     transform: translateX(0);

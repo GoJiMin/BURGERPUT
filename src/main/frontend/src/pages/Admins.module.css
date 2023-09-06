@@ -17,6 +17,7 @@
   text-align: center;
   padding: 0.7rem 0;
   font-size: xx-large;
+  font-weight: 700;
   margin-bottom: 1rem;
   background-color: var(--navbar-background-color);
   color: var(--text-basic-color);
@@ -51,8 +52,17 @@
 
 .wrapper {
   display: flex;
+  position: relative;
   flex-direction: column;
   margin-top: 0.7rem;
+}
+
+.toggleButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-60%);
+  font-size: 1.5rem;
 }
 
 .input {
