@@ -1,7 +1,102 @@
-.email__valid {
-  width: 10rem;
+.section {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  height: 100%;
+  width: 100%;
 }
 
-.email__invalid {
-  width: 20rem;
+.header {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  text-align: center;
+  padding: 0.7rem 0;
+  font-size: xx-large;
+  margin-bottom: 1rem;
+  background-color: var(--navbar-background-color);
+  color: var(--text-basic-color);
+}
+
+.header__button {
+  position: absolute;
+  right: 20px;
+  transition: all 150ms ease-in;
+  cursor: pointer;
+}
+
+.header__button:hover {
+  transform: scale(120%);
+}
+
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  color: var(--navbar-background-color);
+}
+
+.inputBox {
+  height: 9rem;
+}
+
+.label {
+  font-size: 1.6rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.7rem;
+}
+
+.input {
+  border: 1px solid var(--navbar-background-color);
+  border-radius: 5px;
+  padding: 1rem 0.7rem;
+  background-color: transparent;
+  color: var(--navbar-background-color);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex: 0;
+  font-weight: bold;
+}
+
+.button {
+  background: var(--navbar-background-color);
+  text-align: center;
+  width: 100%;
+  color: var(--text-basic-color);
+  font-size: xx-large;
+  padding: 0.7rem 0;
+  transition: all 150ms ease-in;
+  cursor: pointer;
+}
+
+.button1 {
+  background: var(--navbar-background-color);
+  text-align: center;
+  width: 100%;
+  color: var(--text-basic-color);
+  font-size: xx-large;
+  padding: 0.7rem 0;
+  transition: all 150ms ease-in;
+  border-right: 2px solid white;
+  cursor: pointer;
+}
+
+.button:hover,
+.button1:hover {
+  background: var(--main-background-color);
+  color: var(--navbar-background-color);
+  font-weight: bold;
 }
