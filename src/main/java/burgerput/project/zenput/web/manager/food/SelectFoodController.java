@@ -21,7 +21,7 @@ public class SelectFoodController {
     private final SaveData saveData;
     private final PrintData printData;
 
-    @GetMapping("/select/foods") //식품 목록 출력
+    @GetMapping("/back/select/foods") //식품 목록 출력
     @ResponseBody
     public ArrayList<Map> showFoodList() {
         ArrayList<Map> result = printData.zenputFood();
@@ -30,7 +30,7 @@ public class SelectFoodController {
     }
 
 
-    @PostMapping("/select/foods")//선택한 식품의 값
+    @PostMapping("/back/select/foods")//선택한 식품의 값
     @ResponseBody
     public void selected(@RequestBody ArrayList<Map> param) {
 //log.info("what is id={},", map.get("id"));

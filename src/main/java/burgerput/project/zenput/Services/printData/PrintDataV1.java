@@ -44,7 +44,14 @@ public class PrintDataV1 implements PrintData {
 
             result.add(machineMap);
         }
+        List<MgrList> mgrList = mgrListRepository.findAll();
+        for (MgrList list : mgrList) {
+            Map<String, String> mgrMap = new LinkedHashMap<>();
+            mgrMap.put("id", Integer.toString(list.getId()));
+            mgrMap.put("mgrname", list.getMgrName());
 
+            result.add(mgrMap);
+        }
         return result;
     }
 
@@ -67,6 +74,16 @@ public class PrintDataV1 implements PrintData {
 
             result.add(foodMap);
         }
+
+        List<MgrList> mgrList = mgrListRepository.findAll();
+        for (MgrList list : mgrList) {
+            Map<String, String> mgrMap = new LinkedHashMap<>();
+            mgrMap.put("id", Integer.toString(list.getId()));
+            mgrMap.put("mgrname", list.getMgrName());
+
+            result.add(mgrMap);
+        }
+
         return result;
     }
 
