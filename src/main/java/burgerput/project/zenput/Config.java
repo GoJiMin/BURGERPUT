@@ -13,7 +13,9 @@ import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
+import burgerput.project.zenput.repository.mgrList.MgrListRepository;
 import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenputV1;
 import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
@@ -22,16 +24,16 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@Slf4j
 public class Config implements WebMvcConfigurer {
 
-    private final EntityManager em;
-
-    public Config(EntityManager em) {
-        this.em = em;
-    }
+//    private final EntityManager em;
+//
+//    public Config(EntityManager em) {
+//        this.em = em;
+//    }
 
     //Interceptor Settions===========================================
-
     @Bean
     public CheckSessionInterceptor checkSessionInterceptor() {
         return new CheckSessionInterceptor();
@@ -43,7 +45,7 @@ public class Config implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/*.ico", "/error", "/loading", "/back/**", "/manifest.json", "/delCookie"
-                        , "/index.html", "/static/**", "/logo/*", "/logo192.png","/loading/*");
+                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/loading/*", "/*.json", "/data/*");
 
     }
 
@@ -86,20 +88,21 @@ public class Config implements WebMvcConfigurer {
     PrintData printData(MachineRepository machineRepository,
                         CustomMachineRepository customMachineRepository,
                         FoodRepository foodRepository,
-                        CustomFoodRepository customFoodRepository) {
+                        CustomFoodRepository customFoodRepository,
+                        MgrListRepository mgrListRepository) {
         return new PrintDataV1(machineRepository,
                 customMachineRepository,
                 foodRepository,
-                customFoodRepository);
+                customFoodRepository, mgrListRepository);
     }
 
     @Bean
     AlertLoading alertLoading(MachineRepository machineRepository,
-                              FoodRepository foodRepository,
-                              PrintData printdata) {
+                              FoodRepository foodRepository
+    ) {
         return new AlertLoadingV1(machineRepository,
-                foodRepository,
-                printdata);
+                foodRepository
+        );
     }
 
 }

@@ -3,10 +3,12 @@ package burgerput.project.zenput.Services.printData;
 import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;
+import burgerput.project.zenput.domain.MgrList;
 import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
+import burgerput.project.zenput.repository.mgrList.MgrListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +22,8 @@ public class PrintDataV1 implements PrintData {
     private final CustomMachineRepository customMachineRepository;
     private final FoodRepository foodRepository;
     private final CustomFoodRepository customFoodRepository;
+
+    private final MgrListRepository mgrListRepository;
 
     @Override
     public ArrayList<Map> zenputMachine() {
@@ -93,5 +97,22 @@ public class PrintDataV1 implements PrintData {
     public ArrayList<Map> customFood() {
 
         return null;
+    }
+
+    @Override
+    public ArrayList<Map> mgrList() {
+        ArrayList<Map> result = new ArrayList<>();
+
+        List<MgrList> mgrList = mgrListRepository.findAll();
+        log.info("mgrList ???= {}", mgrList);
+        for (MgrList list : mgrList) {
+            Map<String, String> mgrListMap = new LinkedHashMap<>();
+            mgrListMap.put("id", Integer.toString(list.getId()));
+            mgrListMap.put("mgrname", list.getMgrName());
+
+            result.add(mgrListMap);
+        }
+
+        return result;
     }
 }

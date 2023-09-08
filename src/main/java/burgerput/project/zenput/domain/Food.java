@@ -18,8 +18,6 @@ public class Food {
 
     private int id;
     private String name;
-    @JsonIgnore
     private  int max;
-    @JsonIgnore
     private  int min;
 }

@@ -45,7 +45,6 @@ public class SelectMachineController {
     public void selected(@RequestBody ArrayList<Map> param) {
         ArrayList<Map> result = printData.zenputMachine();
 
-
         log.info("Selected Machine param ={}", param.toString());
         //임시로 다지우고 시작 -> 변경해야하는 로직
 //        saveData.customMachineDataSave(param);

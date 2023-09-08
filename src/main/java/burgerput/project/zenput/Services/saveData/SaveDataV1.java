@@ -10,8 +10,11 @@ import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,7 +35,7 @@ public class SaveDataV1 implements SaveData {
     @Override
     public Map<Integer, Machine> machinezenputdatasave(Map<Integer, Machine> machineInfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
-        machineRepository.deleteAll();
+        machineRepository.deleteAllMIne();
         machineRepository.initIncrement();
 
         for (Integer key : machineInfo.keySet()) {
@@ -40,13 +43,15 @@ public class SaveDataV1 implements SaveData {
 
             machineRepository.save(machine);
         }
+
+
         return machineInfo;
     }
 
     @Override
     public Map<Integer, Food> foodZenputDataSave( Map<Integer, Food> foodinfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
-        foodRepository.deleteAll();
+        foodRepository.deleteAllMIne();
         foodRepository.initIncrement();
         for (Integer key : foodinfo.keySet()) {
             Food food = foodinfo.get(key);
@@ -59,14 +64,13 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customMachineDataSave(ArrayList<Map> param) {
         //table의 내용을 전부 지웠다가 다시 저장 -> 달라진 내용만 업데이트 하는 방향 필요
-        customMachineRepository.deleteAll();
+        customMachineRepository.deleteAllInBatch();
         // num 변수 재 설정
         customMachineRepository.initIncrement();
         for (Map<String, String> map : param) {
             CustomMachine selectedMachine = new CustomMachine();
             selectedMachine.setId(Integer.parseInt(map.get("id")));
             //log.info("what is id={},", map.get("id"));
-
             customMachineRepository.save(selectedMachine);
 
         }
