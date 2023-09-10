@@ -32,6 +32,8 @@ public class MgrListController {
         return maps;
     }
 
+
+    
     //delete mgr
     @PostMapping("back/manager")
     @ResponseBody
