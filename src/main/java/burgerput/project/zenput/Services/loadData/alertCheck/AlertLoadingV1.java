@@ -37,7 +37,9 @@ public class AlertLoadingV1 implements AlertLoading {
             dbIdStore.add(machineDBData.getId());
         }
 
+
         ArrayList editResult = new ArrayList();
+
         //새롭게 추가된 Edit객체 저장소
         if (!machineDBDatas.isEmpty()) {
             //DB 데이터가 null이 아닌 경우
@@ -115,7 +117,9 @@ public class AlertLoadingV1 implements AlertLoading {
                     }
 
                     if (!tempMap.isEmpty()) {
+
                         editResult.add(tempMap);
+
                     }
                 }
 //                addResult.add(tempMap);
@@ -124,10 +128,12 @@ public class AlertLoadingV1 implements AlertLoading {
             //Db data is null then upload all
             Map<String, String> tempMap = new HashMap<>();
             tempMap.put("code", "all");
+
             editResult.add(tempMap);
 
         }
         return editResult;
+
     }
 
 
@@ -320,11 +326,13 @@ public class AlertLoadingV1 implements AlertLoading {
 
         //Db's id store - 반복 중첩을 줄이기 위해 id를 따로 저장함
         ArrayList<Integer> dbIdStore = new ArrayList<>();
+
         for (Machine machineDBData : machineDBDatas){
             dbIdStore.add(machineDBData.getId());
         }
 
         ArrayList delResult = new ArrayList();
+
 
         if (!machineDBDatas.isEmpty()) {
             //DB 데이터가 null이 아닌 경우
@@ -343,6 +351,7 @@ public class AlertLoadingV1 implements AlertLoading {
                     tempMap.put("max", Integer.toString(deletedMachine.getMax()));
                     tempMap.put("code", "del");
 
+
                     delResult.add(tempMap);
                 } else {
 
@@ -351,12 +360,14 @@ public class AlertLoadingV1 implements AlertLoading {
         }
 
         return delResult;
+
     }
 
     @Override
     public ArrayList<Map> delFood(Map<Integer, Food> zenputFoodData) {
         //Db에서 값 가져오기
         List<Food> foodDBDatas = foodRepository.findAll();
+
 
         //Db's id store - 반복 중첩을 줄이기 위해 id를 따로 저장함
         ArrayList<Integer> dbIdStore = new ArrayList<>();
@@ -399,6 +410,7 @@ public class AlertLoadingV1 implements AlertLoading {
         tempMap.put("max", Integer.toString(zenputFoodeData.get(keyData).getMax()));
         tempMap.put("code", "add");
     }
+
     private static void tempAddMachineSetup(Map<Integer, Machine> zenputMachineData, Integer keyData, Map<String, String> tempMap) {
         tempMap.put("id", Integer.toString(zenputMachineData.get(keyData).getId()));
         tempMap.put("name", zenputMachineData.get(keyData).getName());

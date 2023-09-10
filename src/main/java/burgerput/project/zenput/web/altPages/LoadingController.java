@@ -51,6 +51,7 @@ public class LoadingController {
         log.info("request URL ={}", request.getRequestURL());
         log.info("loading Controller={}", LocalTime.now().toString());
 
+
         //====================loading logic================================
 //        addMachine Logic=================================================
         ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
@@ -79,6 +80,7 @@ public class LoadingController {
         alertFoodInfoToDb(delFoodMap);
         alertMachineInfoToDb(delMap);
 
+
         saveData.machinezenputdatasave(machineInfo);
         saveData.foodZenputDataSave(foodInfo);
 
@@ -89,7 +91,25 @@ public class LoadingController {
     @ResponseBody
     public void loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+//        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+
+////        addMachine Logic=================================================
+        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+
+        //del Machine logic
+        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+
+        //editMachine logic=====================================
+        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+
+
+        //machine data를 로딩한 것으로 변경함
+//        saveData.machinezenputdatasave(machineInfo);
+
+        ArrayList<Map> maps = alertInfo(addMap, delMap, editMap);
+
+        log.info("machine alert info list ={}", maps);
+
 
         //====================Machine logic================================
 ////        addMachine Logic=================================================
@@ -124,6 +144,7 @@ public class LoadingController {
             saveData.foodZenputDataSave(foodInfo);
         }
 
+
     }
 
     private ArrayList<Map> alertInfo(ArrayList<Map> addMap, ArrayList<Map> delMap, ArrayList<Map> editMap) {
@@ -135,6 +156,7 @@ public class LoadingController {
             for (Map map : addMap) {
                 result.add(map);
             }
+
         }
 
         //edtiMap Logic
@@ -143,6 +165,8 @@ public class LoadingController {
                 result.add(map);
             }
         }
+
+
 
         //delMap logic
         if (!delMap.isEmpty()) {
@@ -154,6 +178,7 @@ public class LoadingController {
         return result;
     }
 
+
     private void alertMachineInfoToDb(ArrayList<Map> delMap) {
 
         for (Map<String, String> map : delMap) {
@@ -161,7 +186,6 @@ public class LoadingController {
             log.info("deleted Machine data ={}", map);
         }
 
-    }
 
     private void alertFoodInfoToDb(ArrayList<Map> delMap) {
 
