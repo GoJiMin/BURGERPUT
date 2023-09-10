@@ -18,5 +18,5 @@ public interface MachineRepository extends JpaRepository<Machine, Integer> {
     public void initIncrement();
 
     @Query(value = "select * from Machine where id = :id ", nativeQuery = true)
-    public Machine findCustomMachineById(@Param("id") String id);
+    public Machine findMachineById(@Param("id") String id);
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public interface SaveData {
-    public Map<Integer, Machine> macihneZenputDataSave(Map<Integer, Machine> machineInfo);
+    public Map<Integer, Machine> machinezenputdatasave(Map<Integer, Machine> machineInfo);
 
     public Map<Integer, Food> foodZenputDataSave(Map<Integer, Food> foodinfo);
 

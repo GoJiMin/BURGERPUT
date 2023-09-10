@@ -30,7 +30,7 @@ public class LoadingController {
     private final MachineLoadingZenput machineLoadingZenput;
     private final FoodLoadingZenput foodLoadingZenput;
 
-//ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
+    //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
     @GetMapping
     public void loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -39,17 +39,10 @@ public class LoadingController {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
         Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
-        log.info("loadingController = {}", machineInfo.toString());
-        log.info("loadginFood ={}", foodInfo.toString());
-
-        //check add alert
-        alertLoading.addMachine(machineInfo);
-        alertLoading.addFood(foodInfo);
-
         log.info("request URL ={}", request.getRequestURL());
-        log.info("loading Controller={}", LocalTime.now().toString() );
+        log.info("loading Controller={}", LocalTime.now().toString());
 
-        saveData.macihneZenputDataSave(machineInfo);
+        saveData.machinezenputdatasave(machineInfo);
         saveData.foodZenputDataSave(foodInfo);
 
         response.sendRedirect(BURGERPUTSITE);
@@ -59,22 +52,56 @@ public class LoadingController {
     @ResponseBody
     public void loadingTest() {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+//        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
-        //addMachine Logic=================================================
-        ArrayList<Map> maps = alertLoading.addMachine(machineInfo);
-        //if insert all then code is all
-        log.info("maps info - added value ={}", maps);
-        Map<String, String> map = maps.get(0);
-        //save data to DB
-        if (map.get("code").equals("all")) {
-            saveData.macihneZenputDataSave(machineInfo);
-        }else{
-            //save to cookie?
-        }
+////        addMachine Logic=================================================
+        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+
+        //del Machine logic
+        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+
+        //editMachine logic=====================================
+        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+
+
+        //machine data를 로딩한 것으로 변경함
+//        saveData.machinezenputdatasave(machineInfo);
+
+        ArrayList<Map> maps = alertInfo(addMap, delMap, editMap);
+
+        log.info("machine alert info list ={}", maps);
+
     }
 
-    private class AlertCookie{
+    private ArrayList<Map> alertInfo(ArrayList<Map> addMap, ArrayList<Map> delMap, ArrayList<Map> editMap) {
+
+        //addMap logic
+        ArrayList<Map> result = new ArrayList<>();
+        if (!addMap.isEmpty() && !addMap.get(0).get("code").equals("all")) {
+
+            for (Map map : addMap) {
+                result.add(map);
+            }
+        }
+
+        //edtiMap Logic
+        if (!editMap.isEmpty()) {
+            for (Map map : editMap) {
+                result.add(map);
+            }
+        }
+
+        //delMap logic
+        if (!delMap.isEmpty()) {
+            for (Map map : delMap) {
+                result.add(map);
+            }
+        }
+
+        return result;
+    }
+
+    private class AlertCookie {
 
     }
 
