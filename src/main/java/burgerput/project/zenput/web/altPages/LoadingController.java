@@ -73,7 +73,6 @@ public class LoadingController {
 
         ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
 
-
 //
 //=============save result To DB
 //apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
@@ -87,11 +86,12 @@ public class LoadingController {
         response.sendRedirect(BURGERPUTSITE);
     }
 
+
     //@GetMapping("/test")
     @ResponseBody
     public void loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-//        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
 
 ////        addMachine Logic=================================================
         ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
@@ -110,18 +110,6 @@ public class LoadingController {
 
         log.info("machine alert info list ={}", maps);
 
-
-        //====================Machine logic================================
-////        addMachine Logic=================================================
-        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
-//
-//        //del Machine logic
-        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
-//
-//        //editMachine logic=====================================
-        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
-//
-//        //apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
 //        //to Machine DB
         alertMachineInfoToDb(delMap);
 
@@ -167,7 +155,6 @@ public class LoadingController {
         }
 
 
-
         //delMap logic
         if (!delMap.isEmpty()) {
             for (Map map : delMap) {
@@ -178,20 +165,19 @@ public class LoadingController {
         return result;
     }
 
+    private void alertFoodInfoToDb (ArrayList < Map > delMap) {
 
+        for (Map<String, String> map : delMap) {
+            customFoodRepository.deleteBymineId(map.get("id"));
+            log.info("deleted Food data ={}", map);
+        }
+
+    }
     private void alertMachineInfoToDb(ArrayList<Map> delMap) {
 
         for (Map<String, String> map : delMap) {
             customMachineRepository.deleteBymineId(map.get("id"));
             log.info("deleted Machine data ={}", map);
-        }
-
-
-    private void alertFoodInfoToDb(ArrayList<Map> delMap) {
-
-        for (Map<String, String> map : delMap) {
-            customFoodRepository.deleteBymineId(map.get("id"));
-            log.info("deleted Food data ={}", map);
         }
 
     }
