@@ -11,13 +11,13 @@ import java.util.List;
 
 @Transactional
 public interface CustomMachineRepository extends JpaRepository<CustomMachine,Integer> {
-    @Modifying
-    @Query(value="truncate table Custom_machine",  nativeQuery = true)
-    public void deleteAll();
 
-    @Modifying
-    @Query(value = "alter table Custom_machine auto_increment=1", nativeQuery = true)
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from custom_machine where id = :id", nativeQuery = true)
+    public void deleteBymineId(@Param("id") String id);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "alter table machine auto_increment=1", nativeQuery = true)
     public void initIncrement();
-
 
 }

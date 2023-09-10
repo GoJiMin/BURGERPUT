@@ -15,4 +15,6 @@ public interface PrintData {
     public ArrayList<Map> customMachine();
 
     public ArrayList<Map> customFood();
+
+    public ArrayList<Map> mgrList();
 }

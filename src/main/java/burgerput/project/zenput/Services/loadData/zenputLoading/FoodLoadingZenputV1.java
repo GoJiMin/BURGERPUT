@@ -67,6 +67,7 @@ public class FoodLoadingZenputV1 implements FoodLoadingZenput {
                 }
             }
             //End process
+            driver.close();
             driver.quit();
 
         } catch (Exception e) {
