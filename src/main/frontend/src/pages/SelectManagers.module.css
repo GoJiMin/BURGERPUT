@@ -44,6 +44,7 @@
   align-items: center;
   width: 100%;
   flex: 1;
+  padding: 1rem;
 }
 
 .form {

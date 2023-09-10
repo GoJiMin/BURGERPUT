@@ -34,7 +34,7 @@ export default function Admins() {
       >
         <div className={styles.inputBox}>
           <label className={styles.label} htmlFor='email'>
-            Email
+            젠풋 이메일
           </label>
           <div className={styles.wrapper}>
             <input
@@ -64,7 +64,7 @@ export default function Admins() {
 
         <div className={styles.inputBox}>
           <label className={styles.label} htmlFor='id'>
-            ID
+            rbi 아이디
           </label>
           <div className={styles.wrapper}>
             <input
@@ -91,7 +91,7 @@ export default function Admins() {
 
         <div className={styles.inputBox}>
           <label className={styles.label} htmlFor='password'>
-            Password
+            rbi 비밀번호
           </label>
           <div className={styles.wrapper}>
             <input
@@ -103,7 +103,7 @@ export default function Admins() {
               {...register("password", {
                 required: "비밀번호는 필수 입력 사항입니다.",
                 minLength: {
-                  value: 8,
+                  value: 6,
                   message: "비밀번호 형식에 맞지 않습니다.",
                 },
               })}
