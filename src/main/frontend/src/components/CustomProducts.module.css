@@ -1,7 +1,7 @@
 .product {
-  margin-bottom: 2rem;
+  margin-bottom: 0.6rem;
   border-bottom: 1px solid var(--navbar-background-color);
-  padding-bottom: 1.5rem;
+  padding-bottom: 2.6rem;
 }
 
 input[type="checkbox"] {
@@ -11,8 +11,8 @@ input[type="checkbox"] {
 input[type="checkbox"] + label {
   display: block;
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 20px;
+  text-align: end;
+  padding-right: 1rem;
   color: var(--navbar-background-color);
   cursor: pointer;
 }
@@ -28,8 +28,8 @@ input[type="checkbox"] + label:before {
   height: 20px;
   border: 1px solid var(--navbar-background-color);
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 1rem;
+  top: 0.5rem;
   opacity: 0.6;
   -webkit-transition: all 0.12s, border-color 0.08s;
   transition: all 0.12s, border-color 0.08s;
@@ -37,8 +37,8 @@ input[type="checkbox"] + label:before {
 
 input[type="checkbox"]:checked + label:before {
   width: 10px;
-  top: -0.7rem;
-  left: 5px;
+  top: 0;
+  left: 1.3rem;
   border-width: 3px;
   border-radius: 0;
   opacity: 1;
@@ -49,10 +49,14 @@ input[type="checkbox"]:checked + label:before {
 }
 
 .text {
+  position: relative;
   font-size: 1.3rem;
 }
 
 .text__temp {
+  position: absolute;
+  top: 110%;
+  right: 1.2rem;
   margin-left: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }

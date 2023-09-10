@@ -91,12 +91,19 @@ export default function Navbar({ setVisible, setHidden }) {
                 관리자 목록 수정
               </button>
             </Link>
+            <Link to='address'>
+              <button
+                onClick={handleDropDownHidden}
+                className={styles.menu__depth2}
+              >
+                관리자 계정 추가
+              </button>
+            </Link>
           </section>
         )}
         {dropDown === "2" && (
           <section className={styles.navbar__depth2}>
             <Link to='/zenput/machines'>
-              {" "}
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
@@ -113,7 +120,6 @@ export default function Navbar({ setVisible, setHidden }) {
               </button>
             </Link>
             <Link to='/zenput/machines'>
-              {" "}
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}

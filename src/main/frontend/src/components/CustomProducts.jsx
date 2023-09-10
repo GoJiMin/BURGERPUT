@@ -31,7 +31,7 @@ export default function CustomProducts({
         onChange={handleChange}
       />
       <label className={styles.text} htmlFor={id}>
-        {name}{" "}
+        {name}
         <span className={styles.text__temp}>
           ({min} ~ {max} ºF)
         </span>

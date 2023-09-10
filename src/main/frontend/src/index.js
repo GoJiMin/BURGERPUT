@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: "/", element: <Main /> },
-      { path: "managers", element: <Admins /> },
+      { path: "address", element: <Admins /> },
       { path: "select/machines", element: <CustomMachines /> },
       { path: "select/foods", element: <CustomFoods /> },
       { path: "select/managers", element: <SelectManagers /> },
