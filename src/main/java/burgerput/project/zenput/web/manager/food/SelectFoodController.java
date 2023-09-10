@@ -36,6 +36,5 @@ public class SelectFoodController {
 //log.info("what is id={},", map.get("id"));
         //table의 내용을 전부 지웠다가 다시 저장
         saveData.customFoodDataSave(param);
-
     }
 }
