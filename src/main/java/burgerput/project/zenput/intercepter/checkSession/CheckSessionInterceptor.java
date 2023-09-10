@@ -31,7 +31,6 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
                 log.info("[preHandle getSession Result ] ={}", session.getSession(request));
                 session.createSession(LocalDate.now(), response);
 
-
                 response.sendRedirect( BURGERPUTSITE+ "loading");
 
 //                //페이지 로딩 화면으로 이동하면 될 듯?
