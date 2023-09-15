@@ -29,12 +29,12 @@ public class SelectFoodController {
         return result;
     }
 
-
     @PostMapping("/back/select/foods")//선택한 식품의 값
     @ResponseBody
     public void selected(@RequestBody ArrayList<Map> param) {
-//log.info("what is id={},", map.get("id"));
+        //log.info("what is id={},", map.get("id"));
         //table의 내용을 전부 지웠다가 다시 저장
         saveData.customFoodDataSave(param);
     }
+
 }

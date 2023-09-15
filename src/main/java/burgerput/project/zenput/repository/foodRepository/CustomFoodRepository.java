@@ -9,13 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface CustomFoodRepository extends JpaRepository<CustomFood, Integer> {
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "truncate table Custom_food", nativeQuery = true)
-    public void deleteAll();
+    public void deleteAllMine();
 
-    @Modifying
-    @Query(value = "alter table Custom_food auto_increment=1", nativeQuery = true)
-    public void initIncrement();
 
 
     @Modifying(clearAutomatically = true)

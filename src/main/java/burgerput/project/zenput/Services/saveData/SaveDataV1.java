@@ -36,7 +36,6 @@ public class SaveDataV1 implements SaveData {
     public Map<Integer, Machine> machinezenputdatasave(Map<Integer, Machine> machineInfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         machineRepository.deleteAllMIne();
-        machineRepository.initIncrement();
 
         for (Integer key : machineInfo.keySet()) {
             Machine machine = machineInfo.get(key);
@@ -52,7 +51,7 @@ public class SaveDataV1 implements SaveData {
     public Map<Integer, Food> foodZenputDataSave( Map<Integer, Food> foodinfo) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         foodRepository.deleteAllMIne();
-        foodRepository.initIncrement();
+
         for (Integer key : foodinfo.keySet()) {
             Food food = foodinfo.get(key);
 
@@ -64,9 +63,9 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customMachineDataSave(ArrayList<Map> param) {
         //table의 내용을 전부 지웠다가 다시 저장 -> 달라진 내용만 업데이트 하는 방향 필요
-        customMachineRepository.deleteAllInBatch();
+        customMachineRepository.deleteAllMine();
         // num 변수 재 설정
-        customMachineRepository.initIncrement();
+
         for (Map<String, String> map : param) {
             CustomMachine selectedMachine = new CustomMachine();
             selectedMachine.setId(Integer.parseInt(map.get("id")));
@@ -80,8 +79,8 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customFoodDataSave(ArrayList<Map> param) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
-        customFoodRepository.deleteAll();
-        customFoodRepository.initIncrement();
+        customFoodRepository.deleteAllMine();
+
 
         for (Map<String, String> map : param) {
             CustomFood selectedFood = new CustomFood();

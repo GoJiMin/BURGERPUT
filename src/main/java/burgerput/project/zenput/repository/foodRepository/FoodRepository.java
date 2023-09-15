@@ -13,10 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface FoodRepository extends JpaRepository<Food,Integer> {
 
-    @Modifying
-    @Query(value = "alter table food auto_increment=1", nativeQuery = true)
-    public void initIncrement();
-
     @Modifying(clearAutomatically = true)
     @Query(value = "truncate table food", nativeQuery = true)
     public void deleteAllMIne();
