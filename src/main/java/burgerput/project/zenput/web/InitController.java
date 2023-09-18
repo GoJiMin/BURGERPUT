@@ -29,8 +29,8 @@ public class InitController {
     public void saveMachineAndFood() {
 
         //임시로 다지우고 시작 -> 변경해야하는 로직
-        machineRepository.deleteAll();
-        machineRepository.initIncrement();
+        machineRepository.deleteAllMIne();
+
 
         Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
         for (Integer key : machineInfo.keySet()) {
@@ -40,8 +40,8 @@ public class InitController {
         }
 
         //임시로 다지우고 시작 -> 변경해야하는 로직
-        foodRepository.deleteAll();
-        foodRepository.initIncrement();
+        foodRepository.deleteAllMIne();
+
         Map<Integer, Food> foodinfo = foodLoadingZenput.getInfo();
         for (Integer key : foodinfo.keySet()) {
             Food food = foodinfo.get(key);

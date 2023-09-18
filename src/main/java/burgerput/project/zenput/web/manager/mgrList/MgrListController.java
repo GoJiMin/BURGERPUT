@@ -35,7 +35,7 @@ public class MgrListController {
 
     
     //delete mgr
-    @PostMapping("back/manager")
+    @PostMapping("back/manager") //[{"mgrname":"김뚝딱"}] map in the ArrayList
     @ResponseBody
     public void deleteMgrlist(@RequestBody ArrayList<Map> param) {
         for (Map<String, String> mgrMap : param) {
@@ -48,7 +48,7 @@ public class MgrListController {
 
     }
 
-    @PostMapping("back/managers")
+    @PostMapping("back/managers") //[{"mgrname":"김뚝딱"}] map in the ArrayList
     @ResponseBody
     public void addMgrList(@RequestBody ArrayList<Map> param) {
         for (Map<String, String> mgrMap : param) {

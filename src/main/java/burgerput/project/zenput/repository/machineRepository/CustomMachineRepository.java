@@ -17,7 +17,7 @@ public interface CustomMachineRepository extends JpaRepository<CustomMachine,Int
     public void deleteBymineId(@Param("id") String id);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "alter table machine auto_increment=1", nativeQuery = true)
-    public void initIncrement();
+    @Query(value = "truncate table machine", nativeQuery = true)
+    public void deleteAllMine();
 
 }

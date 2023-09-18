@@ -15,10 +15,6 @@ public interface MachineRepository extends JpaRepository<Machine, Integer> {
     @Query(value = "truncate table Machine", nativeQuery = true)
     public void deleteAllMIne();
 
-    @Modifying(clearAutomatically = true)
-    @Query(value = "alter table machine auto_increment=1", nativeQuery = true)
-    public void initIncrement();
-
     @Query(value = "select * from Machine where id = :id ", nativeQuery = true)
     public Machine findMachineById(@Param("id") String id);
 }

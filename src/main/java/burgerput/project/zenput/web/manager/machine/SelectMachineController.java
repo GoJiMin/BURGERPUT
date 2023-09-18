@@ -24,10 +24,8 @@ import java.util.Map;
 @Slf4j
 public class SelectMachineController {
 
-    private final MachineRepository machineRepository;
-    private final CustomMachineRepository customMachineRepository;
-
     private final PrintData printData;
+    private final SaveData saveData;
 
 //    SaveData saveData;
 
@@ -36,18 +34,21 @@ public class SelectMachineController {
     public ArrayList<Map> showMachineList() {
         //show MachineList from the Machine DB
         //[id, JSON(MAP)] 으로 리턴
-        ArrayList<Map> result = printData.zenputMachine();
-        return result;
+        ArrayList<Map> machineList = printData.zenputMachine();
+
+        log.info("machineList ={}", machineList);
+
+        return machineList;
     }
 
     @PostMapping("back/select/machines")//선택한 기기의 값
     @ResponseBody
     public void selected(@RequestBody ArrayList<Map> param) {
-        ArrayList<Map> result = printData.zenputMachine();
+//        ArrayList<Map> result = printData.zenputMachine();
 
         log.info("Selected Machine param ={}", param.toString());
         //임시로 다지우고 시작 -> 변경해야하는 로직
-//        saveData.customMachineDataSave(param);
+        saveData.customMachineDataSave(param);
     }
 }
 

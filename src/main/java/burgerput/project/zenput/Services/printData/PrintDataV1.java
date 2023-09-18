@@ -1,9 +1,6 @@
 package burgerput.project.zenput.Services.printData;
 
-import burgerput.project.zenput.domain.CustomMachine;
-import burgerput.project.zenput.domain.Food;
-import burgerput.project.zenput.domain.Machine;
-import burgerput.project.zenput.domain.MgrList;
+import burgerput.project.zenput.domain.*;
 import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
@@ -44,14 +41,16 @@ public class PrintDataV1 implements PrintData {
 
             result.add(machineMap);
         }
-        List<MgrList> mgrList = mgrListRepository.findAll();
-        for (MgrList list : mgrList) {
-            Map<String, String> mgrMap = new LinkedHashMap<>();
-            mgrMap.put("id", Integer.toString(list.getId()));
-            mgrMap.put("mgrname", list.getMgrName());
 
-            result.add(mgrMap);
-        }
+//        List<MgrList> mgrList = mgrListRepository.findAll();
+//        for (MgrList list : mgrList) {
+//            Map<String, String> mgrMap = new LinkedHashMap<>();
+//            mgrMap.put("id", Integer.toString(list.getId()));
+//            mgrMap.put("mgrname", list.getMgrName());
+//
+//            result.add(mgrMap);
+//        }
+
         return result;
     }
 
@@ -74,15 +73,15 @@ public class PrintDataV1 implements PrintData {
 
             result.add(foodMap);
         }
-
-        List<MgrList> mgrList = mgrListRepository.findAll();
-        for (MgrList list : mgrList) {
-            Map<String, String> mgrMap = new LinkedHashMap<>();
-            mgrMap.put("id", Integer.toString(list.getId()));
-            mgrMap.put("mgrname", list.getMgrName());
-
-            result.add(mgrMap);
-        }
+//
+//        List<MgrList> mgrList = mgrListRepository.findAll();
+//        for (MgrList list : mgrList) {
+//            Map<String, String> mgrMap = new LinkedHashMap<>();
+//            mgrMap.put("id", Integer.toString(list.getId()));
+//            mgrMap.put("mgrname", list.getMgrName());
+//
+//            result.add(mgrMap);
+//        }
 
         return result;
     }
@@ -113,7 +112,25 @@ public class PrintDataV1 implements PrintData {
     @Override
     public ArrayList<Map> customFood() {
 
-        return null;
+        //for Saving Result
+        ArrayList<Map> result = new ArrayList<>();
+
+        //Get the customId
+        List<CustomFood> customId = customFoodRepository.findAll();
+
+        for (CustomFood customFood : customId) {
+            log.info("custommachine id ={}", customFood.getId());
+            Food foundFood = foodRepository.findMachineById(Integer.toString(customFood.getId()));
+            Map<String, String> customFoodMap = new LinkedHashMap<>();
+            customFoodMap.put("id", Integer.toString(foundFood.getId()));
+            customFoodMap.put("name", foundFood.getName());
+            customFoodMap.put("min", String.valueOf(foundFood.getMin()));
+            customFoodMap.put("max", String.valueOf(foundFood.getMax()));
+
+            result.add(customFoodMap);
+        }
+
+        return result;
     }
 
     @Override
@@ -132,4 +149,5 @@ public class PrintDataV1 implements PrintData {
 
         return result;
     }
+
 }
