@@ -18,7 +18,7 @@ public class EnterFoodController {
 
     @GetMapping("/back/enter/foods")
     @ResponseBody
-    public Map<String, ArrayList<Map>> enterMachine() {
+    public Map<String, ArrayList<Map>> enterFood() {
         Map<String, ArrayList<Map>> tempMap = new LinkedHashMap<>();
 
         ArrayList<Map> customFood = printData.customFood();
