@@ -17,6 +17,7 @@
     "typeit-react": "^2.6.4",
     "web-vitals": "^2.1.0"
   },
+  "proxy": "http://localhost:8080/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

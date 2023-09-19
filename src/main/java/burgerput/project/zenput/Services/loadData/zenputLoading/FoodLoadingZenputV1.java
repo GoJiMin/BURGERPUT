@@ -31,7 +31,6 @@ public class FoodLoadingZenputV1 implements FoodLoadingZenput {
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
             WebDriver driver = new ChromeDriver(options);
 
-
             //==============================Scrape LOGIC START============================
 
             //GO TO PAGE
@@ -44,7 +43,6 @@ public class FoodLoadingZenputV1 implements FoodLoadingZenput {
 
             //li class group
             List<WebElement> fields = driver.findElements(By.className("form-field"));
-
 
             if (fields.size() == 0) {
                 Food food= new Food();
