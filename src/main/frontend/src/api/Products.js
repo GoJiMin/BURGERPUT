@@ -34,7 +34,7 @@ export async function setCustomMachines(customMachines) {
 
 // 선택한 식품 목록을 전송하는 api
 export async function setCustomFoods(customFoods) {
-  await axios.post("/back/select/machines", JSON.stringify(customFoods), {
+  await axios.post("/back/select/foods", JSON.stringify(customFoods), {
     headers: { "Content-Type": "application/json" },
   });
 }
@@ -64,7 +64,7 @@ export async function getCustomFoods() {
 
 // 완료된 식품 온도 값을 전달하는 api
 export async function submitFoods(foods) {
-  await axios.post("/back/enter/foods", "hi", {
+  await axios.post("/back/enter/foods", JSON.stringify(foods), {
     headers: { "Content-Type": "application/json" },
   });
 }
