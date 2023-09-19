@@ -4,6 +4,8 @@ import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoading;
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoadingV1;
 import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
 import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenputV1;
+import burgerput.project.zenput.Services.movePage.MovePageService;
+import burgerput.project.zenput.Services.movePage.MovePageServiceV1;
 import burgerput.project.zenput.Services.printData.PrintData;
 import burgerput.project.zenput.Services.printData.PrintDataV1;
 import burgerput.project.zenput.Services.saveData.SaveData;
@@ -51,16 +53,20 @@ public class Config implements WebMvcConfigurer {
 
     // load machine list from zenput page
     @Bean
-    public MachineLoadingZenput LoadMachine() {
-        return new MachineLoadingZenputV1();
+    public MachineLoadingZenput LoadMachine(MovePageService movePageService) {
+        return new MachineLoadingZenputV1(movePageService);
     }
 
     //load food list from zenput page
     @Bean
-    public FoodLoadingZenput LoadFood() {
-        return new FoodLoadingZenputV1();
+    public FoodLoadingZenput LoadFood(MovePageService movePageService ) {
+        return new FoodLoadingZenputV1(movePageService);
     }
 
+    @Bean
+    public MovePageService movePage() {
+        return new MovePageServiceV1();
+    }
     //for memory DB Test Setting
 //    @Bean
 //    MemoryMachineRepository saveMachine() {

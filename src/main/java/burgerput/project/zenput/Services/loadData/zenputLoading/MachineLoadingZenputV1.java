@@ -1,6 +1,8 @@
 package burgerput.project.zenput.Services.loadData.zenputLoading;
 
+import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,8 +16,10 @@ import static burgerput.project.zenput.Const.DRIVERLOCATION;
 import static burgerput.project.zenput.Const.MACHINEURL;
 
 @Slf4j
+@RequiredArgsConstructor
 //Service
 public class MachineLoadingZenputV1 implements MachineLoadingZenput {
+    private final MovePageService movePageService;
     @Override
     public Map<Integer, Machine> getInfo() {
 
