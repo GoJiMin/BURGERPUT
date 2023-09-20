@@ -1,4 +1,11 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .title {
+  flex: 0;
   position: sticky;
   z-index: 999;
   width: 100%;
@@ -12,8 +19,17 @@
   color: var(--text-basic-color);
 }
 
+.empty {
+  display: flex;
+  justify-content: center;
+  margin-top: 12rem;
+  color: var(--navbar-background-color);
+  font-size: x-large;
+}
+
 .form {
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: auto;
   padding: 2rem 2.5rem;
@@ -21,8 +37,6 @@
 
 .buttons {
   display: flex;
-  position: sticky;
-  bottom: 0;
   justify-content: space-around;
   transform: translateY(2%);
   margin-top: 1rem;
