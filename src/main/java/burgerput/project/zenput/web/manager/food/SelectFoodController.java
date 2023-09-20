@@ -34,6 +34,7 @@ public class SelectFoodController {
     public void selected(@RequestBody ArrayList<Map> param) {
         //log.info("what is id={},", map.get("id"));
         //table의 내용을 전부 지웠다가 다시 저장
+        log.info("Selected Food param ={}", param.toString());
         saveData.customFoodDataSave(param);
     }
 

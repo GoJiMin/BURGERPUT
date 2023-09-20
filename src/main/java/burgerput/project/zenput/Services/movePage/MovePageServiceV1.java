@@ -160,7 +160,6 @@ public class MovePageServiceV1 implements MovePageService{
 
     }
 
-
     private void getListClick(String listText) {
         WebDriver driver = gotoListWithLogin();
         List<WebElement> listTitles = driver.findElements(By.className("taskitem_title"));
