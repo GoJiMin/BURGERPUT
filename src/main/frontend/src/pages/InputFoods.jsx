@@ -14,13 +14,17 @@ export default function InputFoods() {
   const [warning, setWarning] = useState(false);
 
   const {
-    productsQuery: { isLoading, error, data: customFoods },
+    productsQuery: {
+      isLoading,
+      error,
+      data: { customFood, mgrList },
+    },
     setProductsTemp,
   } = useCustomFoods();
 
   useEffect(() => {
-    setProducts(customFoods);
-  }, [customFoods]);
+    setProducts(customFood);
+  }, [customFood]);
 
   const handleWarning = () => {
     setWarning(true);
@@ -44,10 +48,11 @@ export default function InputFoods() {
       setProductsTemp(products);
     }
   };
+
   return (
     <>
       {products && (
-        <section>
+        <section className={styles.section}>
           <div className={styles.title}>식품 입력</div>
           <form
             className={styles.form}
@@ -55,24 +60,26 @@ export default function InputFoods() {
             onSubmit={handleSubmit}
           >
             {warning && <Banner text={"비어있는 항목이 존재합니다."} />}
-            <div>
-              {products &&
-                products.map((product) => (
-                  <div
-                    className={styles.product}
-                    key={product.id}
-                    onSubmit={handleSubmit}
-                  >
-                    <InputProducts product={product} />
-                  </div>
-                ))}
-            </div>
+            {products.length === 0 ? (
+              <div className={styles.empty}>먼저 식품 선택을 완료해주세요.</div>
+            ) : (
+              products.map((product) => (
+                <div
+                  className={styles.product}
+                  key={product.id}
+                  onSubmit={handleSubmit}
+                >
+                  <InputProducts product={product} />
+                </div>
+              ))
+            )}
           </form>
           <div className={styles.buttons}>
             <button
               type='submit'
               form='inputMachine'
               className={styles.button1}
+              disabled={products.length === 0 ? true : false}
             >
               저장
             </button>

@@ -12,13 +12,17 @@ export default function InputMachines() {
   const [warning, setWarning] = useState(false);
 
   const {
-    productsQuery: { isLoading, error, data: customMachines },
+    productsQuery: {
+      isLoading,
+      error,
+      data: { customMachine, mgrList },
+    },
     setProductsTemp,
   } = useCustomMachines();
 
   useEffect(() => {
-    setProducts(customMachines);
-  }, [customMachines]);
+    setProducts(customMachine);
+  }, [customMachine]);
 
   const handleWarning = () => {
     setWarning(true);
@@ -43,6 +47,7 @@ export default function InputMachines() {
       setProductsTemp(products);
     }
   };
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
@@ -56,7 +61,11 @@ export default function InputMachines() {
           >
             {warning && <Banner text={"비어있는 항목이 존재합니다."} />}
             <div>
-              {products &&
+              {products.length === 0 ? (
+                <div className={styles.empty}>
+                  먼저 기기 선택을 완료해주세요.
+                </div>
+              ) : (
                 products.map((product) => (
                   <div
                     className={styles.product}
@@ -65,7 +74,8 @@ export default function InputMachines() {
                   >
                     <InputProducts product={product} />
                   </div>
-                ))}
+                ))
+              )}
             </div>
           </form>
           <div className={styles.buttons}>
@@ -73,6 +83,7 @@ export default function InputMachines() {
               type='submit'
               form='inputMachine'
               className={styles.button1}
+              disabled={products.length === 0 ? true : false}
             >
               저장
             </button>
