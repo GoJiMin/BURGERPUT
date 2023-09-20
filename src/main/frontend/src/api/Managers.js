@@ -8,13 +8,13 @@ export async function getMangerList() {
 }
 
 export async function addManger(manager) {
-  axios.post("/back/managers", JSON.stringify(manager), {
+  await axios.post("/back/managers", JSON.stringify(manager), {
     headers: { "Content-Type": "application/json" },
   });
 }
 
 export async function deleteManger(manager) {
-  axios.post("/back/managers", JSON.stringify(manager), {
+  axios.post("/back/manager", JSON.stringify(manager), {
     headers: { "Content-Type": "application/json" },
   });
 }
