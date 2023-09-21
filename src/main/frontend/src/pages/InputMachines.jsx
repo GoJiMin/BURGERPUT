@@ -12,17 +12,13 @@ export default function InputMachines() {
   const [warning, setWarning] = useState(false);
 
   const {
-    productsQuery: {
-      isLoading,
-      error,
-      data: { customMachine, mgrList },
-    },
+    productsQuery: { isLoading, error, data },
     setProductsTemp,
   } = useCustomMachines();
 
   useEffect(() => {
-    setProducts(customMachine);
-  }, [customMachine]);
+    setProducts(data?.customMachine);
+  }, [data]);
 
   const handleWarning = () => {
     setWarning(true);

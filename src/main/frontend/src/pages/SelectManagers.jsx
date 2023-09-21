@@ -1,64 +1,27 @@
-import React, { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import styles from "./SelectManagers.module.css";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { PiTrashBold } from "react-icons/pi";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { AiOutlineEnter } from "react-icons/ai";
-import { addManger, deleteManger, getMangerList } from "../api/Managers";
+import { useManagers } from "../hooks/useManagers";
 
 export default function SelectManagers() {
   const { handleHidden } = useOutletContext();
   const navigate = useNavigate();
-  const [manager, setManager] = useState("");
-  const queryClient = useQueryClient();
 
   const {
-    error,
-    isLoading,
-    data: initialManagers,
-  } = useQuery(["managers"], () => getMangerList());
-
-  const addMgr = useMutation(
-    ({ manager }) => addManger([{ mgrname: manager }]),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["managers"]);
-      },
-    }
-  );
-
-  const delMgr = useMutation(
-    ({ id, mgrname }) => deleteManger([{ id, mgrname }]),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["managers"]);
-      },
-    }
-  );
+    managersQuery: { isLoading, error, data: initialManagers },
+    manager,
+    handleChange,
+    handleSubmit,
+    handleDelete,
+  } = useManagers();
 
   const handleClick = () => {
     handleHidden();
     navigate("/");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (manager.trim().length === 0) {
-      return;
-    }
-    console.log(JSON.stringify({ mgrname: manager }));
-    addMgr.mutate({ manager });
-    setManager("");
-  };
-
-  const handleChange = (e) => {
-    setManager(e.target.value);
-  };
-
-  const handleDelete = (id, mgrname) => {
-    delMgr.mutate({ id, mgrname });
-  };
   return (
     <>
       {isLoading && <div>Loading...</div>}
@@ -81,7 +44,10 @@ export default function SelectManagers() {
                     {mgrname}
                   </li>
                   <button
-                    onClick={() => handleDelete(id, mgrname)}
+                    onClick={() => {
+                      handleDelete(id, mgrname);
+                      console.log("clicked");
+                    }}
                     className={styles.cover}
                   >
                     <PiTrashBold />

@@ -14,17 +14,13 @@ export default function InputFoods() {
   const [warning, setWarning] = useState(false);
 
   const {
-    productsQuery: {
-      isLoading,
-      error,
-      data: { customFood, mgrList },
-    },
+    productsQuery: { isLoading, error, data },
     setProductsTemp,
   } = useCustomFoods();
 
   useEffect(() => {
-    setProducts(customFood);
-  }, [customFood]);
+    setProducts(data?.customFood);
+  }, [data]);
 
   const handleWarning = () => {
     setWarning(true);
