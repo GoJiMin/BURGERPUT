@@ -5,7 +5,10 @@ import { getManagerList, addManager, deleteManger } from "../api/Managers";
 export function useManagers() {
   const queryClient = useQueryClient();
   const [manager, setManager] = useState("");
-  const managersQuery = useQuery(["managers"], () => getManagerList());
+  const managersQuery = useQuery(["managers"], () => getManagerList(), {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   const addMgr = useMutation(
     ({ manager }) => addManager([{ mgrname: manager }]),
