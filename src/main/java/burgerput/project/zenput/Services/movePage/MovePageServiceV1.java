@@ -19,9 +19,8 @@ import static burgerput.project.zenput.Const.*;
 
 @Slf4j
 public class MovePageServiceV1 implements MovePageService{
-    Set<Cookie> cookies;
 
-    public WebDriver gotoList() {
+     public WebDriver gotoList() {
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -49,7 +48,7 @@ public class MovePageServiceV1 implements MovePageService{
     }
     //페이지 로그인 까지 하는 것
     @Override
-    public WebDriver gotoListWithLogin() {
+     public WebDriver gotoListWithLogin() {
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -116,7 +115,6 @@ public class MovePageServiceV1 implements MovePageService{
             oktaButton.click();
             //https://asdf:Axjalsjf123456@rbi.kerberos.okta.com/
             //http://%EB%8B%A4%EC%9D%B4%EA%B0%95000001:Axjalsjf123456%40rbi.kerberos.okta.com/login/sso_iwa
-            cookies = driver.manage().getCookies(); //로그인 세션 정보
             return driver;
 
 

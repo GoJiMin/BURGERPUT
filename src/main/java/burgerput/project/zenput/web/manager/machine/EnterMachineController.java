@@ -1,5 +1,6 @@
 package burgerput.project.zenput.web.manager.machine;
 
+import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.Services.printData.PrintData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class EnterMachineController {
 
     private final PrintData printData;
+    private final MovePageService movePage;
 
     @GetMapping("/back/enter/machines")
     @ResponseBody
@@ -39,7 +41,10 @@ public class EnterMachineController {
 
 
     @PostMapping("/back/enter/machines")
+    @ResponseBody
     public void submitZenputMachine(@RequestBody ArrayList<Map> param) {
+        log.info( "param ={}", param);
+        movePage.clikcAmMachine();
 
     }
 
