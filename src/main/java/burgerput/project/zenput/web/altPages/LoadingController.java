@@ -1,26 +1,21 @@
 package burgerput.project.zenput.web.altPages;
 
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoading;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.Services.saveData.SaveData;
-import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;
 import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -34,9 +29,9 @@ import static burgerput.project.zenput.Const.BURGERPUTSITE;
 public class LoadingController {
     private final SaveData saveData;
     private final AlertLoading alertLoading;
-    private final MachineLoadingZenput machineLoadingZenput;
+    private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
     private final CustomMachineRepository customMachineRepository;
-    private final FoodLoadingZenput foodLoadingZenput;
+    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final CustomFoodRepository customFoodRepository;
 
     //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
@@ -45,8 +40,8 @@ public class LoadingController {
 
         //Start Loading Logic
         //loading zenput Page's Data first
-        Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
         log.info("request URL ={}", request.getRequestURL());
         log.info("loading Controller={}", LocalTime.now().toString());
@@ -90,8 +85,8 @@ public class LoadingController {
     //@GetMapping("/test")
     @ResponseBody
     public void loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingZenput.getInfo();
+        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
 ////        addMachine Logic=================================================
         ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);

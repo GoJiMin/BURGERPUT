@@ -2,8 +2,10 @@ package burgerput.project.zenput;
 
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoading;
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoadingV1;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenputV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenputV1;
+import burgerput.project.zenput.Services.movePage.MovePageService;
+import burgerput.project.zenput.Services.movePage.MovePageServiceV1;
 import burgerput.project.zenput.Services.printData.PrintData;
 import burgerput.project.zenput.Services.printData.PrintDataV1;
 import burgerput.project.zenput.Services.saveData.SaveData;
@@ -14,11 +16,10 @@ import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import burgerput.project.zenput.repository.mgrList.MgrListRepository;
-import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenputV1;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenputV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -51,16 +52,20 @@ public class Config implements WebMvcConfigurer {
 
     // load machine list from zenput page
     @Bean
-    public MachineLoadingZenput LoadMachine() {
-        return new MachineLoadingZenputV1();
+    public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService) {
+        return new MachineLoadingAndEnterZenputV1(movePageService);
     }
 
     //load food list from zenput page
     @Bean
-    public FoodLoadingZenput LoadFood() {
-        return new FoodLoadingZenputV1();
+    public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService ) {
+        return new FoodLoadingAndEnterZenputV1(movePageService);
     }
 
+    @Bean
+    public MovePageService movePage() {
+        return new MovePageServiceV1();
+    }
     //for memory DB Test Setting
 //    @Bean
 //    MemoryMachineRepository saveMachine() {
@@ -69,15 +74,15 @@ public class Config implements WebMvcConfigurer {
 
     //Save Data for the Saving data to DB
     @Bean
-    SaveData saveData(MachineLoadingZenput machineLoadingZenput,
+    SaveData saveData(MachineLoadingAndEnterZenput machineLoadingAndEnterZenput,
                       MachineRepository machineRepository,
-                      FoodLoadingZenput foodLoadingZenput,
+                      FoodLoadingAndEnterZenput foodLoadingAndEnterZenput,
                       FoodRepository foodRepository,
                       CustomFoodRepository customFoodRepository,
                       CustomMachineRepository customMachineRepository) {
-        return new SaveDataV1(machineLoadingZenput,
+        return new SaveDataV1(machineLoadingAndEnterZenput,
                 machineRepository,
-                foodLoadingZenput,
+                foodLoadingAndEnterZenput,
                 foodRepository,
                 customFoodRepository,
                 customMachineRepository);

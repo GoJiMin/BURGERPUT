@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Map;
 
-public interface MachineLoadingZenput {
+public interface MachineLoadingAndEnterZenput {
     public Machine extractIdTitle(WebElement field);
 
     public Map<Integer,Machine> getInfo();

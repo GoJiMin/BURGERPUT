@@ -2,7 +2,7 @@ package burgerput.project.zenput.repository.foodRepository;
 
 import burgerput.project.BurgerputProjectApplication;
 import burgerput.project.zenput.Config;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
 import burgerput.project.zenput.domain.CustomFood;
 import burgerput.project.zenput.domain.Food;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes = BurgerputProjectApplication.class)
 class FoodRepositoryTest {
     @Autowired
-    private FoodLoadingZenput foodLoading;
+    private FoodLoadingAndEnterZenput foodLoading;
 
     @Autowired
     private CustomFoodRepository csFoodRepository;

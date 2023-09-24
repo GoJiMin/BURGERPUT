@@ -1,6 +1,6 @@
 package burgerput.project.zenput.Services.loadData;
 
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
 import burgerput.project.zenput.domain.Food;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 @Slf4j
-class FoodLoadingZenputV1Test {
+class FoodLoadingAndEnterZenputV1Test {
 
-    private FoodLoadingZenput food;
+    private FoodLoadingAndEnterZenput food;
 
     @Test
     @DisplayName("LOADING FOOD DATA")
