@@ -1,7 +1,7 @@
 package burgerput.project.zenput.web;
 
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.domain.Machine;
 import burgerput.project.zenput.intercepter.checkSession.CreateSession;
@@ -18,9 +18,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 public class InitController {
-    private final MachineLoadingZenput machineLoadingZenput;
+    private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
     private final MachineRepository machineRepository;
-    private final FoodLoadingZenput foodLoadingZenput;
+    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final FoodRepository foodRepository;
 
     //save Data -> Machine and Food
@@ -32,7 +32,7 @@ public class InitController {
         machineRepository.deleteAllMIne();
 
 
-        Map<Integer, Machine> machineInfo = machineLoadingZenput.getInfo();
+        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
         for (Integer key : machineInfo.keySet()) {
             Machine machine = machineInfo.get(key);
 
@@ -42,7 +42,7 @@ public class InitController {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         foodRepository.deleteAllMIne();
 
-        Map<Integer, Food> foodinfo = foodLoadingZenput.getInfo();
+        Map<Integer, Food> foodinfo = foodLoadingAndEnterZenput.getInfo();
         for (Integer key : foodinfo.keySet()) {
             Food food = foodinfo.get(key);
 

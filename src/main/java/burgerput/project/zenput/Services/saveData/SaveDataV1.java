@@ -1,7 +1,7 @@
 package burgerput.project.zenput.Services.saveData;
 
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.domain.CustomFood;
 import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Food;
@@ -10,11 +10,8 @@ import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -23,9 +20,9 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class SaveDataV1 implements SaveData {
-    private final MachineLoadingZenput machineLoadingZenput;
+    private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
     private final MachineRepository machineRepository;
-    private final FoodLoadingZenput foodLoadingZenput;
+    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final FoodRepository foodRepository;
     private final CustomFoodRepository customFoodRepository;
     private final CustomMachineRepository customMachineRepository;

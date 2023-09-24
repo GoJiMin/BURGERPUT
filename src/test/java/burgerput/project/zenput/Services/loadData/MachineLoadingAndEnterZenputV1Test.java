@@ -1,14 +1,13 @@
 package burgerput.project.zenput.Services.loadData;
 
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenputV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenputV1;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-class MachineLoadingZenputV1Test {
-    MachineLoadingZenput LoadMachinData = new MachineLoadingZenputV1();
+class MachineLoadingAndEnterZenputV1Test {
 
     @Test
     @DisplayName("정규표현식")

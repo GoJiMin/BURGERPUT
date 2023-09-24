@@ -19,9 +19,57 @@ import static burgerput.project.zenput.Const.*;
 
 @Slf4j
 public class MovePageServiceV1 implements MovePageService{
-    Set<Cookie> cookies;
 
-    public WebDriver gotoList() {
+    @Override
+    public WebDriver sampleMachine() {
+
+
+        System.setProperty("java.awt.headless", "false");
+
+        try {
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
+
+            driver.get(MACHINEURL);
+
+            return driver;
+        } catch (Exception e) {
+            log.info("error log ={}", e.toString());
+        }
+
+            return null;
+    }
+
+    public WebDriver sampleFood() {
+        //NOT CLICK LIST JUST COPY AND PASTE LOGIC
+        System.setProperty("java.awt.headless", "false");
+        try {
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
+
+            //==============================Scrape LOGIC START============================
+            //GO TO PAGE
+            driver.get(FOODURL);
+
+            return driver;
+        } catch (Exception e) {
+            log.info("error log ={}", e.toString());
+        }
+        return null;
+    }
+
+
+     public WebDriver gotoList() {
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -49,7 +97,7 @@ public class MovePageServiceV1 implements MovePageService{
     }
     //페이지 로그인 까지 하는 것
     @Override
-    public WebDriver gotoListWithLogin() {
+     public WebDriver gotoListWithLogin() {
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -116,14 +164,13 @@ public class MovePageServiceV1 implements MovePageService{
             oktaButton.click();
             //https://asdf:Axjalsjf123456@rbi.kerberos.okta.com/
             //http://%EB%8B%A4%EC%9D%B4%EA%B0%95000001:Axjalsjf123456%40rbi.kerberos.okta.com/login/sso_iwa
-            cookies = driver.manage().getCookies(); //로그인 세션 정보
             return driver;
 
 
         } catch (StaleElementReferenceException e) {
             log.info("noSuchEletmet = {}", e);
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             log.info("Thread.sleep error [{}]", e);
         }
         return null;

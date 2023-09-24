@@ -2,7 +2,7 @@ package burgerput.project.zenput.repository.machineRepository;
 
 import burgerput.project.BurgerputProjectApplication;
 import burgerput.project.zenput.Config;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.domain.CustomMachine;
 import burgerput.project.zenput.domain.Machine;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.util.Optional;
 class CustomMachineRepositoryTest {
 
     @Autowired
-    private MachineLoadingZenput machineLoadiing;
+    private MachineLoadingAndEnterZenput machineLoadiing;
 
     @Autowired
     private MachineRepository machineRepository;

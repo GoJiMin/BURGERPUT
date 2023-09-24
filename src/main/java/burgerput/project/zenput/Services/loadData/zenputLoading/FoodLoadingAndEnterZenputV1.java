@@ -1,6 +1,8 @@
 package burgerput.project.zenput.Services.loadData.zenputLoading;
 
+import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,9 +15,10 @@ import java.util.*;
 import static burgerput.project.zenput.Const.*;
 
 @Slf4j
+@RequiredArgsConstructor
 //@Service
-public class FoodLoadingZenputV1 implements FoodLoadingZenput {
-
+public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
+    private final MovePageService movePageService;
     @Override
     public Map<Integer, Food> getInfo() {
         Map<Integer, Food> result = new LinkedHashMap<>();
