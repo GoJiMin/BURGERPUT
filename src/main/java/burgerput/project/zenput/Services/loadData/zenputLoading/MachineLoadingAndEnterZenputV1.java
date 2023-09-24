@@ -18,7 +18,7 @@ import static burgerput.project.zenput.Const.MACHINEURL;
 @Slf4j
 @RequiredArgsConstructor
 //Service
-public class MachineLoadingZenputV1 implements MachineLoadingZenput {
+public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZenput {
     private final MovePageService movePageService;
     @Override
     public Map<Integer, Machine> getInfo() {

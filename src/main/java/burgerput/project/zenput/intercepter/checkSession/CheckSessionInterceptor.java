@@ -42,8 +42,6 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
             checkDate((LocalDate) session.getSession(request), request, response);
         }
 
-
-
         return true;
     }
 

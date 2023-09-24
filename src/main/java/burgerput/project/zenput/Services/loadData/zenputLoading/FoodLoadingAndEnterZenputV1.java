@@ -17,7 +17,7 @@ import static burgerput.project.zenput.Const.*;
 @Slf4j
 @RequiredArgsConstructor
 //@Service
-public class FoodLoadingZenputV1 implements FoodLoadingZenput {
+public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
     private final MovePageService movePageService;
     @Override
     public Map<Integer, Food> getInfo() {

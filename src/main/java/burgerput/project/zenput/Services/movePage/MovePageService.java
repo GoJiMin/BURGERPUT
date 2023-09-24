@@ -16,4 +16,7 @@ public interface MovePageService {
 
     public void clickPmMachine();
 
+    public WebDriver sampleFood();
+
+    public WebDriver sampleMachine();
 }
