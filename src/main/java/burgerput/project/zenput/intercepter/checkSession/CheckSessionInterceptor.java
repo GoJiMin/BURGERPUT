@@ -28,7 +28,8 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
         log.info("[request URL ={}]", request.getRequestURL());
         if (session.getSession(request) == null) {
 //                //if it's not have a sessions then create it -> iT MEANS visited first time in this website
-                log.info("[preHandle getSession Result ] ={}", session.getSession(request));
+log.info("session null");
+                // log.info("[preHandle getSession Result ] ={}", session.getSession(request));
                 session.createSession(LocalDate.now(), response);
 
                 response.sendRedirect( BURGERPUTSITE+ "loading");
@@ -39,6 +40,7 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
         } else {
             //check the date is same as today
             //it not same then delete the previous session and create new one and Data loading
+log.info("Not NULLLLLL");
             checkDate((LocalDate) session.getSession(request), request, response);
         }
 

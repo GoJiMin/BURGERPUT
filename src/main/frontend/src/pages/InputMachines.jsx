@@ -50,6 +50,7 @@ export default function InputMachines() {
       {products && (
         <section className={styles.section}>
           <div className={styles.title}>기기 입력</div>
+
           <form
             className={styles.form}
             id='inputMachine'

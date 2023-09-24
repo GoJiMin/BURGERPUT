@@ -81,12 +81,15 @@ public class CreateSession {
     }
 
     private Cookie findCookie(HttpServletRequest request, String mySessionCookieName) {
+        
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
+        if(cookies != null){
+            for (Cookie cookie : cookies) {
             if (cookie.getName().equals(mySessionCookieName)) {
                 return cookie;
             }
-        }
+        } 
+    }
         return null;
     }
 
