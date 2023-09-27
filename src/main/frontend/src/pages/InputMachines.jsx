@@ -39,7 +39,7 @@ export default function InputMachines() {
     e.preventDefault();
     const hasEmptyTemp = products.some((product) => !product.temp);
 
-    if (hasEmptyTemp) {
+    if (hasEmptyTemp || selectManager.length === 0) {
       handleWarning();
       return;
     } else {
