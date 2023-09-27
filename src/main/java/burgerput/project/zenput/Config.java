@@ -1,9 +1,10 @@
 package burgerput.project.zenput;
 
+import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
+import burgerput.project.zenput.Services.jsonObject.MyJsonParserV1;
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoading;
 import burgerput.project.zenput.Services.loadData.alertCheck.AlertLoadingV1;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenputV1;
+import burgerput.project.zenput.Services.loadData.zenputLoading.*;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.Services.movePage.MovePageServiceV1;
 import burgerput.project.zenput.Services.printData.PrintData;
@@ -16,10 +17,9 @@ import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import burgerput.project.zenput.repository.mgrList.MgrListRepository;
+import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenputV1;
-import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -51,20 +51,43 @@ public class Config implements WebMvcConfigurer {
     }
 
     // load machine list from zenput page
-    @Bean
-    public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService) {
-        return new MachineLoadingAndEnterZenputV1(movePageService);
+//    @Bean
+//    public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
+//                                                    MyJsonParser myJsonParser,
+//                                                    MachineRepository machineRepository) {
+//        return new MachineLoadingAndEnterZenputV1Test(movePageService,myJsonParser,machineRepository
+//        );
+//    }
+//
+//    //load food list from zenput page
+//    @Bean
+//    public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
+//                                              MyJsonParser myJsonParser,
+//                                              FoodRepository foodRepository) {
+//        return new FoodLoadingAndEnterZenputV1Test(movePageService, myJsonParser, foodRepository);
+//    }
+
+
+        @Bean
+    public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
+                                                    MyJsonParser myJsonParser,
+                                                    MachineRepository machineRepository) {
+        return new MachineLoadingAndEnterZenputV1(movePageService,myJsonParser,machineRepository
+        );
     }
 
     //load food list from zenput page
     @Bean
-    public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService ) {
-        return new FoodLoadingAndEnterZenputV1(movePageService);
+    public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
+                                              MyJsonParser myJsonParser,
+                                              FoodRepository foodRepository) {
+        return new FoodLoadingAndEnterZenputV1(movePageService, myJsonParser, foodRepository);
     }
 
+
     @Bean
-    public MovePageService movePage() {
-        return new MovePageServiceV1();
+    public MovePageService movePage(ZenputAccountRepository zenputAccountRepository) {
+        return new MovePageServiceV1(zenputAccountRepository);
     }
     //for memory DB Test Setting
 //    @Bean
@@ -74,15 +97,13 @@ public class Config implements WebMvcConfigurer {
 
     //Save Data for the Saving data to DB
     @Bean
-    SaveData saveData(MachineLoadingAndEnterZenput machineLoadingAndEnterZenput,
+    SaveData saveData(
                       MachineRepository machineRepository,
-                      FoodLoadingAndEnterZenput foodLoadingAndEnterZenput,
                       FoodRepository foodRepository,
                       CustomFoodRepository customFoodRepository,
                       CustomMachineRepository customMachineRepository) {
-        return new SaveDataV1(machineLoadingAndEnterZenput,
+        return new SaveDataV1(
                 machineRepository,
-                foodLoadingAndEnterZenput,
                 foodRepository,
                 customFoodRepository,
                 customMachineRepository);
@@ -99,6 +120,12 @@ public class Config implements WebMvcConfigurer {
                 customMachineRepository,
                 foodRepository,
                 customFoodRepository, mgrListRepository);
+    }
+
+
+    @Bean
+    MyJsonParser myJsonParser() {
+        return new MyJsonParserV1();
     }
 
     @Bean

@@ -1,5 +1,7 @@
 package burgerput.project.zenput.web.manager.machine;
 
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.Services.printData.PrintData;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ import java.util.Map;
 public class EnterMachineController {
 
     private final PrintData printData;
-    private final MovePageService movePage;
+    private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
 
     @GetMapping("/back/enter/machines")
     @ResponseBody
@@ -41,7 +43,8 @@ public class EnterMachineController {
 
 
     @PostMapping("/back/enter/machines")
-    public void submitZenputMachine(@RequestBody ArrayList<Map> param) {
+    public void submitZenputMachine(@RequestBody String param) {
+        machineLoadingAndEnterZenput.sendValue(param);
 
     }
 

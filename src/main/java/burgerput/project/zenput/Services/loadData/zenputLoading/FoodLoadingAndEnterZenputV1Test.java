@@ -14,18 +14,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
-import static burgerput.project.zenput.Const.FOODURL;
+import static burgerput.project.zenput.Const.*;
 
 @Slf4j
 @RequiredArgsConstructor
 //@Service
-public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
+public class FoodLoadingAndEnterZenputV1Test implements FoodLoadingAndEnterZenput {
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final FoodRepository foodRepository;
@@ -37,8 +33,23 @@ public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
         System.setProperty("java.awt.headless", "false");
 
         try {
-            WebDriver driver = movePageService.clickAmFood();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
+
+            //==============================Scrape LOGIC START============================
+
+            //GO TO PAGE
+            driver.get(FOODURL);
+
+            //select elements
+            // ul> li > div.field_title + div> div> input
+            //field_title 이랑 input의 field_id 필요
+            //li class form-field 에서 text랑 input 필드 id값 가져오기
 
             //li class group
             List<WebElement> fields = driver.findElements(By.className("form-field"));
@@ -83,23 +94,27 @@ public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
         //selenium enter logic start ========================================
         System.setProperty("java.awt.headless", "false");
 
-        WebDriver driver = null;
-
         try {
-            JSONObject paramO = new JSONObject(param);
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
 
-            if (paramO.get("time").toString().equals("AM")) {
-                driver = movePageService.clickAmFood();
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
 
-            } else if(paramO.get("time").toString().equals("PM")){
-                driver = movePageService.clickPmFood();
+            //==============================Scrape LOGIC START============================
 
-            }
+            //GO TO PAGE
+            driver.get(FOODURL);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+
             // Enter the value
 
             // 1. Enter Manager Name
             //a. getManager info from json
+            JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
             log.info("manager name = {}", mgrName);

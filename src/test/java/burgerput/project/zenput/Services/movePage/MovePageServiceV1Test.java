@@ -1,11 +1,18 @@
 package burgerput.project.zenput.Services.movePage;
 
+import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+@DataJpaTest
 class MovePageServiceV1Test {
 
-    MovePageServiceV1 move = new MovePageServiceV1();
+    @Autowired
+    private ZenputAccountRepository zenputAccountRepository;
+
+    MovePageServiceV1 move = new MovePageServiceV1(zenputAccountRepository);
 
     @Test
     @DisplayName("goto List")
