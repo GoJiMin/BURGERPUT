@@ -14,12 +14,11 @@
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.5",
     "typeit-react": "^2.6.4",
     "web-vitals": "^2.1.0"
   },
-
   "proxy": "http://localhost:8080/",
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

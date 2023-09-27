@@ -39,20 +39,17 @@ export default function SelectManagers() {
           <ul className={styles.box}>
             {initialManagers &&
               initialManagers.map(({ id, mgrname }) => (
-                <div className={styles.card}>
-                  <li className={styles.card__name} key={id}>
-                    {mgrname}
-                  </li>
+                <li className={styles.card} key={id}>
+                  <span className={styles.card__name}>{mgrname}</span>
                   <button
                     onClick={() => {
                       handleDelete(id, mgrname);
-                      console.log("clicked");
                     }}
                     className={styles.cover}
                   >
                     <PiTrashBold />
                   </button>
-                </div>
+                </li>
               ))}
           </ul>
           <form className={styles.form} onSubmit={handleSubmit}>

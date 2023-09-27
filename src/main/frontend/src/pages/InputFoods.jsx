@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCustomFoods } from "../api/GetProducts";
 import InputProducts from "../components/InputProducts";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import styles from "./InputFoods.module.css";
 import { useCustomFoods } from "../hooks/useProducts";
 import Banner from "../components/Banner";
+import ManagerList from "../components/ManagerList";
 
 export default function InputFoods() {
+  const location = useLocation();
+  const [selectManager, setSelectManager] = useState("");
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -37,10 +38,15 @@ export default function InputFoods() {
     e.preventDefault();
     const hasEmptyTemp = products.some((product) => !product.temp);
 
-    if (hasEmptyTemp) {
+    if (hasEmptyTemp || selectManager.length === 0) {
       handleWarning();
       return;
     } else {
+      console.log({
+        mgrname: selectManager.label,
+        products,
+        time: location.state,
+      });
       setProductsTemp(products);
     }
   };
@@ -49,7 +55,17 @@ export default function InputFoods() {
     <>
       {products && (
         <section className={styles.section}>
-          <div className={styles.title}>식품 입력</div>
+          <div className={styles.title}>
+            <div className={styles.text}>식품 입력</div>
+            {data?.mgrList && (
+              <ManagerList
+                className={styles.mgrList}
+                mgrList={data.mgrList}
+                selectManager={selectManager}
+                setSelectManager={setSelectManager}
+              />
+            )}
+          </div>
           <form
             className={styles.form}
             id='inputMachine'

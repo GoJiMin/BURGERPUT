@@ -103,7 +103,7 @@ export default function Navbar({ setVisible, setHidden }) {
         )}
         {dropDown === "2" && (
           <section className={styles.navbar__depth2}>
-            <Link to='/zenput/machines'>
+            <Link to='/zenput/machines' state={"AM"}>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
@@ -111,7 +111,7 @@ export default function Navbar({ setVisible, setHidden }) {
                 오전 기기
               </button>
             </Link>
-            <Link to='/zenput/foods'>
+            <Link to='/zenput/foods' state={"AM"}>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
@@ -119,7 +119,7 @@ export default function Navbar({ setVisible, setHidden }) {
                 오전 식품
               </button>
             </Link>
-            <Link to='/zenput/machines'>
+            <Link to='/zenput/machines' state={"PM"}>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
@@ -127,8 +127,7 @@ export default function Navbar({ setVisible, setHidden }) {
                 오후 기기
               </button>
             </Link>
-            <Link to='/zenput/foods'>
-              {" "}
+            <Link to='/zenput/foods' state={"PM"}>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}

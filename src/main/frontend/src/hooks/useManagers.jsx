@@ -15,6 +15,8 @@ export function useManagers() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["managers"]);
+        queryClient.invalidateQueries(["customMachines"]);
+        queryClient.invalidateQueries(["customFoods"]);
       },
     }
   );
@@ -24,6 +26,8 @@ export function useManagers() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["managers"]);
+        queryClient.invalidateQueries(["customMachines"]);
+        queryClient.invalidateQueries(["customFoods"]);
       },
     }
   );

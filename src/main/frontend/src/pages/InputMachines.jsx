@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import InputProducts from "../components/InputProducts";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import styles from "./InputMachines.module.css";
 import { useCustomMachines } from "../hooks/useProducts";
 import Banner from "../components/Banner";
+import ManagerList from "../components/ManagerList";
 
 export default function InputMachines() {
+  const location = useLocation();
+  const [selectManager, setSelectManager] = useState("");
   const { handleHidden } = useOutletContext();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -40,6 +43,11 @@ export default function InputMachines() {
       handleWarning();
       return;
     } else {
+      console.log({
+        mgrname: selectManager.label,
+        products,
+        time: location.state,
+      });
       setProductsTemp(products);
     }
   };
@@ -49,7 +57,18 @@ export default function InputMachines() {
       {isLoading && <p>Loading...</p>}
       {products && (
         <section className={styles.section}>
-          <div className={styles.title}>기기 입력</div>
+          <div className={styles.title}>
+            <div className={styles.text}>기기 입력</div>
+            {data?.mgrList && (
+              <ManagerList
+                className={styles.mgrList}
+                mgrList={data.mgrList}
+                x
+                selectManager={selectManager}
+                setSelectManager={setSelectManager}
+              />
+            )}
+          </div>
 
           <form
             className={styles.form}
