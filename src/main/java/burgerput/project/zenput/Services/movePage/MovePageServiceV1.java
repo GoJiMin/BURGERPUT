@@ -220,7 +220,7 @@ public class MovePageServiceV1 implements MovePageService{
     }
 
     @Override
-    public WebDriver clikcAmMachine() {
+    public WebDriver clickAmMachine() {
         //BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC
 
         String pmFood="BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC";

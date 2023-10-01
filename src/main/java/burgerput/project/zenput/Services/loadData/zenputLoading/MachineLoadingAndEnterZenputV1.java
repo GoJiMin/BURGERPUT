@@ -38,7 +38,8 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
         System.setProperty("java.awt.headless", "false");
 
         try {
-            WebDriver driver = movePageService.clikcAmMachine();
+            //test를 위해 PM으롭 변경한다. 원래 AM임
+            WebDriver driver = movePageService.clickPmMachine();
 
             //==============================Scrape LOGIC START============================
             //li class group
@@ -88,7 +89,7 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
             JSONObject paramO = new JSONObject(param);
 
             if (paramO.get("time").toString().equals("AM")) {
-                driver = movePageService.clikcAmMachine();
+                driver = movePageService.clickAmMachine();
 
             } else if(paramO.get("time").toString().equals("PM")){
                 driver = movePageService.clickPmMachine();

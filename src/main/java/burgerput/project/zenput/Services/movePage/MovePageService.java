@@ -12,7 +12,7 @@ public interface MovePageService {
 
     public WebDriver clickPmFood();
 
-    public WebDriver clikcAmMachine();
+    public WebDriver clickAmMachine();
 
     public WebDriver clickPmMachine();
 

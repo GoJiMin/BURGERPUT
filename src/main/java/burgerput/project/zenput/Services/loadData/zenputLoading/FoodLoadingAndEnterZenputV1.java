@@ -37,7 +37,8 @@ public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
         System.setProperty("java.awt.headless", "false");
 
         try {
-            WebDriver driver = movePageService.clickAmFood();
+            //test를 위해 pm으로 변경한다.
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //li class group
