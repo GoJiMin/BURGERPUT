@@ -107,7 +107,11 @@ task installReact(type: Exec) {
         commandLine 'yarn.cmd', 'install'
     } else {
         commandLine "yarn", "audit", "fix"
-        commandLine 'yarn', 'install'
+        commandLine 'yarn', 'install' +
+                '' +
+                '' +
+                '' +
+                ''
     }
 }
 
@@ -119,10 +123,10 @@ task buildReact(type: Exec) {
 
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
 //		commandLine "yarn.cmd", "audit", "fix" // added
-        commandLine "yarn.cmd", "run-script", "build"
+        commandLine "yarn.cmd", "run", "build"
     } else {
 //		commandLine "yarn.cmd", "audit", "fix" //added
-        commandLine "yarn", "run-script", "build"
+        commandLine "yarn", "run", "build"
     }
 }
 
