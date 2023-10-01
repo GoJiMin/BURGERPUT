@@ -14,18 +14,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
-import static burgerput.project.zenput.Const.MACHINEURL;
+import static burgerput.project.zenput.Const.*;
 
 @Slf4j
 @RequiredArgsConstructor
 //Service
-public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZenput {
+public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnterZenput {
+
+    //Using saved html file data
+
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final MachineRepository machineRepository;
@@ -38,10 +37,24 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
         System.setProperty("java.awt.headless", "false");
 
         try {
-            //test를 위해 PM으롭 변경한다. 원래 AM임
-            WebDriver driver = movePageService.clickPmMachine();
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
+
 
             //==============================Scrape LOGIC START============================
+            //GO TO PAGE
+            driver.get(MACHINEURL);
+
+            //select elements
+            // ul> li > div.field_title + div> div> input
+            //field_title 이랑 input의 field_id 필요
+            //li class form-field 에서 text랑 input 필드 id값 가져오기
+
             //li class group
             List<WebElement> fields = driver.findElements(By.className("form-field"));
 
@@ -83,23 +96,27 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
         //selenium enter logic start ========================================
         System.setProperty("java.awt.headless", "false");
 
-        WebDriver driver = null;
-
         try {
-            JSONObject paramO = new JSONObject(param);
+            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
 
-            if (paramO.get("time").toString().equals("AM")) {
-                driver = movePageService.clickAmMachine();
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
 
-            } else if(paramO.get("time").toString().equals("PM")){
-                driver = movePageService.clickPmMachine();
+            //==============================Scrape LOGIC START============================
 
-            }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            //GO TO PAGE
+            driver.get(MACHINEURL);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+
             // Enter the value
 
             // 1. Enter Manager Name
             //a. getManager info from json
+            JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
             log.info("manager name = {}", mgrName);
@@ -168,10 +185,10 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
 
             String id = input.getAttribute("field_id");
 
-            //탐침 표면온도계의 경우 없을때 999를 두 번 입력해야됨 id로 한번 wfd-id로 한 번
             for (Map<String, String> customMap : machineMap) {
                 try {
                     if (id.equals(customMap.get("id"))) {
+
                         input.sendKeys(customMap.get("temp"));
                         Thread.sleep(500);
                         customMap.remove(id);

@@ -8,13 +8,13 @@ public interface MovePageService {
 
     public WebDriver gotoListWithLogin();
 
-    public void clickAmFood();
+    public WebDriver clickAmFood();
 
-    public void clickPmFood();
+    public WebDriver clickPmFood();
 
-    public void clikcAmMachine();
+    public WebDriver clickAmMachine();
 
-    public void clickPmMachine();
+    public WebDriver clickPmMachine();
 
     public WebDriver sampleFood();
 

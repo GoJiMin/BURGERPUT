@@ -1,9 +1,11 @@
 package burgerput.project.zenput.web.manager.food;
 
+import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
 import burgerput.project.zenput.Services.printData.PrintData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.openqa.selenium.json.Json;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import java.util.Map;
 @RestController
 public class EnterFoodController {
 
+    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final PrintData printData;
 
 
@@ -40,8 +43,8 @@ public class EnterFoodController {
     }
 
     @PostMapping("/back/enter/foods")
-    public void submitZenputFood(@RequestBody ArrayList<Map> param) {
-
-
+    public void submitZenputFood(@RequestBody String param) {
+        log.info("param = {}", param);
+        foodLoadingAndEnterZenput.sendValue(param);
     }
 }

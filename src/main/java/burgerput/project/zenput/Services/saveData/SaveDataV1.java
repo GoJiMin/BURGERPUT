@@ -20,9 +20,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class SaveDataV1 implements SaveData {
-    private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
     private final MachineRepository machineRepository;
-    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final FoodRepository foodRepository;
     private final CustomFoodRepository customFoodRepository;
     private final CustomMachineRepository customMachineRepository;

@@ -1,5 +1,8 @@
 package burgerput.project.zenput.Services.movePage;
 
+import burgerput.project.zenput.domain.Accounts;
+import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,13 +15,29 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static burgerput.project.zenput.Const.*;
 
 @Slf4j
+@RequiredArgsConstructor
 public class MovePageServiceV1 implements MovePageService{
+
+    private final ZenputAccountRepository zenputAccountRepository;
+
+    private static String ZENPUTID;
+    private static String RBIID;
+    private static String RBIPW;
+    private void zenputAccountSetting() {
+
+        Accounts accounts = zenputAccountRepository.findAll().stream().findFirst().get();
+        ZENPUTID = accounts.getZenputId();
+        RBIID = accounts.getRbiId();
+        RBIPW = accounts.getRbiPw();
+
+    }
 
     @Override
     public WebDriver sampleMachine() {
@@ -96,8 +115,14 @@ public class MovePageServiceV1 implements MovePageService{
 
     }
     //페이지 로그인 까지 하는 것
+
+
     @Override
      public WebDriver gotoListWithLogin() {
+
+        //zenputAccoutns setup
+        zenputAccountSetting();
+
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -107,7 +132,7 @@ public class MovePageServiceV1 implements MovePageService{
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});;
             WebDriver driver = new ChromeDriver(options);
-
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //==============================Scrape LOGIC START============================
 
@@ -129,7 +154,7 @@ public class MovePageServiceV1 implements MovePageService{
                     WebElement loginSignupFields = driver.findElement(By.className("login_signup_fields"));
                     WebElement input = loginSignupFields.findElement(By.tagName("input"));
                     //zenput 회사 이메일 필요
-                    input.sendKeys("rgm21490@rest.whopper.com");
+                    input.sendKeys(ZENPUTID);
                     if (input.getAttribute("value").equals("")) {
 
                     } else{
@@ -153,11 +178,11 @@ public class MovePageServiceV1 implements MovePageService{
             Thread.sleep(5000);
 
             WebElement oktaLogin = driver.findElement(By.id("okta-signin-username"));
-            oktaLogin.sendKeys("다이강000001");
+            oktaLogin.sendKeys(RBIID);
             Thread.sleep(500); //0.5초 대기
             //rbi password
             WebElement oktaPassword = driver.findElement(By.id("okta-signin-password"));
-            oktaPassword.sendKeys("Axjalsjf123456");
+            oktaPassword.sendKeys(RBIPW);
 
             //sign-in button
             WebElement oktaButton = driver.findElement(By.id("okta-signin-submit"));
@@ -177,37 +202,45 @@ public class MovePageServiceV1 implements MovePageService{
     }
 
     @Override
-    public void clickAmFood() {
+    public WebDriver clickAmFood() {
        // BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC
         String pmFood="BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC";
-        getListClick(pmFood);
+        WebDriver driver = getListClick(pmFood);
+
+        return driver;
     }
 
     @Override
-    public void clickPmFood() {
+    public WebDriver clickPmFood() {
 //오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC,
         String pmFood="BK - 오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC";
-        getListClick(pmFood);
+        WebDriver driver = getListClick(pmFood);
+
+        return driver;
     }
 
     @Override
-    public void clikcAmMachine() {
+    public WebDriver clickAmMachine() {
         //BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC
 
         String pmFood="BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC";
-        getListClick(pmFood);
+        WebDriver driver = getListClick(pmFood);
+
+        return driver;
     }
 
 
     @Override
-    public void clickPmMachine() {
+    public WebDriver clickPmMachine() {
         //오후 PM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (PM) - KO_APAC
         String pmMachine = "BK - 오후 PM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (PM) - KO_APAC";
-        getListClick(pmMachine);
+        WebDriver driver = getListClick(pmMachine);
+
+        return driver;
 
     }
 
-    private void getListClick(String listText) {
+    private WebDriver getListClick(String listText) {
         WebDriver driver = gotoListWithLogin();
         List<WebElement> listTitles = driver.findElements(By.className("taskitem_title"));
 
@@ -220,8 +253,10 @@ public class MovePageServiceV1 implements MovePageService{
                 //양식으로 이동
                 WebElement submitForm = driver.findElement(By.id("submit_form"));
                 submitForm.click();
-                break;
+                return driver;
             }
         }
+
+        return driver;
     }
 }
