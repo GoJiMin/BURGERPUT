@@ -103,11 +103,11 @@ task installReact(type: Exec) {
     group = BasePlugin.BUILD_GROUP
 
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "audit", "fix"
-        commandLine 'npm.cmd', 'install'
+        commandLine "yarn.cmd", "audit", "fix"
+        commandLine 'yarn.cmd', 'install'
     } else {
-        commandLine "npm", "audit", "fix"
-        commandLine 'npm', 'install'
+        commandLine "yarn", "audit", "fix"
+        commandLine 'yarn', 'install'
     }
 }
 
@@ -118,11 +118,11 @@ task buildReact(type: Exec) {
     group = BasePlugin.BUILD_GROUP
 
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-//		commandLine "npm.cmd", "audit", "fix" // added
-        commandLine "npm.cmd", "run-script", "build"
+//		commandLine "yarn.cmd", "audit", "fix" // added
+        commandLine "yarn.cmd", "run-script", "build"
     } else {
-//		commandLine "npm.cmd", "audit", "fix" //added
-        commandLine "npm", "run-script", "build"
+//		commandLine "yarn.cmd", "audit", "fix" //added
+        commandLine "yarn", "run-script", "build"
     }
 }
 
@@ -135,15 +135,5 @@ task copyReactBuildFiles(type: Copy) {
 tasks.bootJar {
     dependsOn "copyReactBuildFiles"
 }
-
-//node {
-//	version = '17.6.0'
-//	npmVersion = '8.5.1'
-//	download = true
-//	nodeProjectDir = file('${projectDir}/src/main/resources/static')
-//}
-/**
- * npm install start
- */
 
 
