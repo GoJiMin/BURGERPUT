@@ -19,7 +19,7 @@ export default function InputProducts({
         setTimeout(() => {
           setWarning(false);
           setTemp("");
-        }, 1500);
+        }, 2300);
       }
     }, 2000);
   };
