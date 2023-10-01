@@ -56,7 +56,12 @@ export function useCustomMachines() {
     cacheTime: Infinity,
   });
 
-  const setProductsTemp = (products) => submitMachines(products);
+  const setProductsTemp = ({ selectManager, products, location }) =>
+    submitMachines({
+      mgrname: selectManager.label,
+      products,
+      time: location.state,
+    });
 
   return { productsQuery, setProductsTemp };
 }
@@ -67,7 +72,12 @@ export function useCustomFoods() {
     cacheTime: Infinity,
   });
 
-  const setProductsTemp = (products) => submitFoods(products);
+  const setProductsTemp = ({ selectManager, products, location }) =>
+    submitFoods({
+      mgrname: selectManager.label,
+      products,
+      time: location.state,
+    });
 
   return { productsQuery, setProductsTemp };
 }

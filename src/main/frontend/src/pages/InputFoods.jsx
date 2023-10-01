@@ -42,12 +42,7 @@ export default function InputFoods() {
       handleWarning();
       return;
     } else {
-      console.log({
-        mgrname: selectManager.label,
-        products,
-        time: location.state,
-      });
-      setProductsTemp(products);
+      setProductsTemp(selectManager, products, location);
     }
   };
 
