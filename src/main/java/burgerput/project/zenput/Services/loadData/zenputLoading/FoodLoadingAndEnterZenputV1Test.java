@@ -22,6 +22,8 @@ import static burgerput.project.zenput.Const.*;
 @RequiredArgsConstructor
 //@Service
 public class FoodLoadingAndEnterZenputV1Test implements FoodLoadingAndEnterZenput {
+    //Using saved html file data
+
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final FoodRepository foodRepository;

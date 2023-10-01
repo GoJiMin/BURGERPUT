@@ -167,10 +167,10 @@ public class MachineLoadingAndEnterZenputV1 implements MachineLoadingAndEnterZen
 
             String id = input.getAttribute("field_id");
 
+            //탐침 표면온도계의 경우 없을때 999를 두 번 입력해야됨 id로 한번 wfd-id로 한 번
             for (Map<String, String> customMap : machineMap) {
                 try {
                     if (id.equals(customMap.get("id"))) {
-
                         input.sendKeys(customMap.get("temp"));
                         Thread.sleep(500);
                         customMap.remove(id);

@@ -72,7 +72,7 @@ public class Config implements WebMvcConfigurer {
     public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
                                                     MyJsonParser myJsonParser,
                                                     MachineRepository machineRepository) {
-        return new MachineLoadingAndEnterZenputV1(movePageService,myJsonParser,machineRepository
+        return new MachineLoadingAndEnterZenputV1Test(movePageService,myJsonParser,machineRepository
         );
     }
 
@@ -81,9 +81,8 @@ public class Config implements WebMvcConfigurer {
     public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
                                               MyJsonParser myJsonParser,
                                               FoodRepository foodRepository) {
-        return new FoodLoadingAndEnterZenputV1(movePageService, myJsonParser, foodRepository);
+        return new FoodLoadingAndEnterZenputV1Test(movePageService, myJsonParser, foodRepository);
     }
-
 
     @Bean
     public MovePageService movePage(ZenputAccountRepository zenputAccountRepository) {
