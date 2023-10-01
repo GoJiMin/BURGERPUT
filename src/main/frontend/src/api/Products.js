@@ -13,7 +13,6 @@ export async function getMachines() {
   return await axios
     .get("/back/select/machines")
     .then((res) => res.data)
-    .finally(console.log("데이터를 받아왔음"))
     .catch((error) => console.log(error));
 }
 

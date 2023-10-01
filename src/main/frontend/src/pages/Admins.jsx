@@ -3,6 +3,8 @@ import styles from "./Admins.module.css";
 import { useForm } from "react-hook-form";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { useAccounts } from "../hooks/useManagers";
+import Banner from "../components/Banner";
 
 export default function Admins() {
   const {
@@ -10,14 +12,20 @@ export default function Admins() {
     handleSubmit,
     formState: { isSubmitting, isSubmitted, errors },
   } = useForm({ mode: "onChange" });
+
+  const {
+    accountsQuery: { isLoading, error, data: accounts },
+    submit,
+  } = useAccounts();
+
   const [hide, setHide] = useState(true);
+  const [success, setSuccess] = useState();
   const { handleHidden } = useOutletContext();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
     navigate("/");
   };
-  console.log("re-render");
 
   return (
     <section className={styles.section}>
@@ -29,16 +37,28 @@ export default function Admins() {
         className={styles.form}
         onSubmit={handleSubmit(async (data) => {
           await new Promise((r) => setTimeout(r, 1000));
-          alert(JSON.stringify(data));
+          submit.mutate(
+            { data },
+            {
+              onSuccess: () => {
+                setSuccess(true);
+                setTimeout(() => {
+                  setSuccess(null);
+                }, 4000);
+              },
+            }
+          );
         })}
       >
         <div className={styles.inputBox}>
+          {success && <Banner text={"계정 저장이 완료되었습니다."} />}
           <label className={styles.label} htmlFor='email'>
             젠풋 이메일
           </label>
           <div className={styles.wrapper}>
             <input
               className={styles.input}
+              defaultValue={accounts ? accounts.zenputId : null}
               id='email'
               type='email'
               placeholder='example@email.com'
@@ -69,16 +89,13 @@ export default function Admins() {
           <div className={styles.wrapper}>
             <input
               className={styles.input}
+              defaultValue={accounts ? accounts.rbiId : null}
               id='id'
               type='id'
               placeholder='your ID'
               autoComplete='off'
               {...register("id", {
                 required: "아이디는 필수 입력 사항입니다.",
-                pattern: {
-                  value: /^[a-zA-z0-9]{4,12}$/,
-                  message: "아이디 형식에 맞지 않습니다.",
-                },
               })}
             />
             {errors.id && (
@@ -96,6 +113,7 @@ export default function Admins() {
           <div className={styles.wrapper}>
             <input
               className={styles.input}
+              defaultValue={accounts ? accounts.rbiPw : null}
               id='password'
               type={hide ? `password` : "text"}
               placeholder='********'
@@ -110,13 +128,15 @@ export default function Admins() {
             />
             {hide ? (
               <button
+                type='button'
                 className={styles.toggleButton}
-                onClick={() => setHide(false)}
+                onClick={(e) => setHide(false)}
               >
                 <AiOutlineEye />
               </button>
             ) : (
               <button
+                type='button'
                 className={styles.toggleButton}
                 onClick={() => setHide(true)}
               >

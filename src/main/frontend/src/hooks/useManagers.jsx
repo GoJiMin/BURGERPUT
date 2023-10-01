@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { getManagerList, addManager, deleteManger } from "../api/Managers";
+import {
+  getManagerList,
+  addManager,
+  deleteManger,
+  getAccounts,
+  submitAccounts,
+} from "../api/Managers";
 
 export function useManagers() {
   const queryClient = useQueryClient();
@@ -47,4 +53,29 @@ export function useManagers() {
   };
 
   return { managersQuery, manager, handleChange, handleSubmit, handleDelete };
+}
+
+export function useAccounts() {
+  const queryClient = useQueryClient();
+
+  const accountsQuery = useQuery(["accounts"], () => getAccounts(), {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const submit = useMutation(
+    ({ data }) =>
+      submitAccounts({
+        zenputId: data.email,
+        rbiId: data.id,
+        rbiPw: data.password,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["accounts"]);
+      },
+    }
+  );
+
+  return { accountsQuery, submit };
 }

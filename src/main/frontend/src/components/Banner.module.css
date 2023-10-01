@@ -24,4 +24,5 @@
   font-weight: bold;
   animation: fadein 0.7s ease;
   opacity: 0.8;
+  z-index: 999;
 }
