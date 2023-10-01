@@ -214,6 +214,7 @@ public class MovePageServiceV1 implements MovePageService{
     public WebDriver clickPmFood() {
 //오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC,
         String pmFood="BK - 오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC";
+        log.info("why? ={}", pmFood);
         WebDriver driver = getListClick(pmFood);
 
         return driver;
@@ -249,6 +250,7 @@ public class MovePageServiceV1 implements MovePageService{
             log.info(listName);
 
             if (listText.equals(listName)) {
+                log.info("CLICKED CONTENTS = {}", listName);
                 listTitle.click();
                 //양식으로 이동
                 WebElement submitForm = driver.findElement(By.id("submit_form"));

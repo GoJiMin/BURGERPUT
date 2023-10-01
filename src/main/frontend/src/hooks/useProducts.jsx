@@ -58,9 +58,9 @@ export function useCustomMachines() {
 
   const setProductsTemp = ({ selectManager, products, location }) =>
     submitMachines({
-      mgrname: selectManager.label,
-      products,
-      time: location.state,
+      mgrname: selectManager?.label,
+      customMachine: products,
+      time: location?.state,
     });
 
   return { productsQuery, setProductsTemp };
@@ -73,11 +73,11 @@ export function useCustomFoods() {
   });
 
   const setProductsTemp = ({ selectManager, products, location }) =>
-    submitFoods({
-      mgrname: selectManager.label,
-      products,
-      time: location.state,
-    });
+      submitFoods({
+        mgrname: selectManager?.label,
+        customFood: products,
+        time: location?.state,
+      });
 
   return { productsQuery, setProductsTemp };
 }

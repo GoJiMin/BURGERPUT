@@ -44,6 +44,7 @@ public class EnterMachineController {
 
     @PostMapping("/back/enter/machines")
     public void submitZenputMachine(@RequestBody String param) {
+        log.info("Machine Param ={}", param);
         machineLoadingAndEnterZenput.sendValue(param);
 
     }

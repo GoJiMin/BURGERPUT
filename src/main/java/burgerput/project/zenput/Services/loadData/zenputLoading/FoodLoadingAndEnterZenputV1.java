@@ -86,6 +86,7 @@ public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
 
         WebDriver driver = null;
 
+        log.info("param ={}", param);
         try {
             JSONObject paramO = new JSONObject(param);
 

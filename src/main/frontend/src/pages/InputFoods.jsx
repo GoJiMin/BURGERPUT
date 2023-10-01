@@ -42,7 +42,7 @@ export default function InputFoods() {
       handleWarning();
       return;
     } else {
-      setProductsTemp(selectManager, products, location);
+      setProductsTemp({selectManager, products, location});
     }
   };
 
