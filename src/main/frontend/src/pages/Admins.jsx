@@ -3,8 +3,8 @@ import styles from "./Admins.module.css";
 import { useForm } from "react-hook-form";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { useAccounts } from "../hooks/useManagers";
-import Banner from "../components/Banner";
+import Banner from "./../components/Banner";
+import { useAccounts } from "./../hooks/useManagers";
 
 export default function Admins() {
   const {

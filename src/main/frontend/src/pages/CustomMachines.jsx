@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import CustomProducts from "../components/CustomProducts";
+import CustomProducts from "./../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
-import { useMachines } from "../hooks/useProducts";
-import Banner from "../components/Banner";
+import { useMachines } from "./../hooks/useProducts";
+import Banner from "./../components/Banner";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();

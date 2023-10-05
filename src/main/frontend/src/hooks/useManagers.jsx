@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import {
-  getManagerList,
   addManager,
   deleteManger,
   getAccounts,
+  getManagerList,
   submitAccounts,
 } from "../api/Managers";
 

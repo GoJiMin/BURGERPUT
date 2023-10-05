@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import InputProducts from "../components/InputProducts";
+import InputProducts from "./../components/InputProducts";
 import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import styles from "./InputFoods.module.css";
-import { useCustomFoods } from "../hooks/useProducts";
-import Banner from "../components/Banner";
-import ManagerList from "../components/ManagerList";
+import { useCustomFoods } from "./../hooks/useProducts";
+import Banner from "./../components/Banner";
+import ManagerList from "./../components/ManagerList";
 
 export default function InputFoods() {
   const location = useLocation();
@@ -42,7 +42,7 @@ export default function InputFoods() {
       handleWarning();
       return;
     } else {
-      setProductsTemp({selectManager, products, location});
+      setProductsTemp({ selectManager, products, location });
     }
   };
 

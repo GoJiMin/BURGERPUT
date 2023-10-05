@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import InputProducts from "../components/InputProducts";
+import InputProducts from "./../components/InputProducts";
 import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import styles from "./InputMachines.module.css";
-import { useCustomMachines } from "../hooks/useProducts";
-import Banner from "../components/Banner";
-import ManagerList from "../components/ManagerList";
+import { useCustomMachines } from "./../hooks/useProducts";
+import Banner from "./../components/Banner";
+import ManagerList from "./../components/ManagerList";
 
 export default function InputMachines() {
   const location = useLocation();
