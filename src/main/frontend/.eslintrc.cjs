@@ -7,14 +7,13 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "plugin:jsx-ally/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parserOptions: { ecmaVersion: "latest", sourceType: "module" },
   settings: { react: { version: "18.2" } },
-  plugins: ["react-refresh", "react-hooks", "jsx-ally"],
+  plugins: ["react-refresh", "react-hooks"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",

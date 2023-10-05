@@ -1621,13 +1621,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-ally@npm:^6.0.3":
-  version: 6.0.3
-  resolution: "eslint-plugin-jsx-ally@npm:6.0.3"
-  checksum: 04e48fc71957265eb851293b6571467001f8aa348ab7930192f93087d65023b26a524c9f92900327849bd69163e71e4a81794025d03a5ef42efac236c24390c5
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-react-hooks@npm:^4.6.0":
   version: 4.6.0
   resolution: "eslint-plugin-react-hooks@npm:4.6.0"
@@ -1912,7 +1905,6 @@ __metadata:
     eslint: ^8.45.0
     eslint-config-airbnb: ^19.0.4
     eslint-plugin-import: ^2.28.1
-    eslint-plugin-jsx-ally: ^6.0.3
     eslint-plugin-react: ^7.32.2
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-react-refresh: ^0.4.3
