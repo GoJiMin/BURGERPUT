@@ -25,7 +25,7 @@ import static burgerput.project.zenput.Const.BURGERPUTSITE;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/loading")
+@RequestMapping("loading")
 public class LoadingController {
     private final SaveData saveData;
     private final AlertLoading alertLoading;
@@ -40,43 +40,43 @@ public class LoadingController {
 
         //Start Loading Logic
         //loading zenput Page's Data first
-        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+//        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+//        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
         log.info("request URL ={}", request.getRequestURL());
-        log.info("loading Controller={}", LocalTime.now().toString());
+        log.info("loading Controller={}", LocalTime.now());
 
 
         //====================loading logic================================
-//        addMachine Logic=================================================
-        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+////        addMachine Logic=================================================
+//        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+////
+////        //del Machine logic
+//        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+////
+////        //editMachine logic=====================================
+//        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+////
 //
-//        //del Machine logic
-        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+//        //machine data를 로딩한 것으로 변경함
+////      saveData.machinezenputdatasave(machineInfo);
 //
-//        //editMachine logic=====================================
-        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+//        //====================Food logic start===========================
+//        ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
+//        ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
+//        ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
 //
-
-        //machine data를 로딩한 것으로 변경함
-//      saveData.machinezenputdatasave(machineInfo);
-
-        //====================Food logic start===========================
-        ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
-        ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
-        ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
-
-        ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
-
+//        ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
 //
-//=============save result To DB
-//apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
-        alertFoodInfoToDb(delFoodMap);
-        alertMachineInfoToDb(delMap);
-
-
-        saveData.machinezenputdatasave(machineInfo);
-        saveData.foodZenputDataSave(foodInfo);
+////
+////=============save result To DB
+////apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
+//        alertFoodInfoToDb(delFoodMap);
+//        alertMachineInfoToDb(delMap);
+//
+//
+//        saveData.machinezenputdatasave(machineInfo);
+//        saveData.foodZenputDataSave(foodInfo);
 
         response.sendRedirect(BURGERPUTSITE);
     }

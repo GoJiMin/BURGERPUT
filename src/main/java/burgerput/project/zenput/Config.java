@@ -45,8 +45,8 @@ public class Config implements WebMvcConfigurer {
         registry.addInterceptor(checkSessionInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/*.ico", "/error", "/loading", "/back/**", "/manifest.json", "/delCookie"
-                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/loading/*", "/*.json", "/data/*");
+                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
+                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
 
     }
 

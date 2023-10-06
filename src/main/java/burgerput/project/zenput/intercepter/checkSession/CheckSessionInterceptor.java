@@ -17,7 +17,7 @@ import static burgerput.project.zenput.Const.BURGERPUTSITE;
 @Slf4j
 @RequiredArgsConstructor
 public class CheckSessionInterceptor implements HandlerInterceptor {
-//post Aftercomplete - do nothing
+    //post Aftercomplete - do nothing
     private CreateSession session = new CreateSession();
 //    SaveData saveData;
 
@@ -26,13 +26,15 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("==========PreHandle Interceptor Start==========");
         log.info("[request URL ={}]", request.getRequestURL());
+        log.info("if getSession Start ******************");
         if (session.getSession(request) == null) {
 //                //if it's not have a sessions then create it -> iT MEANS visited first time in this website
-log.info("session null");
-                // log.info("[preHandle getSession Result ] ={}", session.getSession(request));
-                session.createSession(LocalDate.now(), response);
+            // log.info("[preHandle getSession Result ] ={}", session.getSession(request));
 
-                response.sendRedirect( BURGERPUTSITE+ "loading");
+            log.info("createSession START********************");
+            session.createSession(LocalDate.now(), response);
+
+            response.sendRedirect(BURGERPUTSITE + "loading");
 
 //                //페이지 로딩 화면으로 이동하면 될 듯?
 //                //loading페이지에서 로딩하도록 한다. 로딩이 다 완료되면 원래 페이지로 메인페이지로 이동
@@ -40,7 +42,7 @@ log.info("session null");
         } else {
             //check the date is same as today
             //it not same then delete the previous session and create new one and Data loading
-log.info("Not NULLLLLL");
+            log.info("Not NULLLLLL");
             checkDate((LocalDate) session.getSession(request), request, response);
         }
 
@@ -64,7 +66,7 @@ log.info("Not NULLLLLL");
         } else {
             //if it is not Today's info
             //Delete Cookies
-            session.expire(request,response);
+            session.expire(request, response);
             //create new Session Cookie
             session.createSession(LocalDate.now(), response);
             //loading페이지에서 로딩하도록 한다. 로딩이 다 완료되면 원래 페이지로 메인페이지로 이동

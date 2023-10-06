@@ -36,7 +36,7 @@ public class SelectMachineController {
         //[id, JSON(MAP)] 으로 리턴
         ArrayList<Map> machineList = printData.zenputMachine();
 
-        log.info("machineList ={}", machineList);
+//        log.info("machineList ={}", machineList);
 
         return machineList;
     }
