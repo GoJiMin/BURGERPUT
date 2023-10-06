@@ -3,7 +3,7 @@ import styles from "./SelectManagers.module.css";
 import { PiTrashBold } from "react-icons/pi";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { AiOutlineEnter } from "react-icons/ai";
-import { useManagers } from "../hooks/useManagers";
+import { useManagers } from "./../hooks/useManagers";
 
 export default function SelectManagers() {
   const { handleHidden } = useOutletContext();

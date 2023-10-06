@@ -1,12 +1,11 @@
 .section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+  height: 100%;
 }
 
 .wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,6 +13,7 @@
 
 .title {
   position: sticky;
+  flex: 0;
   width: 100%;
   z-index: 999;
   top: 0;

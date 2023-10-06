@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import CustomProducts from "../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
-import { useFoods } from "../hooks/useProducts";
-import Banner from "../components/Banner";
+import { useFoods } from "./../hooks/useProducts";
+import CustomProducts from "./../components/CustomProducts";
+import Banner from "./../components/Banner";
 
 export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
@@ -34,6 +34,8 @@ export default function CustomFoods() {
       }
     );
   };
+
+  console.log(foods);
 
   return (
     <>
