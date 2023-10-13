@@ -9,6 +9,8 @@ import {
   getCustomFoods,
   submitFoods,
 } from "../api/Products";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function useMachines() {
   const queryClient = useQueryClient();
@@ -50,11 +52,21 @@ export function useFoods() {
   return { productsQuery, addCustomFoods };
 }
 
-export function useCustomMachines() {
+export function useCustomMachines({ location, handleHidden }) {
+  const [selectManager, setSelectManager] = useState("");
+  const [products, setProducts] = useState([]);
+  const [warning, setWarning] = useState(false);
   const productsQuery = useQuery(["customMachines"], getCustomMachines, {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    handleHidden();
+    navigate("/");
+  };
 
   const setProductsTemp = ({ selectManager, products, location }) =>
     submitMachines({
@@ -63,7 +75,35 @@ export function useCustomMachines() {
       time: location?.state,
     });
 
-  return { productsQuery, setProductsTemp };
+  const handleWarning = () => {
+    setWarning(true);
+    setTimeout(() => {
+      setWarning(false);
+    }, 1500);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const hasEmptyTemp = products.some((product) => !product.temp);
+
+    if (hasEmptyTemp || selectManager.length === 0) {
+      handleWarning();
+      return;
+    } else {
+      setProductsTemp({ selectManager, products, location });
+    }
+  };
+
+  return {
+    handleClick,
+    selectManager,
+    setSelectManager,
+    productsQuery,
+    handleSubmit,
+    warning,
+    products,
+    setProducts,
+  };
 }
 
 export function useCustomFoods() {
@@ -73,11 +113,11 @@ export function useCustomFoods() {
   });
 
   const setProductsTemp = ({ selectManager, products, location }) =>
-      submitFoods({
-        mgrname: selectManager?.label,
-        customFood: products,
-        time: location?.state,
-      });
+    submitFoods({
+      mgrname: selectManager?.label,
+      customFood: products,
+      time: location?.state,
+    });
 
   return { productsQuery, setProductsTemp };
 }

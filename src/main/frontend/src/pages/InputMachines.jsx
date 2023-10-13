@@ -9,45 +9,22 @@ import Button from "../components/Button";
 
 export default function InputMachines() {
   const location = useLocation();
-  const [selectManager, setSelectManager] = useState("");
   const { handleHidden } = useOutletContext();
-  const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-  const [warning, setWarning] = useState(false);
 
   const {
     productsQuery: { isLoading, error, data },
-    setProductsTemp,
-  } = useCustomMachines();
+    handleSubmit,
+    warning,
+    products,
+    setProducts,
+    selectManager,
+    setSelectManager,
+    handleClick,
+  } = useCustomMachines({ location, handleHidden });
 
   useEffect(() => {
     setProducts(data?.customMachine);
   }, [data]);
-
-  const handleWarning = () => {
-    setWarning(true);
-    setTimeout(() => {
-      setWarning(false);
-    }, 1500);
-  };
-
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const hasEmptyTemp = products.some((product) => !product.temp);
-
-    if (hasEmptyTemp || selectManager.length === 0) {
-      handleWarning();
-      return;
-    } else {
-      setProductsTemp({ selectManager, products, location });
-      console.log(JSON.stringify(products));
-    }
-  };
 
   return (
     <>
