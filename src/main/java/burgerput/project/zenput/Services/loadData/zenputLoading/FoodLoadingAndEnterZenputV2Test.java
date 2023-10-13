@@ -45,7 +45,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         try {
 
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickAmFood();
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================
@@ -108,20 +108,9 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         System.setProperty("java.awt.headless", "false");
 
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-            //==============================Scrape LOGIC START============================
-
-            //GO TO PAGE
-            driver.get(FOODURL);
+            //test를 위해 pm으로 변경한다.
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
 
             // Enter the value
 
