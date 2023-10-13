@@ -44,6 +44,7 @@ export default function InputMachines() {
       return;
     } else {
       setProductsTemp({ selectManager, products, location });
+      console.log(JSON.stringify(products));
     }
   };
 

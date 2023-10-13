@@ -31,7 +31,7 @@ export default function InputProducts({
       setMissing((prev) => !prev);
       return;
     }
-    setTemp(999);
+    setTemp("999");
     setMissing((prev) => !prev);
   };
 
