@@ -14,15 +14,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import static burgerput.project.zenput.Const.*;
+import static burgerput.project.zenput.Const.DRIVERLOCATION;
+import static burgerput.project.zenput.Const.MACHINEURL;
 
 @Slf4j
 @RequiredArgsConstructor
 //Service
-public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnterZenput {
+public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnterZenput {
 
+//Optimize version!
     //Using saved html file data
 
     private final MovePageService movePageService;
@@ -50,17 +55,11 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
             //GO TO PAGE
             driver.get(MACHINEURL);
 
-            //select elements
-            // ul> li > div.field_title + div> div> input
-            //field_title 이랑 input의 field_id 필요
-            //li class form-field 에서 text랑 input 필드 id값 가져오기
-
             //li class group
-
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
 
 
-            if (section.isEmpty()) {
+            if (section.size() == 0) {
                 Machine machine = new Machine();
                 machine.setId(-1);
                 machine.setName("no");
@@ -70,15 +69,21 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
             } else {
 
                 for (WebElement fields : section) {
-
                     List<WebElement> elements = fields.findElements(By.className("form-field"));
+                    log.info("SECTION START");
 
                     for (WebElement field : elements) {
-                        Machine contents = extractIdTitle(field);
-                        if (contents.getName() == null) {
-                            //if map is empty then not save the data
+                        String id = field.getAttribute("id");
+
+                        if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
+//                        skip it
                         } else {
-                            result.put(contents.getId(), contents);
+                            Machine contents = extractIdTitle(field);
+                            if (contents.getName() == null) {
+                                //if map is empty then not save the data
+                            } else {
+                                result.put(contents.getId(), contents);
+                            }
                         }
                     }
                 }
@@ -92,7 +97,6 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
         }
         return result;
     }
-
 
     @Override
     public void sendValue(String param) {
@@ -135,10 +139,6 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
             textarea.sendKeys(mgrName);
             Thread.sleep(30);
 
-
-            //li class group
-            List<WebElement> fields = driver.findElements(By.className("form-field"));
-
             //dummyStore
             ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
             log.info("dummyStore result ={}", dummyStore);
@@ -154,13 +154,24 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
                     }
                 }
             }
-
             log.info("dummyMap final ={}", dummyStore);
-
+            //li class group
             //Enter customValueStart ===============================
-            for (WebElement field : fields) {
-                //extract vaild id list logic
-                enterValue(field, dummyStore);
+            List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
+
+            for (WebElement fields : section) {
+                List<WebElement> elements = fields.findElements(By.className("form-field"));
+
+                for (WebElement field : elements) {
+                    //extract vaild id list logic
+                    String id = field.getAttribute("id");
+                    if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
+
+                    }else{
+                        enterValue(field, dummyStore);
+                    }
+
+                }
             }
 
         } catch (Exception e) {
@@ -174,11 +185,51 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
 
         for (Machine machine : allMachine) {
             Map<String, String> tempMap = new LinkedHashMap<>();
-            tempMap.put("id", Integer.toString(machine.getId()));
-            tempMap.put("temp", "999");
-            tempMap.put("name", machine.getName());
 
-            result.add(tempMap);
+            if (machine.getId() == 2 | machine.getId() == 54 | machine.getId() == 56) {
+                tempMap.put("id", Integer.toString(machine.getId()));
+                tempMap.put("temp", "999");
+                tempMap.put("name", machine.getName());
+
+                result.add(tempMap);
+
+                switch (machine.getId()) {
+                    case 2:
+                        Map<String, String> tempMap2 = new LinkedHashMap<>();
+
+                        tempMap2.put("id", Integer.toString(3));
+                        tempMap2.put("temp", "999");
+                        tempMap2.put("name", machine.getName());
+                        result.add(tempMap2);
+
+                        break;
+
+                    case 54:
+                        Map<String, String> tempMap55 = new LinkedHashMap<>();
+                        tempMap55.put("id", Integer.toString(55));
+                        tempMap55.put("temp", "999");
+                        tempMap55.put("name", machine.getName());
+                        result.add(tempMap55);
+
+                        break;
+
+                    case 56:
+                        Map<String, String> tempMap57 = new LinkedHashMap<>();
+                        tempMap57.put("id", Integer.toString(57));
+                        tempMap57.put("temp", "999");
+                        tempMap57.put("name", machine.getName());
+                        result.add(tempMap57);
+
+                        break;
+                }
+            } else {
+                tempMap.put("id", Integer.toString(machine.getId()));
+                tempMap.put("temp", "999");
+                tempMap.put("name", machine.getName());
+
+                result.add(tempMap);
+            }
+
         }
         return result;
     }
@@ -186,24 +237,29 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
     private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap) {
 
         try {
+            String id1 = field.getAttribute("id");
+            log.info("help id ={}", id1);
+
             //extract vaild id field
             WebElement input = field.findElement(By.tagName("input"));
 
             String id = input.getAttribute("field_id");
 
-            for (Map<String, String> customMap : machineMap) {
+
+            for (int i = 0; i < machineMap.size(); i++) {
+                Map<String, String> customMap = machineMap.get(i);
                 try {
                     if (id.equals(customMap.get("id"))) {
-
                         input.sendKeys(customMap.get("temp"));
                         Thread.sleep(500);
-                        customMap.remove(id);
+                        machineMap.remove(i);
                         break;
                     }
                 } catch (NullPointerException e) {
                     //do nothing
                 }
             }
+
 
         } catch (Exception e) {
             log.info("Error LoadFood={}", e.toString());

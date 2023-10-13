@@ -9,10 +9,7 @@ import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,6 +19,7 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+//@CrossOrigin(origins="https://localhost:3000")
 public class SelectMachineController {
 
     private final PrintData printData;
@@ -36,7 +34,7 @@ public class SelectMachineController {
         //[id, JSON(MAP)] 으로 리턴
         ArrayList<Map> machineList = printData.zenputMachine();
 
-//        log.info("machineList ={}", machineList);
+        log.info("machineList ={}", machineList);
 
         return machineList;
     }
