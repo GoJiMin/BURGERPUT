@@ -13,18 +13,37 @@
 .container {
   display: flex;
   align-items: center;
-  border: 1px solid var(--navbar-background-color);
-  border-radius: 4px;
   height: 3rem;
 }
 
+.missing {
+  margin-top: 1.5rem;
+  margin-right: 0.7rem;
+  font-size: 0.9rem;
+  color: rgb(249, 117, 68);
+}
+
 .input {
-  border: none;
+  border: 1px solid var(--navbar-background-color);
+  border-radius: 4px;
+  height: 3rem;
   background-color: transparent;
   text-align: end;
-  width: 4rem;
+  width: 6rem;
   padding-right: 0.2rem;
   color: var(--navbar-background-color);
+  font-size: large;
+}
+
+.input__missing {
+  border: 1px solid rgb(249, 117, 68);
+  border-radius: 4px;
+  height: 3rem;
+  background-color: transparent;
+  text-align: end;
+  width: 6rem;
+  padding-right: 0.2rem;
+  color: rgb(249, 117, 68);
   font-size: large;
 }
 
@@ -39,6 +58,12 @@
 }
 
 .text__temp {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.text__temp__missing {
+  color: rgb(249, 117, 68);
   font-size: 1rem;
   margin-top: 0.5rem;
 }

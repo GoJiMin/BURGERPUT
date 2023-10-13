@@ -101,10 +101,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         System.setProperty("java.awt.headless", "false");
 
         try {
-            //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmMachine();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
 
             // Enter the value
 
@@ -113,7 +109,17 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            log.info("manager name = {}", mgrName);
+            String time = paramO.get("time").toString();
+            WebDriver driver = null;
+            if (time.equals("AM")) {
+                driver = movePageService.clickAmMachine();
+
+            } else if (time.equals("PM")) {
+                driver = movePageService.clickPmMachine();
+                log.info("ENTER PM Machine");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_1"));
 
@@ -222,7 +228,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
         try {
             String id1 = field.getAttribute("id");
-            log.info("help id ={}", id1);
 
             //extract vaild id field
             WebElement input = field.findElement(By.tagName("input"));
@@ -251,7 +256,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             log.info("Error LoadFood={}", e.toString());
         }
     }
-
 
     @Override
     public Machine extractIdTitle(WebElement field) {
