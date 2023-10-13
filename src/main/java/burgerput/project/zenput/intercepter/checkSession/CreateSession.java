@@ -56,10 +56,10 @@ public class CreateSession {
                 sessionStore.put(sessionID, date);
                 //쿠키 생성
             ResponseCookie cookie = ResponseCookie.from(MY_SESSION_COOKIE_NAME,sessionID)
-                    .secure(false)
+                    .secure(true)
                             .sameSite("None")
                                     .path("/")
-                                            .httpOnly(true)
+                                            .httpOnly(false)
                                                     .build();
 
             //응답에 쿠키 담아서 보냄

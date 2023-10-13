@@ -19,8 +19,13 @@ import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import burgerput.project.zenput.repository.mgrList.MgrListRepository;
 import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -34,45 +39,40 @@ public class Config implements WebMvcConfigurer {
 //        this.em = em;
 //    }
 
+    //SSL cross-origin set-up ======================
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        WebMvcConfigurer.super.addCorsMappings(registry);
+        registry.addMapping("/**")
+                .allowedOrigins("https://localhost:3000")
+                .allowedMethods("GET", "POST")
+                .allowedHeaders("*");
+    }
+
     //Interceptor Settions===========================================
     @Bean
     public CheckSessionInterceptor checkSessionInterceptor() {
         return new CheckSessionInterceptor();
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(checkSessionInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
-                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
-
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(checkSessionInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
+//                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
+//
+//    }
 
     // load machine list from zenput page
-//    @Bean
-//    public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
-//                                                    MyJsonParser myJsonParser,
-//                                                    MachineRepository machineRepository) {
-//        return new MachineLoadingAndEnterZenputV1Test(movePageService,myJsonParser,machineRepository
-//        );
-//    }
-//
-//    //load food list from zenput page
-//    @Bean
-//    public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
-//                                              MyJsonParser myJsonParser,
-//                                              FoodRepository foodRepository) {
-//        return new FoodLoadingAndEnterZenputV1Test(movePageService, myJsonParser, foodRepository);
-//    }
-
 
         @Bean
     public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
                                                     MyJsonParser myJsonParser,
                                                     MachineRepository machineRepository) {
-        return new MachineLoadingAndEnterZenputV1Test(movePageService,myJsonParser,machineRepository
+        return new MachineLoadingAndEnterZenputV2Test(movePageService,myJsonParser,machineRepository
         );
     }
 
@@ -81,7 +81,7 @@ public class Config implements WebMvcConfigurer {
     public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
                                               MyJsonParser myJsonParser,
                                               FoodRepository foodRepository) {
-        return new FoodLoadingAndEnterZenputV1Test(movePageService, myJsonParser, foodRepository);
+        return new FoodLoadingAndEnterZenputV2Test(movePageService, myJsonParser, foodRepository);
     }
 
     @Bean

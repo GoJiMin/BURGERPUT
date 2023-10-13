@@ -32,7 +32,8 @@ public class CheckSessionInterceptor implements HandlerInterceptor {
             // log.info("[preHandle getSession Result ] ={}", session.getSession(request));
 
             log.info("createSession START********************");
-            session.createSession(LocalDate.now(), response);
+            session.createSessionV2(LocalDate.now(), response);
+//            session.createSessionV2(LocalDate.now(), response);
 
             response.sendRedirect(BURGERPUTSITE + "loading");
 

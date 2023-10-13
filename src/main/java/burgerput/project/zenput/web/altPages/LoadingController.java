@@ -41,7 +41,7 @@ public class LoadingController {
         //Start Loading Logic
         //loading zenput Page's Data first
 //        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
-//        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
         log.info("request URL ={}", request.getRequestURL());
         log.info("loading Controller={}", LocalTime.now());
