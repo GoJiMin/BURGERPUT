@@ -5,6 +5,7 @@ import styles from "./InputMachines.module.css";
 import { useCustomMachines } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
 import ManagerList from "./../components/ManagerList";
+import Button from "../components/Button";
 
 export default function InputMachines() {
   const location = useLocation();
@@ -91,17 +92,13 @@ export default function InputMachines() {
             </div>
           </form>
           <div className={styles.buttons}>
-            <button
-              type='submit'
-              form='inputMachine'
-              className={styles.button1}
+            <Button
+              text={"저장"}
+              type={"submit"}
+              form={"inputMachine"}
               disabled={products.length === 0 ? true : false}
-            >
-              저장
-            </button>
-            <button className={styles.button} onClick={handleClick}>
-              취소
-            </button>
+            />
+            <Button text={"취소"} handleFunction={handleClick} />
           </div>
         </section>
       )}

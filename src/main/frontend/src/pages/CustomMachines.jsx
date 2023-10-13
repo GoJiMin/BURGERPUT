@@ -4,6 +4,7 @@ import CustomProducts from "./../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
 import { useMachines } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
+import Button from "../components/Button";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
@@ -62,16 +63,8 @@ export default function InputMachines() {
               </div>
             </form>
             <div className={styles.buttons}>
-              <button
-                type='submit'
-                form='customMachine'
-                className={styles.button1}
-              >
-                저장
-              </button>
-              <button className={styles.button} onClick={handleClick}>
-                취소
-              </button>
+              <Button text={"저장"} type={"submit"} form={"customMachine"} />
+              <Button text={"취소"} handleFunction={handleClick} />
             </div>
           </div>
         </section>
