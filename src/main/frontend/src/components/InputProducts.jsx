@@ -8,6 +8,7 @@ export default function InputProducts({
 }) {
   const [temp, setTemp] = useState("");
   const [warning, setWarning] = useState(false);
+  const [missing, setMissing] = useState(false);
   const handleChange = (e) => {
     setTemp(e.target.value);
     setTimeout(() => {
@@ -24,6 +25,16 @@ export default function InputProducts({
     }, 2000);
   };
 
+  const handleClick = () => {
+    if (missing) {
+      setTemp("");
+      setMissing((prev) => !prev);
+      return;
+    }
+    setTemp(999);
+    setMissing((prev) => !prev);
+  };
+
   useEffect(() => {
     product.temp = temp;
   }, [product, temp]);
@@ -38,13 +49,23 @@ export default function InputProducts({
 
       {warning && <Banner text={"지정된 온도 범위가 아닙니다."} />}
       <div className={styles.container}>
+        <button className={styles.missing} onClick={handleClick} type='button'>
+          결품
+        </button>
         <input
-          className={styles.input}
+          className={missing ? `${styles.input__missing}` : `${styles.input}`}
           type='text'
           value={temp}
+          disabled={missing}
           onChange={handleChange}
         />
-        <p className={styles.temp}>ºF</p>
+        <p
+          className={
+            missing ? `${styles.text__temp__missing}` : `${styles.text__temp}`
+          }
+        >
+          ºF
+        </p>
       </div>
     </div>
   );
