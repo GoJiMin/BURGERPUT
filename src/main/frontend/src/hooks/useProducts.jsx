@@ -23,6 +23,7 @@ export function useMachines() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["customMachines"]);
+        queryClient.invalidateQueries(["machines"]);
       },
     }
   );
@@ -43,6 +44,7 @@ export function useFoods() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["customFoods"]);
+        queryClient.invalidateQueries(["foods"]);
       },
     }
   );
@@ -73,11 +75,11 @@ export function useCustomFoods() {
   });
 
   const setProductsTemp = ({ selectManager, products, location }) =>
-      submitFoods({
-        mgrname: selectManager?.label,
-        customFood: products,
-        time: location?.state,
-      });
+    submitFoods({
+      mgrname: selectManager?.label,
+      customFood: products,
+      time: location?.state,
+    });
 
   return { productsQuery, setProductsTemp };
 }

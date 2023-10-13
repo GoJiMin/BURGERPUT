@@ -93,7 +93,7 @@ public class PrintDataV1 implements PrintData {
                 int idFood = food.getId();
 
                 if (idFood == idCustom) {
-                    foodMap.put("idChecked", "true'");
+                    foodMap.put("isChecked", "true");
                 }
             }
             result.add(foodMap);

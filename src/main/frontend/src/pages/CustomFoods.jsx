@@ -35,8 +35,6 @@ export default function CustomFoods() {
     );
   };
 
-  console.log(foods);
-
   return (
     <>
       {isLoading && <p>Loading...</p>}
@@ -55,7 +53,11 @@ export default function CustomFoods() {
                 {foods &&
                   foods.map((food) => (
                     <div key={food.id}>
-                      <CustomProducts value={food} setProducts={setProducts} />
+                      <CustomProducts
+                        value={food}
+                        setProducts={setProducts}
+                        checkedIt={food.isChecked === "true" ? true : false}
+                      />
                     </div>
                   ))}
               </div>
