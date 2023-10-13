@@ -32,13 +32,28 @@ public class PrintDataV1 implements PrintData {
         //Read Data from the DB(select * from machine;)
         List<Machine> machineList = machineRepository.findAll();
 
+        List<CustomMachine> customAll = customMachineRepository.findAll();
+
         for (Machine macihne : machineList) {
             Map<String, String> machineMap = new LinkedHashMap<>();
             machineMap.put("id", String.valueOf(macihne.getId()));
             machineMap.put("name", macihne.getName());
             machineMap.put("min", String.valueOf(macihne.getMin()));
             machineMap.put("max", String.valueOf(macihne.getMax()));
+            machineMap.put("isChecked", "false");
 
+            for (Iterator<CustomMachine> iterator = customAll.iterator(); iterator.hasNext();) {
+                int idCustom = iterator.next().getId();
+                int idMachine = macihne.getId();
+
+                log.info("idCusomt's id ={}   |  idMachine 's id ={}", idCustom, idMachine);
+                if (idMachine == idCustom) {
+
+                    machineMap.put("isChecked", "true");
+                    iterator.remove();
+
+                }
+            }
             result.add(machineMap);
         }
 
@@ -63,14 +78,24 @@ public class PrintDataV1 implements PrintData {
 
         //Read Data from the DB(select * from Food;)
         List<Food> foodList = foodRepository.findAll();
+        List<CustomFood> foodAll = customFoodRepository.findAll();
 
         for (Food food : foodList) {
-            Map<String,String> foodMap = new LinkedHashMap<>();
+            Map<String, String> foodMap = new LinkedHashMap<>();
             foodMap.put("id", String.valueOf(food.getId()));
             foodMap.put("name", food.getName());
             foodMap.put("min", String.valueOf(food.getMin()));
             foodMap.put("max", String.valueOf(food.getMax()));
+            foodMap.put("isChecked", "false'");
 
+            for (Iterator<CustomFood> iterator = foodAll.iterator(); iterator.hasNext();) {
+                int idCustom = iterator.next().getId();
+                int idFood = food.getId();
+
+                if (idFood == idCustom) {
+                    foodMap.put("idChecked", "true'");
+                }
+            }
             result.add(foodMap);
         }
 //

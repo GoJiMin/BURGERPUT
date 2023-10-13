@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -34,6 +35,8 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
     private final MyJsonParser myJsonParser;
     private final MachineRepository machineRepository;
 
+    //get info 는 무조건 AM 으로만 받아온다.
+    // Only am list
     @Override
     public Map<Integer, Machine> getInfo() {
 
@@ -42,18 +45,9 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         System.setProperty("java.awt.headless", "false");
 
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-
-            //==============================Scrape LOGIC START============================
-            //GO TO PAGE
-            driver.get(MACHINEURL);
+            //test를 위해 pm으로 변경한다.
+            WebDriver driver = movePageService.clickPmMachine();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //li class group
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
@@ -107,20 +101,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         System.setProperty("java.awt.headless", "false");
 
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-            //==============================Scrape LOGIC START============================
-
-            //GO TO PAGE
-            driver.get(MACHINEURL);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-
 
             // Enter the value
 
@@ -129,7 +109,17 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            log.info("manager name = {}", mgrName);
+            String time = paramO.get("time").toString();
+            WebDriver driver = null;
+            if (time.equals("AM")) {
+                driver = movePageService.clickAmMachine();
+
+            } else if (time.equals("PM")) {
+                driver = movePageService.clickPmMachine();
+                log.info("ENTER PM Machine");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_1"));
 
@@ -238,7 +228,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
         try {
             String id1 = field.getAttribute("id");
-            log.info("help id ={}", id1);
 
             //extract vaild id field
             WebElement input = field.findElement(By.tagName("input"));
@@ -250,7 +239,9 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                 Map<String, String> customMap = machineMap.get(i);
                 try {
                     if (id.equals(customMap.get("id"))) {
+
                         input.sendKeys(customMap.get("temp"));
+                        input.sendKeys(Keys.TAB);
                         Thread.sleep(500);
                         machineMap.remove(i);
                         break;
@@ -265,7 +256,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             log.info("Error LoadFood={}", e.toString());
         }
     }
-
 
     @Override
     public Machine extractIdTitle(WebElement field) {

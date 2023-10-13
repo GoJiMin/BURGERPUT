@@ -4,6 +4,7 @@ import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -45,7 +46,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         try {
 
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickAmFood();
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================
@@ -108,29 +109,24 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         System.setProperty("java.awt.headless", "false");
 
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-            //==============================Scrape LOGIC START============================
-
-            //GO TO PAGE
-            driver.get(FOODURL);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-
-            // Enter the value
 
             // 1. Enter Manager Name
             //a. getManager info from json
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            log.info("manager name = {}", mgrName);
+            String time = paramO.get("time").toString();
+            WebDriver driver = null;
+            if (time.equals("AM")) {
+                 driver = movePageService.clickAmFood();
+
+            } else if (time.equals("PM")) {
+                 driver = movePageService.clickPmFood();
+                 log.info("ENTER PM FOOD");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_18"));
             WebElement textarea = managerField.findElement(By.tagName("textarea"));
