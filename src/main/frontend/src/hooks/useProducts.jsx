@@ -52,28 +52,16 @@ export function useFoods() {
   return { productsQuery, addCustomFoods };
 }
 
-export function useCustomMachines({ location, handleHidden }) {
+export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
   const [selectManager, setSelectManager] = useState("");
   const [products, setProducts] = useState([]);
   const [warning, setWarning] = useState(false);
-  const productsQuery = useQuery(["customMachines"], getCustomMachines, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
-
   const navigate = useNavigate();
 
   const handleClick = () => {
     handleHidden();
     navigate("/");
   };
-
-  const setProductsTemp = ({ selectManager, products, location }) =>
-    submitMachines({
-      mgrname: selectManager?.label,
-      customMachine: products,
-      time: location?.state,
-    });
 
   const handleWarning = () => {
     setWarning(true);
@@ -98,12 +86,27 @@ export function useCustomMachines({ location, handleHidden }) {
     handleClick,
     selectManager,
     setSelectManager,
-    productsQuery,
     handleSubmit,
     warning,
     products,
     setProducts,
   };
+}
+
+export function useCustomMachines() {
+  const productsQuery = useQuery(["customMachines"], getCustomMachines, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const setProductsTemp = ({ selectManager, products, location }) =>
+    submitMachines({
+      mgrname: selectManager?.label,
+      customMachine: products,
+      time: location?.state,
+    });
+
+  return { productsQuery, setProductsTemp };
 }
 
 export function useCustomFoods() {

@@ -1,51 +1,34 @@
-import React, { useEffect, useState } from "react";
-import InputProducts from "./../components/InputProducts";
-import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
-import styles from "./InputFoods.module.css";
-import { useCustomFoods } from "./../hooks/useProducts";
+import React, { useEffect } from "react";
+import { useOutletContext, useLocation } from "react-router-dom";
+import { useCustomFoods, useCustomProducts } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
+import InputProducts from "./../components/InputProducts";
 import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
+import styles from "./InputFoods.module.css";
 
 export default function InputFoods() {
   const location = useLocation();
-  const [selectManager, setSelectManager] = useState("");
   const { handleHidden } = useOutletContext();
-  const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-  const [warning, setWarning] = useState(false);
 
   const {
     productsQuery: { isLoading, error, data },
     setProductsTemp,
   } = useCustomFoods();
 
+  const {
+    handleSubmit,
+    warning,
+    products,
+    setProducts,
+    selectManager,
+    setSelectManager,
+    handleClick,
+  } = useCustomProducts({ location, handleHidden, setProductsTemp });
+
   useEffect(() => {
     setProducts(data?.customFood);
   }, [data]);
-
-  const handleWarning = () => {
-    setWarning(true);
-    setTimeout(() => {
-      setWarning(false);
-    }, 1500);
-  };
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const hasEmptyTemp = products.some((product) => !product.temp);
-
-    if (hasEmptyTemp || selectManager.length === 0) {
-      handleWarning();
-      return;
-    } else {
-      setProductsTemp({ selectManager, products, location });
-    }
-  };
 
   return (
     <>

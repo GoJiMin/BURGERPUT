@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useOutletContext, useLocation } from "react-router-dom";
+import { useCustomMachines, useCustomProducts } from "./../hooks/useProducts";
 import InputProducts from "./../components/InputProducts";
-import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
-import styles from "./InputMachines.module.css";
-import { useCustomMachines } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
 import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
+import styles from "./InputMachines.module.css";
 
 export default function InputMachines() {
   const location = useLocation();
@@ -13,6 +13,10 @@ export default function InputMachines() {
 
   const {
     productsQuery: { isLoading, error, data },
+    setProductsTemp,
+  } = useCustomMachines();
+
+  const {
     handleSubmit,
     warning,
     products,
@@ -20,7 +24,7 @@ export default function InputMachines() {
     selectManager,
     setSelectManager,
     handleClick,
-  } = useCustomMachines({ location, handleHidden });
+  } = useCustomProducts({ location, handleHidden, setProductsTemp });
 
   useEffect(() => {
     setProducts(data?.customMachine);
