@@ -15,7 +15,7 @@ export default function CustomProducts({
   };
   const handleCheck = (isChecked) => {
     if (isChecked) {
-      setProducts((prev) => [...prev, { id }]);
+      setProducts((prev) => [...prev, { id, isChecked }]);
     } else {
       deleteProducts(id);
     }
