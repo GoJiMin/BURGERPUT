@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import styles from "./CustomMachines.module.css";
 import { useFoods } from "./../hooks/useProducts";
@@ -8,8 +8,7 @@ import Button from "../components/Button";
 
 export default function CustomFoods() {
   const { handleHidden } = useOutletContext();
-  const [success, setSuccess] = useState();
-  const [products, setProducts] = useState([]);
+
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
@@ -18,25 +17,10 @@ export default function CustomFoods() {
 
   const {
     productsQuery: { isLoading, error, data: foods },
-    addCustomFoods,
+    setProducts,
+    handleSubmit,
+    success,
   } = useFoods();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addCustomFoods.mutate(
-      { products },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-        },
-      }
-    );
-  };
-
-  console.log(foods);
 
   return (
     <>

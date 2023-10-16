@@ -8,8 +8,6 @@ import Button from "../components/Button";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
-  const [products, setProducts] = useState([]);
-  const [success, setSuccess] = useState();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
@@ -18,23 +16,10 @@ export default function InputMachines() {
 
   const {
     productsQuery: { isLoading, error, data: machines },
-    addCustomMachines,
+    handleSubmit,
+    setProducts,
+    success,
   } = useMachines();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addCustomMachines.mutate(
-      { products },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-        },
-      }
-    );
-  };
 
   return (
     <>

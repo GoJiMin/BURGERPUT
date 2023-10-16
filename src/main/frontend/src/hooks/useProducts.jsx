@@ -14,6 +14,8 @@ import { useState } from "react";
 
 export function useMachines() {
   const queryClient = useQueryClient();
+  const [products, setProducts] = useState([]);
+  const [success, setSuccess] = useState();
 
   const productsQuery = useQuery(["machines"], getMachines, {
     staleTime: Infinity,
@@ -29,10 +31,27 @@ export function useMachines() {
     }
   );
 
-  return { productsQuery, addCustomMachines };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCustomMachines.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
+  };
+
+  return { productsQuery, handleSubmit, success, setProducts };
 }
 
 export function useFoods() {
+  const [success, setSuccess] = useState();
+  const [products, setProducts] = useState([]);
   const queryClient = useQueryClient();
 
   const productsQuery = useQuery(["foods"], getFoods, {
@@ -49,7 +68,22 @@ export function useFoods() {
     }
   );
 
-  return { productsQuery, addCustomFoods };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCustomFoods.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
+  };
+
+  return { productsQuery, setProducts, success, handleSubmit };
 }
 
 export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
