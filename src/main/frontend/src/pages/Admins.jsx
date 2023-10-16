@@ -17,10 +17,12 @@ export default function Admins() {
   const {
     accountsQuery: { isLoading, error, data: accounts },
     submit,
+    hide,
+    setHide,
+    success,
+    setSuccess,
   } = useAccounts();
 
-  const [hide, setHide] = useState(true);
-  const [success, setSuccess] = useState();
   const { handleHidden } = useOutletContext();
   const navigate = useNavigate();
   const handleClick = () => {

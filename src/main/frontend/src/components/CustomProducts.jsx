@@ -6,7 +6,7 @@ export default function CustomProducts({
   value: { name, min, max, id },
   setProducts,
 }) {
-  const { checked, handleChange } = customProductsHook();
+  const { checked, handleChange } = customProductsHook({ setProducts, id });
 
   return (
     <div className={styles.product}>

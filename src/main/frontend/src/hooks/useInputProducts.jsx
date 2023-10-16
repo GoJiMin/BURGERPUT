@@ -31,5 +31,5 @@ export function useInputProducts() {
     setMissing((prev) => !prev);
   };
 
-  return { temp, warning, handleChange, handleClick };
+  return { temp, warning, handleChange, handleClick, missing };
 }

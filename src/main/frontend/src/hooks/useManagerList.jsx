@@ -1,4 +1,4 @@
-export function useManagerList(mgrList) {
+export function useManagerList({ mgrList, setSelectManager }) {
   const options = mgrList.map(({ id, mgrname }) => ({
     value: id,
     label: mgrname,

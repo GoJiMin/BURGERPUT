@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function customProductsHook() {
+export function customProductsHook({ setProducts, id }) {
   const [checked, setChecked] = useState(false);
   const handleChange = (e) => {
     setChecked((prev) => !prev);

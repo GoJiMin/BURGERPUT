@@ -8,7 +8,10 @@ export default function ManagerList({
   setSelectManager,
   selectManager,
 }) {
-  const { options, customStyles, handleChange } = useManagerList({ mgrList });
+  const { options, customStyles, handleChange } = useManagerList({
+    mgrList,
+    setSelectManager,
+  });
 
   useEffect(() => {
     setSelectManager(selectManager);

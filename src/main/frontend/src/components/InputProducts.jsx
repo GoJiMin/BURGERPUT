@@ -7,7 +7,8 @@ export default function InputProducts({
   product: { name, min, max },
   product,
 }) {
-  const { temp, warning, handleChange, handleClick } = useInputProducts();
+  const { temp, warning, handleChange, handleClick, missing } =
+    useInputProducts();
 
   useEffect(() => {
     product.temp = temp;
