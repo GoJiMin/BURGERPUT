@@ -7,7 +7,6 @@ export default function CustomProducts({
   setProducts,
   checkedIt,
 }) {
-  console.log(checkedIt);
   const { checked, handleChange } = customProductsHook({
     setProducts,
     id,
