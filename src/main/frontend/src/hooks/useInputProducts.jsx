@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { useDebounce } from "./useDebounce";
 
-export function useInputProducts() {
+export function useInputProducts({ min, max }) {
+  const inputContainer = useRef();
   const [temp, setTemp] = useState("");
   const [warning, setWarning] = useState(false);
   const [missing, setMissing] = useState(false);
 
   const handleChange = (e) => {
     setTemp(e.target.value);
-    setTimeout(() => {
-      if (
-        parseInt(e.target.value) > parseInt(max) ||
-        parseInt(e.target.value) < parseInt(min)
-      ) {
-        setWarning(true);
-        setTimeout(() => {
-          setWarning(false);
-          setTemp("");
-        }, 2300);
-      }
-    }, 2000);
+    setValue(e.target.value);
+  };
+
+  const setValue = useCallback(
+    useDebounce((value) => validateRange(value), 1300),
+    []
+  );
+
+  const validateRange = (value) => {
+    if (parseInt(value) > parseInt(max) || parseInt(value) < parseInt(min)) {
+      setWarning(true);
+      setTemp("");
+    } else {
+      setWarning(false);
+    }
   };
 
   const handleClick = () => {
@@ -31,5 +36,5 @@ export function useInputProducts() {
     setMissing((prev) => !prev);
   };
 
-  return { temp, warning, handleChange, handleClick, missing };
+  return { temp, warning, handleChange, handleClick, missing, inputContainer };
 }

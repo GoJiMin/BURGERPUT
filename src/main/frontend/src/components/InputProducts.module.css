@@ -1,3 +1,7 @@
+:root {
+  --color-missing: rgb(232, 71, 71);
+}
+
 .product {
   margin-bottom: 2rem;
   display: flex;
@@ -12,15 +16,28 @@
 
 .container {
   display: flex;
+  flex-direction: column;
+}
+
+.inputBox {
+  display: flex;
+  position: relative;
   align-items: center;
   height: 3rem;
+}
+
+.warning {
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+  margin-right: 0.5rem;
+  color: #eed202;
 }
 
 .missing {
   margin-top: 1.5rem;
   margin-right: 0.7rem;
   font-size: 0.9rem;
-  color: rgb(249, 117, 68);
+  color: var(--color-missing);
 }
 
 .input {
@@ -36,14 +53,14 @@
 }
 
 .input__missing {
-  border: 1px solid rgb(249, 117, 68);
+  border: 1px solid var(--color-missing);
   border-radius: 4px;
   height: 3rem;
   background-color: transparent;
   text-align: end;
   width: 6rem;
   padding-right: 0.2rem;
-  color: rgb(249, 117, 68);
+  color: var(--color-missing);
   font-size: large;
 }
 
@@ -63,7 +80,7 @@
 }
 
 .text__temp__missing {
-  color: rgb(249, 117, 68);
+  color: var(--color-missing);
   font-size: 1rem;
   margin-top: 0.5rem;
 }

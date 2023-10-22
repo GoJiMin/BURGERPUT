@@ -88,6 +88,7 @@ export function useFoods() {
 
 export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
   const [selectManager, setSelectManager] = useState("");
+  const [emptyProducts, setEmptyProducts] = useState(null);
   const [products, setProducts] = useState([]);
   const [warning, setWarning] = useState(false);
   const navigate = useNavigate();
