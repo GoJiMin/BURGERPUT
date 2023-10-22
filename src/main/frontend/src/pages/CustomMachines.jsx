@@ -42,6 +42,7 @@ export default function InputMachines() {
                       <CustomProducts
                         value={machine}
                         setProducts={setProducts}
+                        checkedIt={machine.isChecked === "true" ? true : false}
                       />
                     </div>
                   ))}

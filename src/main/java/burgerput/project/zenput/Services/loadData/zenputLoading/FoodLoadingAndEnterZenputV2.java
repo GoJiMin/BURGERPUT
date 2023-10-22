@@ -11,25 +11,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
-import static burgerput.project.zenput.Const.FOODURL;
 
 //Optimize version!
 @Slf4j
 @RequiredArgsConstructor
 
-public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenput {
+public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
 
     private final MovePageService movePageService;
@@ -45,7 +38,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         try {
 
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickAmFood();
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================
@@ -108,29 +101,24 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         System.setProperty("java.awt.headless", "false");
 
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-            //==============================Scrape LOGIC START============================
-
-            //GO TO PAGE
-            driver.get(FOODURL);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-
-            // Enter the value
 
             // 1. Enter Manager Name
             //a. getManager info from json
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            log.info("manager name = {}", mgrName);
+            String time = paramO.get("time").toString();
+            WebDriver driver = null;
+            if (time.equals("AM")) {
+                driver = movePageService.clickAmFood();
+
+            } else if (time.equals("PM")) {
+                driver = movePageService.clickPmFood();
+                log.info("ENTER PM FOOD");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_18"));
             WebElement textarea = managerField.findElement(By.tagName("textarea"));
@@ -269,7 +257,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         } else if (title.contains(":")) {
             String[] split = title.split(":");
 
-             String sample = split[0];
+            String sample = split[0];
             food.setName(sample);
             String s = split[1].replaceAll("[a-zA-Z가-힣* ]", "");
 
