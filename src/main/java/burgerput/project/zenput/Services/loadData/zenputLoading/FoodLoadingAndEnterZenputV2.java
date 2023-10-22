@@ -4,7 +4,6 @@ import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -12,25 +11,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
-import static burgerput.project.zenput.Const.FOODURL;
 
 //Optimize version!
 @Slf4j
 @RequiredArgsConstructor
 
-public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenput {
+public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
 
     private final MovePageService movePageService;
@@ -118,11 +110,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             String time = paramO.get("time").toString();
             WebDriver driver = null;
             if (time.equals("AM")) {
-                 driver = movePageService.clickAmFood();
+                driver = movePageService.clickAmFood();
 
             } else if (time.equals("PM")) {
-                 driver = movePageService.clickPmFood();
-                 log.info("ENTER PM FOOD");
+                driver = movePageService.clickPmFood();
+                log.info("ENTER PM FOOD");
 
             }
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -265,7 +257,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         } else if (title.contains(":")) {
             String[] split = title.split(":");
 
-             String sample = split[0];
+            String sample = split[0];
             food.setName(sample);
             String s = split[1].replaceAll("[a-zA-Z가-힣* ]", "");
 

@@ -11,8 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -20,13 +18,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
-import static burgerput.project.zenput.Const.MACHINEURL;
-
 @Slf4j
 @RequiredArgsConstructor
 //Service
-public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnterZenput {
+public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZenput {
 
 //Optimize version!
     //Using saved html file data
@@ -99,7 +94,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
         //selenium enter logic start ========================================
         System.setProperty("java.awt.headless", "false");
-
         try {
 
             // Enter the value
@@ -110,6 +104,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             String mgrName = paramO.get("mgrname").toString();
 
             String time = paramO.get("time").toString();
+
             WebDriver driver = null;
             if (time.equals("AM")) {
                 driver = movePageService.clickAmMachine();
@@ -120,6 +115,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
             }
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_1"));
 
@@ -136,15 +132,10 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             //dummyMap changed
             ArrayList<Map> customMachineMap = myJsonParser.jsonStringToArrayList(param);
 
-            for (Map<String, String> customMap : customMachineMap) {
-                //id와 이름이 똑같으면 이거로 temp값을 변경하기 dummyStore의 temp값을 변경한다.
-                for (Map<String, String> dummyMap : dummyStore) {
-                    if (dummyMap.get("id").equals(customMap.get("id"))) {
-                        dummyMap.put("temp", customMap.get("temp"));
-                    }
-                }
-            }
-            log.info("dummyMap final ={}", dummyStore);
+
+            ArrayList<Map<String, String>> maps = finalMapMaker(customMachineMap, dummyStore);
+
+            log.info("dummyMap final ={}", maps);
             //li class group
             //Enter customValueStart ===============================
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
@@ -167,6 +158,39 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         } catch (Exception e) {
             log.info(e.toString());
         }
+    }
+
+    private ArrayList<Map<String,String>> finalMapMaker(ArrayList<Map> customMachineMap, ArrayList<Map<String, String>> dummyStore) {
+        //implant customMap value to dummyStore
+
+        ArrayList<Map> deletekey = new ArrayList<>();
+        for (Map<String, String> customMap : customMachineMap) {
+            //id와 이름이 똑같으면 이거로 temp값을 변경하기 dummyStore의 temp값을 변경한다.
+            String temp = customMap.get("temp");
+            String id = customMap.get("id");
+            if ((id.equals("2") || id.equals("54") || id.equals("56")) && !temp.equals("999")) {
+
+                Map<String, String> tmpMap = new LinkedHashMap<>();
+                tmpMap.put("id", Integer.toString(Integer.parseInt(id) + 1));
+                tmpMap.put("temp", "999");
+                tmpMap.put("name", customMap.get("name"));
+
+                deletekey.add(tmpMap);
+            }
+
+            for (Map<String, String> dummyMap : dummyStore) {
+                if (dummyMap.get("id").equals(customMap.get("id"))) {
+                    log.info("customMap  ={}", customMap);
+                    dummyMap.put("temp", customMap.get("temp"));
+                }
+            }
+
+//delete object from dummystore with delete key map values
+            for (Map map : deletekey) {
+                dummyStore.remove(map);
+            }
+        }
+        return dummyStore;
     }
 
     private ArrayList<Map<String, String>> dummyStoreMaker() {
@@ -227,18 +251,16 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
     private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap) {
 
         try {
-            String id1 = field.getAttribute("id");
 
             //extract vaild id field
             WebElement input = field.findElement(By.tagName("input"));
 
             String id = input.getAttribute("field_id");
 
-
             for (int i = 0; i < machineMap.size(); i++) {
                 Map<String, String> customMap = machineMap.get(i);
                 try {
-                    if (id.equals(customMap.get("id"))) {
+                    if (id.equals(customMap.get("id")) ) {
 
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
@@ -247,6 +269,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                         break;
                     }
                 } catch (NullPointerException e) {
+                    log.info("error message ={}", e);
                     //do nothing
                 }
             }
