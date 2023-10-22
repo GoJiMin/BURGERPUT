@@ -7,7 +7,12 @@ export default function CustomProducts({
   setProducts,
   checkedIt,
 }) {
-  const { checked, handleChange } = customProductsHook({ setProducts, id });
+  console.log(checkedIt);
+  const { checked, handleChange } = customProductsHook({
+    setProducts,
+    id,
+    checkedIt,
+  });
 
   useEffect(() => {
     if (checked) {
