@@ -5,6 +5,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import Banner from "./../components/Banner";
 import { useAccounts } from "./../hooks/useManagers";
+import Button from "../components/Button";
 
 export default function Admins() {
   const {
@@ -16,10 +17,12 @@ export default function Admins() {
   const {
     accountsQuery: { isLoading, error, data: accounts },
     submit,
+    hide,
+    setHide,
+    success,
+    setSuccess,
   } = useAccounts();
 
-  const [hide, setHide] = useState(true);
-  const [success, setSuccess] = useState();
   const { handleHidden } = useOutletContext();
   const navigate = useNavigate();
   const handleClick = () => {
@@ -152,17 +155,13 @@ export default function Admins() {
         </div>
       </form>
       <div className={styles.buttons}>
-        <button
-          type='submit'
-          form='inputForm'
+        <Button
+          text={"저장"}
+          type={"submit"}
+          form={"inputForm"}
           disabled={isSubmitting}
-          className={styles.button1}
-        >
-          저장
-        </button>
-        <button className={styles.button} onClick={handleClick}>
-          취소
-        </button>
+        />
+        <Button text={"취소"} handleFunction={handleClick} />
       </div>
     </section>
   );

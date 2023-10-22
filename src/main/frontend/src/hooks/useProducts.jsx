@@ -9,9 +9,13 @@ import {
   getCustomFoods,
   submitFoods,
 } from "../api/Products";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function useMachines() {
   const queryClient = useQueryClient();
+  const [products, setProducts] = useState([]);
+  const [success, setSuccess] = useState();
 
   const productsQuery = useQuery(["machines"], getMachines, {
     staleTime: Infinity,
@@ -28,10 +32,27 @@ export function useMachines() {
     }
   );
 
-  return { productsQuery, addCustomMachines };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCustomMachines.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
+  };
+
+  return { productsQuery, handleSubmit, success, setProducts };
 }
 
 export function useFoods() {
+  const [success, setSuccess] = useState();
+  const [products, setProducts] = useState([]);
   const queryClient = useQueryClient();
 
   const productsQuery = useQuery(["foods"], getFoods, {
@@ -49,7 +70,64 @@ export function useFoods() {
     }
   );
 
-  return { productsQuery, addCustomFoods };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCustomFoods.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        },
+      }
+    );
+  };
+
+  return { productsQuery, setProducts, success, handleSubmit };
+}
+
+export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
+  const [selectManager, setSelectManager] = useState("");
+  const [emptyProducts, setEmptyProducts] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [warning, setWarning] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    handleHidden();
+    navigate("/");
+  };
+
+  const handleWarning = () => {
+    setWarning(true);
+    setTimeout(() => {
+      setWarning(false);
+    }, 1500);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const hasEmptyTemp = products.some((product) => !product.temp);
+
+    if (hasEmptyTemp || selectManager.length === 0) {
+      handleWarning();
+      return;
+    } else {
+      setProductsTemp({ selectManager, products, location });
+    }
+  };
+
+  return {
+    handleClick,
+    selectManager,
+    setSelectManager,
+    handleSubmit,
+    warning,
+    products,
+    setProducts,
+  };
 }
 
 export function useCustomMachines() {

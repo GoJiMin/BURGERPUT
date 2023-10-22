@@ -57,6 +57,8 @@ export function useManagers() {
 
 export function useAccounts() {
   const queryClient = useQueryClient();
+  const [hide, setHide] = useState(true);
+  const [success, setSuccess] = useState();
 
   const accountsQuery = useQuery(["accounts"], () => getAccounts(), {
     staleTime: Infinity,
@@ -77,5 +79,5 @@ export function useAccounts() {
     }
   );
 
-  return { accountsQuery, submit };
+  return { accountsQuery, submit, hide, setHide, success, setSuccess };
 }

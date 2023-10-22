@@ -1,52 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useOutletContext, useLocation } from "react-router-dom";
+import { useCustomMachines, useCustomProducts } from "./../hooks/useProducts";
 import InputProducts from "./../components/InputProducts";
-import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
-import styles from "./InputMachines.module.css";
-import { useCustomMachines } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
 import ManagerList from "./../components/ManagerList";
+import Button from "../components/Button";
+import styles from "./InputMachines.module.css";
 
 export default function InputMachines() {
   const location = useLocation();
-  const [selectManager, setSelectManager] = useState("");
   const { handleHidden } = useOutletContext();
-  const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-  const [warning, setWarning] = useState(false);
 
   const {
     productsQuery: { isLoading, error, data },
     setProductsTemp,
   } = useCustomMachines();
 
+  const {
+    handleSubmit,
+    warning,
+    products,
+    setProducts,
+    selectManager,
+    setSelectManager,
+    handleClick,
+  } = useCustomProducts({ location, handleHidden, setProductsTemp });
+
   useEffect(() => {
     setProducts(data?.customMachine);
   }, [data]);
-
-  const handleWarning = () => {
-    setWarning(true);
-    setTimeout(() => {
-      setWarning(false);
-    }, 1500);
-  };
-
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const hasEmptyTemp = products.some((product) => !product.temp);
-
-    if (hasEmptyTemp || selectManager.length === 0) {
-      handleWarning();
-      return;
-    } else {
-      setProductsTemp({ selectManager, products, location });
-      console.log(JSON.stringify(products));
-    }
-  };
 
   return (
     <>
@@ -91,17 +73,13 @@ export default function InputMachines() {
             </div>
           </form>
           <div className={styles.buttons}>
-            <button
-              type='submit'
-              form='inputMachine'
-              className={styles.button1}
+            <Button
+              text={"저장"}
+              type={"submit"}
+              form={"inputMachine"}
               disabled={products.length === 0 ? true : false}
-            >
-              저장
-            </button>
-            <button className={styles.button} onClick={handleClick}>
-              취소
-            </button>
+            />
+            <Button text={"취소"} handleFunction={handleClick} />
           </div>
         </section>
       )}

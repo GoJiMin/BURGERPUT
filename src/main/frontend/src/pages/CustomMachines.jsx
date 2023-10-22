@@ -4,11 +4,10 @@ import CustomProducts from "./../components/CustomProducts";
 import styles from "./CustomMachines.module.css";
 import { useMachines } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
+import Button from "../components/Button";
 
 export default function InputMachines() {
   const { handleHidden } = useOutletContext();
-  const [products, setProducts] = useState([]);
-  const [success, setSuccess] = useState();
   const navigate = useNavigate();
   const handleClick = () => {
     handleHidden();
@@ -17,23 +16,10 @@ export default function InputMachines() {
 
   const {
     productsQuery: { isLoading, error, data: machines },
-    addCustomMachines,
+    handleSubmit,
+    setProducts,
+    success,
   } = useMachines();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addCustomMachines.mutate(
-      { products },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-        },
-      }
-    );
-  };
 
   return (
     <>
@@ -63,16 +49,8 @@ export default function InputMachines() {
               </div>
             </form>
             <div className={styles.buttons}>
-              <button
-                type='submit'
-                form='customMachine'
-                className={styles.button1}
-              >
-                저장
-              </button>
-              <button className={styles.button} onClick={handleClick}>
-                취소
-              </button>
+              <Button text={"저장"} type={"submit"} form={"customMachine"} />
+              <Button text={"취소"} handleFunction={handleClick} />
             </div>
           </div>
         </section>
