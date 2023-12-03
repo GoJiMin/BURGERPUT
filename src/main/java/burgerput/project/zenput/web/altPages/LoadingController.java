@@ -166,7 +166,6 @@ public class LoadingController {
             customFoodRepository.deleteBymineId(map.get("id"));
             log.info("deleted Food data ={}", map);
         }
-
     }
     private void alertMachineInfoToDb(ArrayList<Map> delMap) {
 
@@ -174,6 +173,5 @@ public class LoadingController {
             customMachineRepository.deleteBymineId(map.get("id"));
             log.info("deleted Machine data ={}", map);
         }
-
     }
 }

@@ -131,6 +131,14 @@ public class MovePageServiceV1 implements MovePageService{
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});;
+            //서버에서 돌려서 안돼서 추가한 옵션
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--single-process");
+            options.addArguments("--remote-allow-origins=*");
+            options.setBinary("/opt/google/chrome/");
+            //서버에서 돌려서 어쩌구 옵션 끝
             WebDriver driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

@@ -56,15 +56,15 @@ public class Config implements WebMvcConfigurer {
         return new CheckSessionInterceptor();
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(checkSessionInterceptor())
-//                .order(1)
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
-//                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
-//
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(checkSessionInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
+                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
+
+    }
 
     // load machine list from zenput page
 
@@ -72,7 +72,7 @@ public class Config implements WebMvcConfigurer {
     public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
                                                     MyJsonParser myJsonParser,
                                                     MachineRepository machineRepository) {
-        return new MachineLoadingAndEnterZenputV2(movePageService,myJsonParser,machineRepository
+        return new MachineLoadingAndEnterZenputV1Test(movePageService,myJsonParser,machineRepository
         );
     }
 
@@ -81,7 +81,7 @@ public class Config implements WebMvcConfigurer {
     public FoodLoadingAndEnterZenput LoadFood(MovePageService movePageService,
                                               MyJsonParser myJsonParser,
                                               FoodRepository foodRepository) {
-        return new FoodLoadingAndEnterZenputV2(movePageService, myJsonParser, foodRepository);
+        return new FoodLoadingAndEnterZenputV1Test(movePageService, myJsonParser, foodRepository);
     }
 
     @Bean
