@@ -36,7 +36,10 @@ dependencies {
 //	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version:
     // https://mavenlibs.com/maven/dependency/org.seleniumhq.selenium/selenium-devtools-v86
 //Thanks for using https://jar-download.com
-	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+    //	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.11.0'
+
 
     //Spring test Sl4fj
     testCompileOnly 'org.projectlombok:lombok'
