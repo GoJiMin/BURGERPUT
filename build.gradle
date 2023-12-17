@@ -38,8 +38,10 @@ dependencies {
 //Thanks for using https://jar-download.com
 
     //	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.11.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.15.0'
 
+    //webDriverManger
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.6.2'
 
     //Spring test Sl4fj
     testCompileOnly 'org.projectlombok:lombok'

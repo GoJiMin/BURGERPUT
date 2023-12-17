@@ -2,6 +2,7 @@ package burgerput.project.zenput.Services.movePage;
 
 import burgerput.project.zenput.domain.Accounts;
 import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
@@ -125,19 +126,22 @@ public class MovePageServiceV1 implements MovePageService{
 
         System.setProperty("java.awt.headless", "false");
         try {
-            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+//            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
             //chrome driver use
+            WebDriverManager.chromedriver().setup();
+
 
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});;
             //서버에서 돌려서 안돼서 추가한 옵션
             options.addArguments("--no-sandbox");
-            options.addArguments("--headless=new");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--single-process");
-            options.addArguments("--remote-allow-origins=*");
-            options.setBinary("/opt/google/chrome/");
+//            options.addArguments("--headless=new");
+
+//            options.addArguments("--disable-dev-shm-usage");
+//            options.addArguments("--single-process");
+//            options.addArguments("--remote-allow-origins=*");
+//            options.setBinary("/opt/google/chrome/");
             //서버에서 돌려서 어쩌구 옵션 끝
             WebDriver driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -266,7 +270,8 @@ public class MovePageServiceV1 implements MovePageService{
                 return driver;
             }
         }
-
         return driver;
     }
+
+
 }

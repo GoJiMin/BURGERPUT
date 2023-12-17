@@ -11,6 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -164,10 +167,46 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                 }
 
             }
+
+//            saveButtonClick(driver);
+
         } catch (Exception e) {
+
             log.info(e.toString());
         }
     }
+
+    private void saveButtonClick(WebDriver driver) throws InterruptedException {
+
+        //Back button clicked
+        WebElement itag = driver.findElement(By.xpath("//*[@id=\"action_left\"]/i"));
+
+        new Actions(driver)
+                .click(itag)
+                .perform();
+
+        log.info("Clicked....");
+
+        Thread.sleep(2000);
+
+        log.info("초안저장 alert 누르기");
+        //초안저장 START
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.alertIsPresent());
+
+        driver.switchTo().alert().accept();
+        Thread.sleep(5000);
+
+        driver.quit();
+        //초안저장 END
+
+        //Back Button clicked END
+
+////*[@id="action_left"]/i
+//        driver.quit();
+
+    }
+
     private ArrayList<Map<String, String>> dummyStoreMaker() {
         ArrayList<Map<String, String>> result = new ArrayList<>();
         List<Food> allFood = foodRepository.findAll();

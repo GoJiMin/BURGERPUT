@@ -43,9 +43,11 @@ public class LoadingController {
         Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
         Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
+        log.info("loading Machine Map info : {}", machineInfo);
+        log.info("Loading Food Map info : {}", foodInfo);
+
         log.info("request URL ={}", request.getRequestURL());
         log.info("loading Controller={}", LocalTime.now());
-
 
         //====================loading logic================================
 //        addMachine Logic=================================================

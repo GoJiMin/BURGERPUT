@@ -56,15 +56,15 @@ public class Config implements WebMvcConfigurer {
         return new CheckSessionInterceptor();
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(checkSessionInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
-                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
-
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(checkSessionInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/*.ico", "/error", "/loading","/manifest.json", "/delCookie"
+//                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
+//
+//    }
 
     // load machine list from zenput page
 
@@ -120,7 +120,6 @@ public class Config implements WebMvcConfigurer {
                 foodRepository,
                 customFoodRepository, mgrListRepository);
     }
-
 
     @Bean
     MyJsonParser myJsonParser() {
