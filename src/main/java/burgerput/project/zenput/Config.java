@@ -12,6 +12,10 @@ import burgerput.project.zenput.Services.printData.PrintDataV1;
 import burgerput.project.zenput.Services.saveData.SaveData;
 import burgerput.project.zenput.Services.saveData.SaveDataV1;
 import burgerput.project.zenput.intercepter.checkSession.CheckSessionInterceptor;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepositoryV1;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.foodRepository.CustomFoodRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import burgerput.project.zenput.repository.machineRepository.CustomMachineRepository;
@@ -133,6 +137,17 @@ public class Config implements WebMvcConfigurer {
         return new AlertLoadingV1(machineRepository,
                 foodRepository
         );
+    }
+
+    //WebDriver store
+    @Bean
+    FoodDriverRepository foodDriverRepository() {
+        return new FoodDriverRepositoryV1();
+    }
+
+    @Bean
+    MachineDriverRepository machineDriverRepository() {
+        return new MachineDriverRepositoryV1();
     }
 
 }

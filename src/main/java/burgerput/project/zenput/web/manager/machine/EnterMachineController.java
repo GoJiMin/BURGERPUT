@@ -2,7 +2,6 @@ package burgerput.project.zenput.web.manager.machine;
 
 import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
 import burgerput.project.zenput.Services.printData.PrintData;
-import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -3,7 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
-import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +45,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         System.setProperty("java.awt.headless", "false");
 
         try {
-//            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-
-            //automatic web driver management through webdrivermanager
             WebDriverManager.chromedriver().setup();
 
             //remove being controlled option information bar
@@ -61,6 +57,10 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
             WebDriver driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+
+            //GO TO PAGE
+            driver.get(MACHINEURL);
 
             //li class group
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
@@ -177,8 +177,8 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-            MachineDriverRepository machineDriverRepository = new MachineDriverRepository();
-            machineDriverRepository.setDriver(driver);
+            MachineDriverRepositoryV1 machineDriverRepositoryV1 = new MachineDriverRepositoryV1();
+            machineDriverRepositoryV1.setDriver(driver);
 
         } catch (Exception e) {
             //에러나면 false 리턴
@@ -372,7 +372,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
 
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         machineMap.remove(i);
                         break;
                     }

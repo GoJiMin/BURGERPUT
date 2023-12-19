@@ -3,7 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
-import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepositoryV1;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static burgerput.project.zenput.Const.DRIVERLOCATION;
 import static burgerput.project.zenput.Const.FOODURL;
 
 //Optimize version!
@@ -281,7 +280,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             //성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
-            FoodDriverRepository foodDriverRepository = new FoodDriverRepository();
+            FoodDriverRepositoryV1 foodDriverRepository = new FoodDriverRepositoryV1();
             foodDriverRepository.setDriver(driver);
 //            saveButtonClick(driver);
 

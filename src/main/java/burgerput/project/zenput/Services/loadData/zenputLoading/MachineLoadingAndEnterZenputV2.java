@@ -3,7 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
-import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -159,8 +159,8 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-            MachineDriverRepository machineDriverRepository = new MachineDriverRepository();
-            machineDriverRepository.setDriver(driver);
+            MachineDriverRepositoryV1 machineDriverRepositoryV1 = new MachineDriverRepositoryV1();
+            machineDriverRepositoryV1.setDriver(driver);
 
         } catch (Exception e) {
             //에러나면 false 리턴
