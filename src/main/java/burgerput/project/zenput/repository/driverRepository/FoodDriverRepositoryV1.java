@@ -1,9 +1,11 @@
 package burgerput.project.zenput.repository.driverRepository;
 
 import org.openqa.selenium.WebDriver;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
+
+@Component
 public class FoodDriverRepositoryV1 implements FoodDriverRepository{
     WebDriver driver;
 

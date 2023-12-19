@@ -25,6 +25,8 @@ public class SubmitMachineController {
     @GetMapping("back/submit")
     public String submitMachine() {
         WebDriver driver = machineDriverRepository.getDriver();
+
+
         WebElement mgrName = driver.findElement(By.xpath("//*[@id=\"field_18\"]/div[2]/textarea"));
 
         mgrName.sendKeys("성공했다");
