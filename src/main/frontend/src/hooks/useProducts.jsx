@@ -90,7 +90,8 @@ export function useFoods() {
 
 export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
   const [selectManager, setSelectManager] = useState("");
-  const [emptyProducts, setEmptyProducts] = useState(null);
+  const [result, setResult] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [warning, setWarning] = useState(false);
   const navigate = useNavigate();
@@ -115,7 +116,13 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
       handleWarning();
       return;
     } else {
-      setProductsTemp({ selectManager, products, location });
+      setProductsTemp({ selectManager, products, location })
+        .then(() => setLoading(true))
+        .finally((res) => {
+          setLoading(false);
+          setResult(res.data);
+        })
+        .catch(() => setResult("error"));
     }
   };
 
@@ -125,6 +132,8 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
     setSelectManager,
     handleSubmit,
     warning,
+    result,
+    loading,
     products,
     setProducts,
   };

@@ -6,6 +6,7 @@ import InputProducts from "./../components/InputProducts";
 import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
 import styles from "./InputFoods.module.css";
+import Modal from "../components/Modal";
 
 export default function InputFoods() {
   const location = useLocation();
@@ -20,6 +21,8 @@ export default function InputFoods() {
     handleSubmit,
     warning,
     products,
+    result,
+    loading,
     setProducts,
     selectManager,
     setSelectManager,
@@ -51,6 +54,24 @@ export default function InputFoods() {
             onSubmit={handleSubmit}
           >
             {warning && <Banner text={"비어있는 항목이 존재합니다."} />}
+            {loading && (
+              <Banner
+                type={"loading"}
+                text={
+                  <img
+                    src='/spinner/spinner.gif'
+                    width='60%'
+                    style={{ paddingTop: "2px" }}
+                  />
+                }
+              />
+            )}
+            {result && (
+              <Modal
+                title={"제출"}
+                component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
+              />
+            )}
             {products.length === 0 ? (
               <div className={styles.empty}>먼저 식품 선택을 완료해주세요.</div>
             ) : (
