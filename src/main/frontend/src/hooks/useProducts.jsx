@@ -116,13 +116,18 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
       handleWarning();
       return;
     } else {
-      setProductsTemp({ selectManager, products, location })
-        .then(() => setLoading(true))
-        .finally((res) => {
-          setLoading(false);
-          setResult(res.data);
+      setLoading(true);
+
+      setProductsTemp({
+        selectManager,
+        products,
+        location,
+      })
+        .then((res) => {
+          setResult(res);
         })
-        .catch(() => setResult("error"));
+        .finally(() => setLoading(false))
+        .catch((error) => console.log(error));
     }
   };
 
