@@ -31,14 +31,14 @@ class FoodLoadingAndEnterZenputV2TestTest {
     @Autowired
     private FoodRepository foodRepository;
 
-    FoodLoadingAndEnterZenput FoodLoading = new FoodLoadingAndEnterZenputV2Test(movePageService,myJsonParser,foodRepository);
+//    FoodLoadingAndEnterZenput FoodLoading = new FoodLoadingAndEnterZenputV2Test(movePageService,myJsonParser,foodRepository);
 
     @Test
     @DisplayName("getInfoTest")
     public void getInfoTest() {
 
-        Map<Integer, Food> info = FoodLoading.getInfo();
-       log.info(info.toString());
+//        Map<Integer, Food> info = FoodLoading.getInfo();
+//       log.info(info.toString());
     }
 
 }

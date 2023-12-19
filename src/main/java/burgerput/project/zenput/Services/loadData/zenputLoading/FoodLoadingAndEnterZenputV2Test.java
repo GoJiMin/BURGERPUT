@@ -3,6 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import burgerput.project.zenput.repository.driverRepository.FoodDriverRepositoryV1;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -37,6 +38,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final FoodRepository foodRepository;
+    private final FoodDriverRepository foodDriverRepository;
 
     @Override
     public Map<Integer, Food> getInfo() {//get from am info
@@ -55,9 +57,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
             options.addArguments("--no-sandbox");
-            options.addArguments("--headless=new");
+//            options.addArguments("--headless=new");
 
             WebDriver driver = new ChromeDriver(options);
+
+            driver.get(FOODURL);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             //==============================Scrape LOGIC START============================
 
@@ -280,7 +284,6 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             //성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
-            FoodDriverRepositoryV1 foodDriverRepository = new FoodDriverRepositoryV1();
             foodDriverRepository.setDriver(driver);
 //            saveButtonClick(driver);
 

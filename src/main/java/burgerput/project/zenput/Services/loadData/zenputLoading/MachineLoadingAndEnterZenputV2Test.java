@@ -3,6 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
 import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -35,6 +36,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final MachineRepository machineRepository;
+    private final MachineDriverRepository machineDriverRepository;
 
     //get info 는 무조건 AM 으로만 받아온다.
     // Only am list
@@ -52,7 +54,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
             options.addArguments("--no-sandbox");
-            options.addArguments("--headless=new");
+//            options.addArguments("--headless=new");
 
 
             WebDriver driver = new ChromeDriver(options);
@@ -177,8 +179,8 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-            MachineDriverRepositoryV1 machineDriverRepositoryV1 = new MachineDriverRepositoryV1();
-            machineDriverRepositoryV1.setDriver(driver);
+
+            machineDriverRepository.setDriver(driver);
 
         } catch (Exception e) {
             //에러나면 false 리턴
