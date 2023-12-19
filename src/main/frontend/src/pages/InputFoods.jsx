@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
-import { useCustomFoods, useCustomProducts } from "./../hooks/useProducts";
+import {
+  useCustomFoods,
+  useCustomMachines,
+  useCustomProducts,
+} from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
 import InputProducts from "./../components/InputProducts";
 import ManagerList from "./../components/ManagerList";
@@ -14,8 +18,10 @@ export default function InputFoods() {
 
   const {
     productsQuery: { isLoading, error, data },
-    setProductsTemp,
+    // setProductsTemp,
   } = useCustomFoods();
+
+  const { setProductsTemp } = useCustomMachines();
 
   const {
     handleSubmit,
@@ -32,6 +38,9 @@ export default function InputFoods() {
   useEffect(() => {
     setProducts(data?.customFood);
   }, [data]);
+
+  console.log("result : ", result);
+  console.log("loading : ", loading);
 
   return (
     <>
@@ -66,7 +75,7 @@ export default function InputFoods() {
                 }
               />
             )}
-            {result && (
+            {result.result === "true" && (
               <Modal
                 title={"제출"}
                 component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}

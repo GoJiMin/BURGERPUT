@@ -124,7 +124,7 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
         location,
       })
         .then((res) => {
-          setResult(res);
+          setResult(res.data);
         })
         .finally(() => setLoading(false))
         .catch((error) => console.log(error));

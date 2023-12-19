@@ -48,7 +48,7 @@ export async function getCustomMachines() {
 
 // 완료된 기기 온도 값을 전달하는 api
 export async function submitMachines(machines) {
-  await axios.post("/back/enter/machines", JSON.stringify(machines), {
+  return await axios.post("/back/enter/machines", JSON.stringify(machines), {
     headers: { "Content-Type": "application/json" },
   });
 }
@@ -70,7 +70,5 @@ export async function submitFoods(foods) {
 
 // 최종 제출을 요청하는 api
 export async function submitResult() {
-  await axios.post("/back/submit", JSON.stringify({ access: true }), {
-    headers: { "Content-Type": "application/json" },
-  });
+  await axios.get("/back/submit");
 }
