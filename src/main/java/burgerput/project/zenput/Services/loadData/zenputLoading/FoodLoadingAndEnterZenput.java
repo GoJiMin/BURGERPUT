@@ -13,4 +13,7 @@ public interface FoodLoadingAndEnterZenput {
 
     public void sendValue(String param);
 
+    //adedd 20231217
+    public Map<String, String> sendValueV2(String param);
+
 }

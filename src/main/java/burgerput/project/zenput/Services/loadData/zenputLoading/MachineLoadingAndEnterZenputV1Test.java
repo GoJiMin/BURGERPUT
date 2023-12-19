@@ -31,6 +31,11 @@ public class MachineLoadingAndEnterZenputV1Test implements MachineLoadingAndEnte
     private final MachineRepository machineRepository;
 
     @Override
+    public Map<String, String> sendValueV2(String param) {
+        return null;
+    }
+
+    @Override
     public Map<Integer, Machine> getInfo() {
 
         Map<Integer, Machine> result = new LinkedHashMap<>();

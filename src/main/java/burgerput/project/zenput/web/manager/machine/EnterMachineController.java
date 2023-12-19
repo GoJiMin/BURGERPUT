@@ -1,9 +1,8 @@
 package burgerput.project.zenput.web.manager.machine;
 
-import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
 import burgerput.project.zenput.Services.loadData.zenputLoading.MachineLoadingAndEnterZenput;
-import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.Services.printData.PrintData;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,11 +40,18 @@ public class EnterMachineController {
         return tempMap;
     }
 
-
     @PostMapping("/back/enter/machines")
-    public void submitZenputMachine(@RequestBody String param) {
+    public Map<String, String> submitZenputMachine(@RequestBody String param) {
         log.info("Machine Param ={}", param);
-        machineLoadingAndEnterZenput.sendValue(param);
+        Map<String, String> resultMap = machineLoadingAndEnterZenput.sendValueV2(param);
+
+        Map<String, String> result = new LinkedHashMap<>();
+
+        result.put("result", resultMap.get("result").toString());
+
+        FoodDriverRepository driverRepository = new FoodDriverRepository();
+
+        return result;
 
     }
 
