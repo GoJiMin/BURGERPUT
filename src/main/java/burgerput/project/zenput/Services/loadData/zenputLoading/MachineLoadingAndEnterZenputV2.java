@@ -3,6 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +89,93 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
     }
 
     @Override
+    public Map<String, String> sendValueV2(String param) {
+        Map<String, String> result = new LinkedHashMap<>();
+
+        //choose am/pm list Start ==============================
+        WebDriver driver = null;
+        //selenium enter logic start ========================================
+        System.setProperty("java.awt.headless", "false");
+        try {
+
+            // Enter the value
+
+            // 1. Enter Manager Name
+            //a. getManager info from json
+            JSONObject paramO = new JSONObject(param);
+            String mgrName = paramO.get("mgrname").toString();
+
+            String time = paramO.get("time").toString();
+
+            if (time.equals("AM")) {
+                driver = movePageService.clickAmMachine();
+
+            } else if (time.equals("PM")) {
+                driver = movePageService.clickPmMachine();
+                log.info("ENTER PM Machine");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+            //b. Enter the manager textbox
+            WebElement managerField = driver.findElement(By.id("field_1"));
+
+            WebElement textarea = managerField.findElement(By.tagName("textarea"));
+
+            textarea.click();
+            textarea.sendKeys(mgrName);
+            Thread.sleep(30);
+
+            //dummyStore
+            ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
+            log.info("dummyStore result ={}", dummyStore);
+
+            //dummyMap changed
+            ArrayList<Map> customMachineMap = myJsonParser.jsonStringToArrayList(param);
+
+
+            ArrayList<Map<String, String>> maps = finalMapMaker(customMachineMap, dummyStore);
+
+            log.info("dummyMap final ={}", maps);
+            //li class group
+            //Enter customValueStart ===============================
+            List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
+
+            for (WebElement fields : section) {
+                List<WebElement> elements = fields.findElements(By.className("form-field"));
+
+                for (WebElement field : elements) {
+                    //extract vaild id list logic
+                    String id = field.getAttribute("id");
+                    if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
+
+                    }else{
+                        enterValue(field, dummyStore);
+                    }
+
+                }
+            }
+            //성공했을 시에 driver 값 같이 리턴
+            result.put("result", "true");
+
+            //MachineDriverRepository에 저장
+            MachineDriverRepository machineDriverRepository = new MachineDriverRepository();
+            machineDriverRepository.setDriver(driver);
+
+        } catch (Exception e) {
+            //에러나면 false 리턴
+            result.put("result", "false");
+            log.info(e.toString());
+
+            //에러난 드라이버 종료
+            driver.quit();
+
+            return result;
+        }
+        return result;
+    }
+
+    @Override
     public void sendValue(String param) {
 
         //choose am/pm list Start ==============================
@@ -156,6 +244,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             }
 
         } catch (Exception e) {
+
             log.info(e.toString());
         }
     }

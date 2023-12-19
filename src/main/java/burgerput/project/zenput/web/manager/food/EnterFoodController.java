@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -24,7 +25,6 @@ public class EnterFoodController {
 
     private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final PrintData printData;
-
 
     @GetMapping("/back/enter/foods")
     @ResponseBody
@@ -43,8 +43,12 @@ public class EnterFoodController {
     }
 
     @PostMapping("/back/enter/foods")
-    public void submitZenputFood(@RequestBody String param) {
+    public Map<String,String> submitZenputFood(@RequestBody String param) {
         log.info("Foodparam = {}", param);
-        foodLoadingAndEnterZenput.sendValue(param);
+        Map<String, String> resultMap = foodLoadingAndEnterZenput.sendValueV2(param);
+
+        Map<String, String> result = new LinkedHashMap<>();
+        result.put("result", resultMap.get("result").toString());
+        return result;
     }
 }

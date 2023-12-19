@@ -11,4 +11,6 @@ public interface MachineLoadingAndEnterZenput {
     public Map<Integer,Machine> getInfo();
 
     public void sendValue(String param);
+
+    public Map<String, String> sendValueV2(String param);
 }

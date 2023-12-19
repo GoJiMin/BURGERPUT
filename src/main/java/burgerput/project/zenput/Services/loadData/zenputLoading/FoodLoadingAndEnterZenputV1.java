@@ -148,6 +148,11 @@ public class FoodLoadingAndEnterZenputV1 implements FoodLoadingAndEnterZenput {
         }
     }
 
+    @Override
+    public Map<String, String> sendValueV2(String param) {
+        return null;
+    }
+
     private ArrayList<Map<String, String>> dummyStoreMaker() {
         ArrayList<Map<String, String>> result = new ArrayList<>();
         List<Food> allFood = foodRepository.findAll();

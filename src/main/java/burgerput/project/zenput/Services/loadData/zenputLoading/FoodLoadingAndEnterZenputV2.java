@@ -3,6 +3,7 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -174,6 +175,97 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
             log.info(e.toString());
         }
+    }
+
+    //send result true false value and driver
+    @Override
+    public Map<String,String> sendValueV2(String param) {
+
+        Map<String, String> result = new LinkedHashMap<>();
+        //choose am/pm list Start ==============================
+        WebDriver driver= null;
+
+        //selenium enter logic start ========================================
+        System.setProperty("java.awt.headless", "false");
+
+        try {
+            // 1. Enter Manager Name
+            //a. getManager info from jsonf
+            JSONObject paramO = new JSONObject(param);
+            String mgrName = paramO.get("mgrname").toString();
+
+            String time = paramO.get("time").toString();
+            if (time.equals("AM")) {
+                driver = movePageService.clickAmFood();
+
+            } else if (time.equals("PM")) {
+                driver = movePageService.clickPmFood();
+                log.info("ENTER PM FOOD");
+
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+            //b. Enter the manager textbox
+            WebElement managerField = driver.findElement(By.id("field_18"));
+            WebElement textarea = managerField.findElement(By.tagName("textarea"));
+
+            textarea.click();
+            textarea.sendKeys(mgrName);
+            Thread.sleep(30);
+
+            //dummyStore setup start ===============================
+            ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
+
+            //dummyMap changed
+            ArrayList<Map> customFoodMap = myJsonParser.jsonStringToArrayList(param);
+
+            for (Map<String, String> customMap : customFoodMap) {
+                //id와 이름이 똑같으면 이거로 temp값을 변경하기 dummyStore의 temp값을 변경한다.
+                for (Map<String, String> dummyMap : dummyStore) {
+                    if (dummyMap.get("id").equals(customMap.get("id"))) {
+
+                        dummyMap.put("temp", customMap.get("temp"));
+
+                    }
+                }
+            }
+            //===================dummy setup END =======================
+
+            log.info("dummyMap final ={}", dummyStore);
+
+            List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
+
+            for (WebElement fields : section) {
+                List<WebElement> elements = fields.findElements(By.className("form-field"));
+                log.info("SECTION START");
+                for (WebElement field : elements) {
+                    //Enter customValueStart ===============================
+
+                    String id = field.getAttribute("id");
+                    if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
+                        log.info("where's id?'{}", id);
+                        enterValue(field, dummyStore);
+                    }
+
+                }
+
+            }
+            //성공했을 시에 result에 true 값 저장
+            result.put("result", "true");
+            //FoodDriverREpository memeroy repository에 해당 값 저장
+            FoodDriverRepository foodDriverRepository = new FoodDriverRepository();
+            foodDriverRepository.setDriver(driver);
+//            saveButtonClick(driver);
+
+        } catch (Exception e) {
+            //에러나면 false 리턴
+            result.put("result", "false");
+            log.info(e.toString());
+            //에러가 난 selenium driver 는 종료
+            driver.quit();
+            return result;
+        }
+        return result;
     }
 
     private void saveButtonClick(WebDriver driver) throws InterruptedException {
