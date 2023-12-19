@@ -67,3 +67,10 @@ export async function submitFoods(foods) {
     headers: { "Content-Type": "application/json" },
   });
 }
+
+// 최종 제출을 요청하는 api
+export async function submitResult() {
+  await axios.post("/back/submit", JSON.stringify({ access: true }), {
+    headers: { "Content-Type": "application/json" },
+  });
+}

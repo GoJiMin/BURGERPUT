@@ -1,0 +1,75 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.contentBox {
+  position: absolute;
+  display: grid;
+  gap: 16px;
+  top: 50%;
+  left: 50%;
+  padding: 16px;
+  border: 4px solid var(--navbar-background-color);
+  border-radius: 12px;
+  background-color: var(--screen-background-color);
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  color: var(--navbar-background-color);
+}
+
+.content {
+  width: 500px;
+  height: 100px;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin-left: 26px;
+  font-weight: var(--weight-bold);
+}
+
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: 30px;
+  text-align: center;
+  border: 1px solid var(--font-base-color);
+  color: var(--font-base-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirmBtn {
+  flex: 1;
+  height: 30px;
+  text-align: center;
+  color: var(--background-color);
+  background-color: var(--font-base-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
