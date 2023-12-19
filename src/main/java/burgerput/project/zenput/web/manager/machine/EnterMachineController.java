@@ -49,8 +49,6 @@ public class EnterMachineController {
 
         result.put("result", resultMap.get("result").toString());
 
-        FoodDriverRepository driverRepository = new FoodDriverRepository();
-
         return result;
 
     }

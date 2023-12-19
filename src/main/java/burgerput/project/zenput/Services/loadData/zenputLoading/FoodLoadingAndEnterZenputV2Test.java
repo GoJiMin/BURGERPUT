@@ -5,6 +5,7 @@ import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -12,6 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,11 +25,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static burgerput.project.zenput.Const.DRIVERLOCATION;
+import static burgerput.project.zenput.Const.FOODURL;
+
 //Optimize version!
 @Slf4j
 @RequiredArgsConstructor
 
-public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
+public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenput {
 
 
     private final MovePageService movePageService;
@@ -40,11 +46,20 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         System.setProperty("java.awt.headless", "false");
 
         try {
+//            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+            //automatic web driver management through webdrivermanager
+            WebDriverManager.chromedriver().setup();
 
-            //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmFood();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless=new");
+
+            WebDriver driver = new ChromeDriver(options);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             //==============================Scrape LOGIC START============================
 
             //li class group
@@ -105,22 +120,27 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         System.setProperty("java.awt.headless", "false");
 
         try {
+            //chrome driver use
+
+            WebDriverManager.chromedriver().setup();
+
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            WebDriver driver = new ChromeDriver(options);
+
+            //==============================Scrape LOGIC START============================
+
+            //GO TO PAGE
+            driver.get(FOODURL);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             // 1. Enter Manager Name
             //a. getManager info from json
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            String time = paramO.get("time").toString();
-            WebDriver driver = null;
-            if (time.equals("AM")) {
-                driver = movePageService.clickAmFood();
-
-            } else if (time.equals("PM")) {
-                driver = movePageService.clickPmFood();
-                log.info("ENTER PM FOOD");
-
-            }
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //b. Enter the manager textbox
@@ -186,24 +206,31 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         WebDriver driver= null;
 
         //selenium enter logic start ========================================
-        System.setProperty("java.awt.headless", "false");
 
         try {
+            //selenium enter logic start ========================================
+            System.setProperty("java.awt.headless", "false");
+            //chrome driver use
+
+            WebDriverManager.chromedriver().setup();
+
+
+            //remove being controlled option information bar
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            driver = new ChromeDriver(options);
+
+            //==============================Scrape LOGIC START============================
+
+            //GO TO PAGE
+            driver.get(FOODURL);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
             // 1. Enter Manager Name
             //a. getManager info from jsonf
             JSONObject paramO = new JSONObject(param);
             String mgrName = paramO.get("mgrname").toString();
 
-            String time = paramO.get("time").toString();
-            if (time.equals("AM")) {
-                driver = movePageService.clickAmFood();
-
-            } else if (time.equals("PM")) {
-                driver = movePageService.clickPmFood();
-                log.info("ENTER PM FOOD");
-
-            }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //b. Enter the manager textbox
             WebElement managerField = driver.findElement(By.id("field_18"));
