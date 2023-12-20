@@ -179,7 +179,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-
             machineDriverRepository.setDriver(driver);
 
         } catch (Exception e) {
