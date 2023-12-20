@@ -194,7 +194,8 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                         enterValue(field, dummyStore, result);
                     }
                     if (result.containsValue("false")) {
-                        NoSuchElementException e = (NoSuchElementException) new Exception("No such Element Exception Occured");
+                        NoSuchElementException e = (NoSuchElementException) new Exception("No such Element Exception Occured 에러에러에러에ㅓㄹ");
+                        throw e;
                     }
 
                 }
@@ -206,12 +207,17 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             foodDriverRepository.setDriver(driver);
 //            saveButtonClick(driver);
 
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             //에러나면 false 리턴
             log.info(e.toString());
             //에러가 난 selenium driver 는 종료
             driver.quit();
             return result;
+        } catch (InterruptedException e) {
+            log.info("runTime eXcpetion ");
+            log.info(e.toString());
+            throw new RuntimeException(e);
+
         }
         return result;
     }
