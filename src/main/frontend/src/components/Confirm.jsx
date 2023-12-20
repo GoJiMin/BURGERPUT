@@ -14,9 +14,6 @@ export default function Confirm({ title, content, close, confirm }) {
         </header>
         <div className={styles.content}>{content}</div>
         <div className={styles.btnContainer}>
-          <button className={styles.cancelBtn} onClick={close}>
-            아니오
-          </button>
           <button
             className={styles.confirmBtn}
             onClick={() => {
@@ -24,7 +21,10 @@ export default function Confirm({ title, content, close, confirm }) {
               close && close();
             }}
           >
-            예
+            제출
+          </button>
+          <button className={styles.cancelBtn} onClick={close}>
+            취소
           </button>
         </div>
       </div>

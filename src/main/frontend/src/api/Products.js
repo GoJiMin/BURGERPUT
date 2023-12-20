@@ -63,12 +63,17 @@ export async function getCustomFoods() {
 
 // 완료된 식품 온도 값을 전달하는 api
 export async function submitFoods(foods) {
-  await axios.post("/back/enter/foods", JSON.stringify(foods), {
+  return await axios.post("/back/enter/foods", JSON.stringify(foods), {
     headers: { "Content-Type": "application/json" },
   });
 }
 
-// 최종 제출을 요청하는 api
-export async function submitResult() {
-  await axios.get("/back/submit");
+// 기기 최종 제출을 요청하는 api
+export async function submitResultMachines() {
+  await axios.get("/back/msubmit");
+}
+
+// 식품 최종 제출을 요청하는 api
+export async function submitResultFoods() {
+  await axios.get("/back/fsubmit");
 }

@@ -141,6 +141,7 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
     loading,
     products,
     setProducts,
+    setResult,
   };
 }
 

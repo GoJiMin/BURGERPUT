@@ -14,19 +14,22 @@
   gap: 16px;
   top: 50%;
   left: 50%;
-  padding: 16px;
+  padding: 12px;
   border: 4px solid var(--navbar-background-color);
-  border-radius: 12px;
   background-color: var(--screen-background-color);
+  border-radius: 12px;
   transform: translate(-50%, -50%);
   z-index: 999;
   color: var(--navbar-background-color);
 }
 
 .content {
-  width: 500px;
-  height: 100px;
+  width: 450px;
+  height: 70px;
   overflow: auto;
+  font-size: 1rem;
+  padding: 0 15px;
+  padding-top: 10px;
 }
 
 .header {
@@ -36,15 +39,16 @@
 }
 
 .title {
-  margin-left: 26px;
-  font-weight: var(--weight-bold);
+  margin-left: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .closeBtn {
   width: 24px;
   height: 24px;
   line-height: 24px;
-  font-size: 30px;
+  font-size: 22px;
   text-align: center;
   cursor: pointer;
 }
@@ -54,12 +58,19 @@
   gap: 8px;
 }
 
+.btnContainer button:hover {
+  background-color: var(--navbar-background-color);
+  color: var(--screen-background-color);
+}
+
+.btnContainer button {
+  transition: all 250ms ease-out;
+}
+
 .cancelBtn {
   flex: 1;
   height: 30px;
   text-align: center;
-  border: 1px solid var(--font-base-color);
-  color: var(--font-base-color);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -68,8 +79,6 @@
   flex: 1;
   height: 30px;
   text-align: center;
-  color: var(--background-color);
-  background-color: var(--font-base-color);
   border-radius: 4px;
   cursor: pointer;
 }
