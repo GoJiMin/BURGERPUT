@@ -1,18 +1,10 @@
 import React from "react";
 import styles from "./Modal.module.css";
 import Confirm from "./Confirm";
-import { submitResultFoods, submitResultMachines } from "../api/Products";
+import { useModal } from "../hooks/useModal";
 
 export default function Modal({ title, component, setResult, machine, food }) {
-  const close = () => {
-    setResult(false);
-  };
-
-  const confirm = () => {
-    machine && submitResultMachines();
-    food && submitResultFoods();
-    setResult(false);
-  };
+  const { close, confirm } = useModal({ machine, food, setResult });
 
   return (
     <section className={styles.section}>
