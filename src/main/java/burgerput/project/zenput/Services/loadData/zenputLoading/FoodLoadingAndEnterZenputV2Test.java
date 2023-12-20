@@ -116,88 +116,6 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
     // ================ send Data to Zenput======================
     @Override
     public void sendValue(String param) {
-
-        //choose am/pm list Start ==============================
-
-        //selenium enter logic start ========================================
-        System.setProperty("java.awt.headless", "false");
-
-        try {
-            //chrome driver use
-
-            WebDriverManager.chromedriver().setup();
-
-
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            WebDriver driver = new ChromeDriver(options);
-
-            //==============================Scrape LOGIC START============================
-
-            //GO TO PAGE
-            driver.get(FOODURL);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            // 1. Enter Manager Name
-            //a. getManager info from json
-            JSONObject paramO = new JSONObject(param);
-            String mgrName = paramO.get("mgrname").toString();
-
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            //b. Enter the manager textbox
-            WebElement managerField = driver.findElement(By.id("field_18"));
-            WebElement textarea = managerField.findElement(By.tagName("textarea"));
-
-            textarea.click();
-            textarea.sendKeys(mgrName);
-            Thread.sleep(30);
-
-            //dummyStore setup start ===============================
-            ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
-
-            //dummyMap changed
-            ArrayList<Map> customFoodMap = myJsonParser.jsonStringToArrayList(param);
-
-            for (Map<String, String> customMap : customFoodMap) {
-                //id와 이름이 똑같으면 이거로 temp값을 변경하기 dummyStore의 temp값을 변경한다.
-                for (Map<String, String> dummyMap : dummyStore) {
-                    if (dummyMap.get("id").equals(customMap.get("id"))) {
-
-                        dummyMap.put("temp", customMap.get("temp"));
-
-                    }
-                }
-            }
-            //===================dummy setup END =======================
-
-            log.info("dummyMap final ={}", dummyStore);
-
-            List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
-
-            for (WebElement fields : section) {
-                List<WebElement> elements = fields.findElements(By.className("form-field"));
-                log.info("SECTION START");
-                for (WebElement field : elements) {
-                    //Enter customValueStart ===============================
-
-                    String id = field.getAttribute("id");
-                    if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
-                        log.info("where's id?'{}", id);
-                        enterValue(field, dummyStore);
-                    }
-
-                }
-
-            }
-
-//            saveButtonClick(driver);
-
-        } catch (Exception e) {
-
-            log.info(e.toString());
-        }
     }
 
     //send result true false value and driver
@@ -270,17 +188,18 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                 log.info("SECTION START");
                 for (WebElement field : elements) {
                     //Enter customValueStart ===============================
-
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
                         log.info("where's id?'{}", id);
-                        enterValue(field, dummyStore);
+                        enterValue(field, dummyStore, result);
+                    }
+                    if (result.containsValue("false")) {
+                        NoSuchElementException e = (NoSuchElementException) new Exception("No such Element Exception Occured");
                     }
 
                 }
 
             }
-
             //성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
@@ -289,7 +208,6 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
 
         } catch (Exception e) {
             //에러나면 false 리턴
-            result.put("result", "false");
             log.info(e.toString());
             //에러가 난 selenium driver 는 종료
             driver.quit();
@@ -344,7 +262,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         return result;
     }
 
-    private void enterValue(WebElement field, ArrayList<Map<String, String>> foodMap) {
+    private void enterValue(WebElement field, ArrayList<Map<String, String>> foodMap, Map<String,String> resultMap) {
 
         try {
             //extract vaild id field
@@ -362,7 +280,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                         customMap.remove(id);
                         break;
                     }
-                } catch (NullPointerException e) {
+                } catch (NoSuchElementException e) {
+                    log.info("Exception Occured in the entervalue Method!!");
+                    log.info(e.toString());
+
+                    resultMap.put("result", "false");
                     //do nothing
                 }
             }

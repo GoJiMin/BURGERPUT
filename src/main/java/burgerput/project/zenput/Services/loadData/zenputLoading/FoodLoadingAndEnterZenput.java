@@ -11,7 +11,7 @@ public interface FoodLoadingAndEnterZenput {
 
     public  Map<Integer, Food> getInfo();
 
-    public void sendValue(String param);
+    public void sendValue(String param); //사용하지 않음
 
     //adedd 20231217
     public Map<String, String> sendValueV2(String param);
