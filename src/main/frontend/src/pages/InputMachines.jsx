@@ -6,6 +6,7 @@ import Banner from "./../components/Banner";
 import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
 import styles from "./InputMachines.module.css";
+import Modal from "../components/Modal";
 
 export default function InputMachines() {
   const location = useLocation();
@@ -20,10 +21,13 @@ export default function InputMachines() {
     handleSubmit,
     warning,
     products,
+    result,
+    loading,
     setProducts,
     selectManager,
     setSelectManager,
     handleClick,
+    setResult,
   } = useCustomProducts({ location, handleHidden, setProductsTemp });
 
   useEffect(() => {
@@ -54,6 +58,26 @@ export default function InputMachines() {
             onSubmit={handleSubmit}
           >
             {warning && <Banner text={"비어있는 항목이 존재합니다."} />}
+            {loading && (
+              <Banner
+                type={"loading"}
+                text={
+                  <img
+                    src='/spinner/spinner.gif'
+                    width='60%'
+                    style={{ paddingTop: "2px" }}
+                  />
+                }
+              />
+            )}
+            {result.result === "true" && (
+              <Modal
+                title={"제출"}
+                machine={true}
+                setResult={setResult}
+                component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
+              />
+            )}
             <div>
               {products.length === 0 ? (
                 <div className={styles.empty}>

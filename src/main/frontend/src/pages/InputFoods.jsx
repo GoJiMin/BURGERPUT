@@ -18,10 +18,8 @@ export default function InputFoods() {
 
   const {
     productsQuery: { isLoading, error, data },
-    // setProductsTemp,
+    setProductsTemp,
   } = useCustomFoods();
-
-  const { setProductsTemp } = useCustomMachines();
 
   const {
     handleSubmit,
@@ -30,6 +28,7 @@ export default function InputFoods() {
     result,
     loading,
     setProducts,
+    setResult,
     selectManager,
     setSelectManager,
     handleClick,
@@ -39,8 +38,7 @@ export default function InputFoods() {
     setProducts(data?.customFood);
   }, [data]);
 
-  console.log("result : ", result);
-  console.log("loading : ", loading);
+  console.log(result);
 
   return (
     <>
@@ -78,6 +76,8 @@ export default function InputFoods() {
             {result.result === "true" && (
               <Modal
                 title={"제출"}
+                food={true}
+                setResult={setResult}
                 component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
               />
             )}

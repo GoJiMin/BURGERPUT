@@ -1,30 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Modal.module.css";
 import Confirm from "./Confirm";
-import { submitResult } from "../api/Products";
+import { submitResultFoods, submitResultMachines } from "../api/Products";
 
-export default function Modal({ title, component }) {
-  const [isOpen, setIsOpen] = useState(true);
-
+export default function Modal({ title, component, setResult, machine, food }) {
   const close = () => {
-    setIsOpen(false);
+    setResult(false);
   };
 
   const confirm = () => {
-    submitResult();
-    setIsOpen(false);
+    machine && submitResultMachines();
+    food && submitResultFoods();
+    setResult(false);
   };
 
   return (
     <section className={styles.section}>
-      {isOpen && (
-        <Confirm
-          title={title}
-          content={component}
-          close={close}
-          confirm={confirm}
-        />
-      )}
+      <Confirm
+        title={title}
+        content={component}
+        close={close}
+        confirm={confirm}
+      />
     </section>
   );
 }
