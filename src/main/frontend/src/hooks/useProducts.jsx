@@ -109,7 +109,7 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     const hasEmptyTemp = products.some((product) => !product.temp);
 
     if (hasEmptyTemp || selectManager.length === 0) {

@@ -3,7 +3,15 @@ import styles from "./Modal.module.css";
 import Confirm from "./Confirm";
 import { useModal } from "../hooks/useModal";
 
-export default function Modal({ title, component, setResult, machine, food }) {
+export default function Modal({
+  title,
+  component,
+  setResult,
+  machine,
+  food,
+  error,
+  submit,
+}) {
   const { close, confirm } = useModal({ machine, food, setResult });
 
   return (
@@ -12,7 +20,7 @@ export default function Modal({ title, component, setResult, machine, food }) {
         title={title}
         content={component}
         close={close}
-        confirm={confirm}
+        confirm={error ? submit : confirm}
       />
     </section>
   );

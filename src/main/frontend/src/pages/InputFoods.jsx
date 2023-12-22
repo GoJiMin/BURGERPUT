@@ -81,6 +81,15 @@ export default function InputFoods() {
                 component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
               />
             )}
+            {result.result === "false" && (
+              <Modal
+                title={"에러 발생"}
+                error={true}
+                submit={handleSubmit}
+                setResult={setResult}
+                component={"입력에 실패했습니다. 다시 시도해주세요."}
+              />
+            )}
             {products.length === 0 ? (
               <div className={styles.empty}>먼저 식품 선택을 완료해주세요.</div>
             ) : (
