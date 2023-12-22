@@ -24,5 +24,7 @@ public class SubmitFoodController {
         WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
         button.click();
 
+        driver.quit();
+
     }
 }

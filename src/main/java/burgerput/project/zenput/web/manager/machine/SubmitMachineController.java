@@ -28,6 +28,9 @@ public class SubmitMachineController {
 
         WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
         button.click();
-        //GO TO PAGE
+
+        //close the webPage
+
+        driver.quit();
     }
 }

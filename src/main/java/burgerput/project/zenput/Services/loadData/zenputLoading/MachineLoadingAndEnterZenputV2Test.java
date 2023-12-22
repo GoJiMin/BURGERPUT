@@ -179,7 +179,6 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             }
             //성공했을 시에 driver 값 같이 리턴
             result.put("result", "true");
-
             //MachineDriverRepository에 저장
             machineDriverRepository.setDriver(driver);
 
