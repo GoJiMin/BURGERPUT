@@ -78,6 +78,15 @@ export default function InputMachines() {
                 component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
               />
             )}
+            {result.result === "false" && (
+              <Modal
+                title={"에러 발생"}
+                error={true}
+                submit={handleSubmit}
+                setResult={setResult}
+                component={"입력에 실패했습니다. 다시 시도해주세요."}
+              />
+            )}
             <div>
               {products.length === 0 ? (
                 <div className={styles.empty}>

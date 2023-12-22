@@ -38,8 +38,6 @@ export default function InputFoods() {
     setProducts(data?.customFood);
   }, [data]);
 
-  console.log(result);
-
   return (
     <>
       {products && (
