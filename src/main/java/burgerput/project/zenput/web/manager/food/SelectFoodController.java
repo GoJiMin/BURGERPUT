@@ -25,7 +25,6 @@ public class SelectFoodController {
     @ResponseBody
     public ArrayList<Map> showFoodList() {
         ArrayList<Map> result = printData.zenputFood();
-
         return result;
     }
 

@@ -17,12 +17,13 @@ public class SubmitFoodController {
     private final FoodDriverRepository foodDriverRepository;
 
     @GetMapping("back/fsubmit")
-
     public void submitFood() {
         WebDriver driver = foodDriverRepository.getDriver();
 
         WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
         button.click();
+
+        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         driver.quit();
 

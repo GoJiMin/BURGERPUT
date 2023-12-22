@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class SubmitMachineController {
@@ -29,6 +29,7 @@ public class SubmitMachineController {
         WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
         button.click();
 
+        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         //close the webPage
 
         driver.quit();

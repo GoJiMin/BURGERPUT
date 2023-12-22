@@ -43,6 +43,7 @@ public class EnterFoodController {
     }
 
     @PostMapping("/back/enter/foods")
+    @ResponseBody
     public Map<String,String> submitZenputFood(@RequestBody String param) {
         log.info("Foodparam = {}", param);
         Map<String, String> resultMap = foodLoadingAndEnterZenput.sendValueV2(param);
