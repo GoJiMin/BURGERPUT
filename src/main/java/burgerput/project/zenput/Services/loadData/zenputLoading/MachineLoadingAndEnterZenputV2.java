@@ -3,15 +3,13 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
+import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
 import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -30,6 +28,8 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final MachineRepository machineRepository;
+    private final MachineDriverRepository machineDriverRepository;
+
 
     //get info 는 무조건 AM 으로만 받아온다.
     // Only am list
@@ -150,7 +150,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                     if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
 
                     }else{
-                        enterValue(field, dummyStore);
+                        enterValue(field, dummyStore,result);
                     }
 
                 }
@@ -159,94 +159,26 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-            MachineDriverRepositoryV1 machineDriverRepositoryV1 = new MachineDriverRepositoryV1();
-            machineDriverRepositoryV1.setDriver(driver);
+            machineDriverRepository.setDriver(driver);
 
-        } catch (Exception e) {
+
+        }  catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
-            result.put("result", "false");
+            log.info("errororrororororororrrorrerrorerrorerror error error error ");
             log.info(e.toString());
 
             //에러난 드라이버 종료
             driver.quit();
-
             return result;
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }
 
     @Override
     public void sendValue(String param) {
-
-        //choose am/pm list Start ==============================
-
-        //selenium enter logic start ========================================
-        System.setProperty("java.awt.headless", "false");
-        try {
-
-            // Enter the value
-
-            // 1. Enter Manager Name
-            //a. getManager info from json
-            JSONObject paramO = new JSONObject(param);
-            String mgrName = paramO.get("mgrname").toString();
-
-            String time = paramO.get("time").toString();
-
-            WebDriver driver = null;
-            if (time.equals("AM")) {
-                driver = movePageService.clickAmMachine();
-
-            } else if (time.equals("PM")) {
-                driver = movePageService.clickPmMachine();
-                log.info("ENTER PM Machine");
-
-            }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            //b. Enter the manager textbox
-            WebElement managerField = driver.findElement(By.id("field_1"));
-
-            WebElement textarea = managerField.findElement(By.tagName("textarea"));
-
-            textarea.click();
-            textarea.sendKeys(mgrName);
-            Thread.sleep(30);
-
-            //dummyStore
-            ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
-            log.info("dummyStore result ={}", dummyStore);
-
-            //dummyMap changed
-            ArrayList<Map> customMachineMap = myJsonParser.jsonStringToArrayList(param);
-
-
-            ArrayList<Map<String, String>> maps = finalMapMaker(customMachineMap, dummyStore);
-
-            log.info("dummyMap final ={}", maps);
-            //li class group
-            //Enter customValueStart ===============================
-            List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
-
-            for (WebElement fields : section) {
-                List<WebElement> elements = fields.findElements(By.className("form-field"));
-
-                for (WebElement field : elements) {
-                    //extract vaild id list logic
-                    String id = field.getAttribute("id");
-                    if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
-
-                    }else{
-                        enterValue(field, dummyStore);
-                    }
-
-                }
-            }
-
-        } catch (Exception e) {
-
-            log.info(e.toString());
-        }
     }
 
     private ArrayList<Map<String,String>> finalMapMaker(ArrayList<Map> customMachineMap, ArrayList<Map<String, String>> dummyStore) {
@@ -337,7 +269,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
         return result;
     }
 
-    private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap) {
+    private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap, Map<String,String> resultMap) {
 
         try {
 
@@ -349,17 +281,23 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             for (int i = 0; i < machineMap.size(); i++) {
                 Map<String, String> customMap = machineMap.get(i);
                 try {
-                    if (id.equals(customMap.get("id")) ) {
+                    if (id.equals(customMap.get("id"))) {
 
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         machineMap.remove(i);
                         break;
                     }
                 } catch (NullPointerException e) {
                     log.info("error message ={}", e);
                     //do nothing
+                } catch (ElementNotInteractableException e) {
+                    log.info("ElementNotinteratable Excpetion error");
+                    log.info(e.toString());
+
+                    resultMap.put("result", "false");
+
                 }
             }
 

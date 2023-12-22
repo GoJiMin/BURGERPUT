@@ -10,10 +10,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -170,7 +167,12 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                     if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
 
                     }else{
-                        enterValue(field, dummyStore);
+                        enterValue(field, dummyStore,result);
+                    }
+
+                    if (result.containsValue("false")) {
+                        ElementNotInteractableException e = new ElementNotInteractableException("ElementNot Interatable Excpetion");
+                        throw e;
                     }
 
                 }
@@ -181,15 +183,17 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             //MachineDriverRepository에 저장
             machineDriverRepository.setDriver(driver);
 
-        } catch (Exception e) {
+        } catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
-            result.put("result", "false");
+            log.info("errororrororororororrrorrerrorerrorerror error error error ");
             log.info(e.toString());
 
             //에러난 드라이버 종료
             driver.quit();
-
             return result;
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -257,9 +261,8 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                     if (id.equals("field_0") | id.equals("field_1") | id.equals("field_84")) {
 
                     }else{
-                        enterValue(field, dummyStore);
+//                        enterValue(field, dummyStore);
                     }
-
                 }
             }
 
@@ -357,7 +360,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
         return result;
     }
 
-    private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap) {
+    private void enterValue(WebElement field, ArrayList<Map<String, String>> machineMap, Map<String,String> resultMap) {
 
         try {
 
@@ -369,7 +372,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             for (int i = 0; i < machineMap.size(); i++) {
                 Map<String, String> customMap = machineMap.get(i);
                 try {
-                    if (id.equals(customMap.get("id")) ) {
+                    if (id.equals(customMap.get("id"))) {
 
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
@@ -380,6 +383,12 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                 } catch (NullPointerException e) {
                     log.info("error message ={}", e);
                     //do nothing
+                } catch (ElementNotInteractableException e) {
+                    log.info("ElementNotinteratable Excpetion error");
+                    log.info(e.toString());
+
+                    resultMap.put("result", "false");
+
                 }
             }
 
