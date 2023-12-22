@@ -10,10 +10,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -131,6 +128,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
         try {
             //selenium enter logic start ========================================
             System.setProperty("java.awt.headless", "false");
+
             //chrome driver use
 
             WebDriverManager.chromedriver().setup();
@@ -194,7 +192,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                         enterValue(field, dummyStore, result);
                     }
                     if (result.containsValue("false")) {
-                        NoSuchElementException e = (NoSuchElementException) new Exception("No such Element Exception Occured 에러에러에러에ㅓㄹ");
+                        ElementNotInteractableException e =  new ElementNotInteractableException("No such Element Exception Occured 에러에러에러에ㅓㄹ");
                         throw e;
                     }
 
@@ -207,50 +205,20 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             foodDriverRepository.setDriver(driver);
 //            saveButtonClick(driver);
 
-        } catch (NoSuchElementException e) {
+        } catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
+            log.info("errore errororororrorororororororororororororororororororororo");
             log.info(e.toString());
             //에러가 난 selenium driver 는 종료
             driver.quit();
             return result;
+
         } catch (InterruptedException e) {
             log.info("runTime eXcpetion ");
             log.info(e.toString());
             throw new RuntimeException(e);
-
         }
         return result;
-    }
-
-    private void saveButtonClick(WebDriver driver) throws InterruptedException {
-
-        //Back button clicked
-        WebElement itag = driver.findElement(By.xpath("//*[@id=\"action_left\"]/i"));
-
-        new Actions(driver)
-                .click(itag)
-                .perform();
-
-        log.info("Clicked....");
-
-        Thread.sleep(2000);
-
-        log.info("초안저장 alert 누르기");
-        //초안저장 START
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.alertIsPresent());
-
-        driver.switchTo().alert().accept();
-        Thread.sleep(5000);
-
-        driver.quit();
-        //초안저장 END
-
-        //Back Button clicked END
-
-////*[@id="action_left"]/i
-//        driver.quit();
-
     }
 
     private ArrayList<Map<String, String>> dummyStoreMaker() {
@@ -286,7 +254,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                         customMap.remove(id);
                         break;
                     }
-                } catch (NoSuchElementException e) {
+                } catch (ElementNotInteractableException e) {
                     log.info("Exception Occured in the entervalue Method!!");
                     log.info(e.toString());
 

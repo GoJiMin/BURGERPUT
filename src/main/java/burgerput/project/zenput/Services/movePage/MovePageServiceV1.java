@@ -136,7 +136,9 @@ public class MovePageServiceV1 implements MovePageService{
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});;
             //서버에서 돌려서 안돼서 추가한 옵션
             options.addArguments("--no-sandbox");
-            options.addArguments("--headless=new");
+
+//            options.addArguments("--headless=new");
+
 
 //            options.addArguments("--disable-dev-shm-usage");
 //            options.addArguments("--single-process");
