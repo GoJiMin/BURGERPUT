@@ -189,6 +189,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
                         log.info("where's id?'{}", id);
+
                         enterValue(field, dummyStore, result);
                     }
                     if (result.containsValue("false")) {
