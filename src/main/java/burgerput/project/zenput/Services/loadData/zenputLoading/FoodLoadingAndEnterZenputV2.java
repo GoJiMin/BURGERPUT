@@ -3,15 +3,13 @@ package burgerput.project.zenput.Services.loadData.zenputLoading;
 import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
+import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import burgerput.project.zenput.repository.driverRepository.FoodDriverRepositoryV1;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,6 +30,8 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
     private final MovePageService movePageService;
     private final MyJsonParser myJsonParser;
     private final FoodRepository foodRepository;
+    private final FoodDriverRepository foodDriverRepository;
+
 
     @Override
     public Map<Integer, Food> getInfo() {//get from am info
@@ -162,7 +162,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
                         log.info("where's id?'{}", id);
-                        enterValue(field, dummyStore);
+//                        enterValue(field, dummyStore);
                     }
 
                 }
@@ -244,7 +244,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
                         log.info("where's id?'{}", id);
-                        enterValue(field, dummyStore);
+                        enterValue(field, dummyStore, result);
                     }
 
                 }
@@ -254,51 +254,25 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             //성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
-            FoodDriverRepositoryV1 foodDriverRepository = new FoodDriverRepositoryV1();
             foodDriverRepository.setDriver(driver);
-//            saveButtonClick(driver);
+//            saveButt
 
-        } catch (Exception e) {
+        } catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
-            result.put("result", "false");
+            log.info("errore errororororrorororororororororororororororororororororo");
             log.info(e.toString());
             //에러가 난 selenium driver 는 종료
             driver.quit();
             return result;
+
+        } catch (InterruptedException e) {
+            log.info("runTime eXcpetion ");
+            log.info(e.toString());
+            throw new RuntimeException(e);
         }
         return result;
     }
 
-    private void saveButtonClick(WebDriver driver) throws InterruptedException {
-
-        //Back button clicked
-        WebElement itag = driver.findElement(By.xpath("//*[@id=\"action_left\"]/i"));
-
-        new Actions(driver)
-                .click(itag)
-                .perform();
-
-        log.info("Clicked....");
-
-        Thread.sleep(2000);
-
-        log.info("초안저장 alert 누르기");
-        //초안저장 START
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.alertIsPresent());
-
-        driver.switchTo().alert().accept();
-        Thread.sleep(5000);
-
-        driver.quit();
-        //초안저장 END
-
-        //Back Button clicked END
-
-////*[@id="action_left"]/i
-//        driver.quit();
-
-    }
 
     private ArrayList<Map<String, String>> dummyStoreMaker() {
         ArrayList<Map<String, String>> result = new ArrayList<>();
@@ -315,7 +289,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         return result;
     }
 
-    private void enterValue(WebElement field, ArrayList<Map<String, String>> foodMap) {
+    private void enterValue(WebElement field, ArrayList<Map<String, String>> foodMap, Map<String,String> resultMap) {
 
         try {
             //extract vaild id field
@@ -333,7 +307,11 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                         customMap.remove(id);
                         break;
                     }
-                } catch (NullPointerException e) {
+                } catch (ElementNotInteractableException e) {
+                    log.info("Exception Occured in the entervalue Method!!");
+                    log.info(e.toString());
+
+                    resultMap.put("result", "false");
                     //do nothing
                 }
             }
