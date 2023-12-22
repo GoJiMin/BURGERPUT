@@ -1,6 +1,6 @@
 import { submitResultFoods, submitResultMachines } from "../api/Products";
 
-export function useModal({ machine, food }) {
+export function useModal({ machine, food, setResult }) {
   const close = () => {
     setResult(false);
   };

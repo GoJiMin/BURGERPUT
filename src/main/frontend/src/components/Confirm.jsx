@@ -21,7 +21,7 @@ export default function Confirm({ title, content, close, confirm }) {
               close && close();
             }}
           >
-            제출
+            예
           </button>
           <button className={styles.cancelBtn} onClick={close}>
             취소
