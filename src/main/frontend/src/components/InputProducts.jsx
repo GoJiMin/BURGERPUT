@@ -35,7 +35,7 @@ export default function InputProducts({
           </button>
           <input
             className={missing ? `${styles.input__missing}` : `${styles.input}`}
-            type='text'
+            type='number'
             value={temp}
             disabled={missing}
             onChange={handleChange}
