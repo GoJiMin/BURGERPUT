@@ -126,7 +126,11 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            options.addArguments("--headless=new");
+
             driver = new ChromeDriver(options);
+            driver.manage().window().setSize(new Dimension(1024, 9999));
+
 
             //==============================Scrape LOGIC START============================
 
@@ -373,6 +377,7 @@ public class MachineLoadingAndEnterZenputV2Test implements MachineLoadingAndEnte
                 try {
                     if (id.equals(customMap.get("id"))) {
 
+                        log.info("enter Map info {}", customMap);
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
                         Thread.sleep(1000);

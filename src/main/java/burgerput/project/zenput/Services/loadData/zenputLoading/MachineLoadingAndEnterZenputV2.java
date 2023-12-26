@@ -283,6 +283,9 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                 try {
                     if (id.equals(customMap.get("id"))) {
 
+                        log.info("enter Map info {}", customMap);
+
+
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
                         Thread.sleep(1000);

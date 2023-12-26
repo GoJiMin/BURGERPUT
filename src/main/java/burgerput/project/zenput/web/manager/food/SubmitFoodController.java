@@ -3,11 +3,16 @@ package burgerput.project.zenput.web.manager.food;
 import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.hibernate.result.Output;
+import org.openqa.selenium.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,7 +30,19 @@ public class SubmitFoodController {
 
         log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
+        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
         driver.quit();
+
+        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
+
+        try {
+            FileUtils.copyFile(screenshotAs, file);
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+//            writer.write(source);
+//            writer.close();
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
 
     }
 }

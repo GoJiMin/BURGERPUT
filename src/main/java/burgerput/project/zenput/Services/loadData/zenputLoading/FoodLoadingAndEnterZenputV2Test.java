@@ -137,7 +137,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            options.addArguments("--headless=new");
+
             driver = new ChromeDriver(options);
+            driver.manage().window().setSize(new Dimension(1024, 9999));
+
 
             //==============================Scrape LOGIC START============================
 
@@ -188,7 +192,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                     //Enter customValueStart ===============================
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
-                        log.info("where's id?'{}", id);
+//                        log.info("where's id?'{}", id);
 
                         enterValue(field, dummyStore, result);
                     }
@@ -248,10 +252,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             for (Map<String, String> customMap : foodMap) {
                 try {
                     if (id.equals(customMap.get("id"))) {
-
+                        log.info("custom Map info put this result={}", customMap);
                         input.sendKeys(customMap.get("temp"));
 
-                        Thread.sleep(450);
+
+                        Thread.sleep(500);
                         customMap.remove(id);
                         break;
                     }

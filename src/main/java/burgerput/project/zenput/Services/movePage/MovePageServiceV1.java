@@ -137,7 +137,7 @@ public class MovePageServiceV1 implements MovePageService{
             //서버에서 돌려서 안돼서 추가한 옵션
             options.addArguments("--no-sandbox");
 
-//            options.addArguments("--headless=new");
+            options.addArguments("--headless=new");
 
 
 //            options.addArguments("--disable-dev-shm-usage");
@@ -146,6 +146,8 @@ public class MovePageServiceV1 implements MovePageService{
 //            options.setBinary("/opt/google/chrome/");
             //서버에서 돌려서 어쩌구 옵션 끝
             WebDriver driver = new ChromeDriver(options);
+            driver.manage().window().setSize(new Dimension(1024, 9999));
+
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //==============================Scrape LOGIC START============================

@@ -83,7 +83,6 @@ public class LoadingController {
         response.sendRedirect(BURGERPUTSITE);
     }
 
-
     //@GetMapping("/test")
     @ResponseBody
     public void loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {

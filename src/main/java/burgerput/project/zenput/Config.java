@@ -44,21 +44,21 @@ public class Config implements WebMvcConfigurer {
 //    }
 
     //SSL cross-origin set-up ======================
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping("/**")
-                .allowedOrigins("https://localhost:3000")
-                .allowedMethods("GET", "POST")
-                .allowedHeaders("*");
-    }
+//
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        WebMvcConfigurer.super.addCorsMappings(registry);
+//        registry.addMapping("/**")
+//                .allowedOrigins("https://localhost:3000")
+//                .allowedMethods("GET", "POST")
+//                .allowedHeaders("*");
+//    }
 
     //Interceptor Settions===========================================
-    @Bean
-    public CheckSessionInterceptor checkSessionInterceptor() {
-        return new CheckSessionInterceptor();
-    }
+//    @Bean
+//    public CheckSessionInterceptor checkSessionInterceptor() {
+//        return new CheckSessionInterceptor();
+//    }
 
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
@@ -69,15 +69,14 @@ public class Config implements WebMvcConfigurer {
 //                        , "/index.html", "/static/**", "/logo/*", "/logo192.png", "/*.json", "/data/*");
 //
 //    }
-
-    // load machine list from zenput page
+// load machine list from zenput page
 
         @Bean
     public MachineLoadingAndEnterZenput LoadMachine(MovePageService movePageService,
                                                     MyJsonParser myJsonParser,
                                                     MachineRepository machineRepository,
                                                     MachineDriverRepository machineDriverRepository) {
-        return new MachineLoadingAndEnterZenputV2Test(movePageService,myJsonParser,machineRepository, machineDriverRepository
+        return new MachineLoadingAndEnterZenputV2(movePageService,myJsonParser,machineRepository, machineDriverRepository
         );
     }
 
@@ -87,7 +86,7 @@ public class Config implements WebMvcConfigurer {
                                               MyJsonParser myJsonParser,
                                               FoodRepository foodRepository,
                                               FoodDriverRepository foodDriverRepository) {
-        return new FoodLoadingAndEnterZenputV2Test(movePageService, myJsonParser, foodRepository, foodDriverRepository);
+        return new FoodLoadingAndEnterZenputV2(movePageService, myJsonParser, foodRepository, foodDriverRepository);
     }
 
     @Bean

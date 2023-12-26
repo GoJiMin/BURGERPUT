@@ -223,9 +223,9 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             for (Map<String, String> customMap : foodMap) {
                 try {
                     if (id.equals(customMap.get("id"))) {
+                        log.info("enter Map info {}", customMap);
 
                         input.sendKeys(customMap.get("temp"));
-
                         Thread.sleep(450);
                         customMap.remove(id);
                         break;

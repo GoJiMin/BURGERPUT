@@ -4,12 +4,16 @@ import burgerput.project.zenput.repository.driverRepository.MachineDriverReposit
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 @RestController
@@ -30,8 +34,22 @@ public class SubmitMachineController {
         button.click();
 
         log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         //close the webPage
 
+        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
         driver.quit();
+
+        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
+
+        try {
+            FileUtils.copyFile(screenshotAs, file);
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+//            writer.write(source);
+//            writer.close();
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
+
     }
 }
