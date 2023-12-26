@@ -29,6 +29,7 @@ export default function InputProducts({
             className={styles.missing}
             onClick={handleClick}
             type='button'
+            tabindex='-1'
           >
             결품
           </button>
