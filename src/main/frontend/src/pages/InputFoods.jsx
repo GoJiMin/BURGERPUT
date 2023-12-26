@@ -43,7 +43,7 @@ export default function InputFoods() {
       {products && (
         <section className={styles.section}>
           <div className={styles.title}>
-            <div className={styles.text}></div>
+            <div className={styles.text}>식품 입력</div>
             {data?.mgrList && (
               <ManagerList
                 className={styles.mgrList}
