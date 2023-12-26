@@ -23,7 +23,7 @@ export default function Main() {
 
   // 현재 시간을 배열로 저장하는 함수
   function getCurrentDate() {
-    const currentDate = setCurrentDate;
+    const currentDate = setCurrentDate();
 
     const year = currentDate.getFullYear();
     const month = +("0" + (1 + currentDate.getMonth())).slice(-2);
@@ -61,7 +61,7 @@ export default function Main() {
 
     if (result > 0) {
       if (isAfter8AM()) {
-        saveCurrentDate;
+        saveCurrentDate();
       } else {
         return;
       }
