@@ -40,7 +40,7 @@ public class SubmitMachineController {
         File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
         driver.quit();
 
-        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
+        File file = new File("C:/Users/bbubb/Desktop/test/machine.png");
 
         try {
             FileUtils.copyFile(screenshotAs, file);
