@@ -201,7 +201,7 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
                 사용 방법
               </button>
             </Link>
-            <Link to='/zenput/foods' state={"AM"}>
+            <Link to='/cheat/machine'>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
