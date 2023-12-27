@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
-export default function Navbar({ setVisible, setHidden }) {
+export default function Navbar({ setVisible, setHidden, cheat }) {
   const [dropDown, setDropDown] = useState("");
   const handleDropDownVisibility = (index) => {
     setDropDown(index);
@@ -17,6 +17,20 @@ export default function Navbar({ setVisible, setHidden }) {
     <nav className={styles.navbar}>
       <section className={styles.navbar__wrapper}>
         <section className={styles.navbar__depth1}>
+          {cheat && (
+            <button
+              onClick={() => {
+                if (dropDown === "cheat") {
+                  setDropDown("");
+                  return;
+                }
+                handleDropDownVisibility("cheat");
+              }}
+              className={styles.menu}
+            >
+              &nbsp;&nbsp;Cheat
+            </button>
+          )}
           <Link to='/'>
             <button
               onClick={() => {
@@ -175,6 +189,34 @@ export default function Navbar({ setVisible, setHidden }) {
                 </p>
               </div>
             </div>
+          </section>
+        )}
+        {dropDown === "cheat" && (
+          <section className={styles.navbar__depth2}>
+            <Link to='/zenput/machines' state={"AM"}>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                사용 방법
+              </button>
+            </Link>
+            <Link to='/zenput/foods' state={"AM"}>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                기기 범위 지정
+              </button>
+            </Link>
+            <Link to='/zenput/machines' state={"PM"}>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                식품 범위 지정
+              </button>
+            </Link>
           </section>
         )}
       </section>
