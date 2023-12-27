@@ -145,7 +145,7 @@ public class PrintDataV1 implements PrintData {
 
         for (CustomFood customFood : customId) {
             log.info("custommachine id ={}", customFood.getId());
-            Food foundFood = foodRepository.findMachineById(Integer.toString(customFood.getId()));
+            Food foundFood = foodRepository.findFoodById(Integer.toString(customFood.getId()));
             Map<String, String> customFoodMap = new LinkedHashMap<>();
             customFoodMap.put("id", Integer.toString(foundFood.getId()));
             customFoodMap.put("name", foundFood.getName());
@@ -153,6 +153,54 @@ public class PrintDataV1 implements PrintData {
             customFoodMap.put("max", String.valueOf(foundFood.getMax()));
 
             result.add(customFoodMap);
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public ArrayList<Map> customCheatMachine() {
+        ArrayList<Map> result = new ArrayList<>();
+
+        //Get the customId
+        List<CustomMachine> customId = customMachineRepository.findAll();
+
+        for (CustomMachine customCheatMachine : customId) {
+            log.info("customCheatMachine INFO ={}",customCheatMachine);
+
+            Machine foundCheatMachine = machineRepository.findMachineById(Integer.toString(customCheatMachine.getId()));
+            Map<String, String> customCheatMachineMap = new LinkedHashMap<>();
+
+            customCheatMachineMap.put("id", Integer.toString(foundCheatMachine.getId()));
+            customCheatMachineMap.put("name", foundCheatMachine.getName());
+            customCheatMachineMap.put("min", Integer.toString(customCheatMachine.getMin()));
+            customCheatMachineMap.put("max", Integer.toString(customCheatMachine.getMax()));
+
+            result.add(customCheatMachineMap);
+        }
+
+        return result;
+    }
+
+    @Override
+    public ArrayList<Map> customCheatFood() {
+        ArrayList<Map> result = new ArrayList<>();
+
+        List<CustomFood> customId = customFoodRepository.findAll();
+
+        for (CustomFood customCheatFood : customId) {
+            log.info("customCheatFood INFO = {}", customCheatFood);
+
+            Food foundCheatFood = foodRepository.findFoodById(Integer.toString(customCheatFood.getId()));
+            Map<String, String> customCheatFoodMap = new LinkedHashMap<>();
+
+            customCheatFoodMap.put("id", Integer.toString(foundCheatFood.getId()));
+            customCheatFoodMap.put("name", foundCheatFood.getName());
+            customCheatFoodMap.put("min", Integer.toString(customCheatFood.getMin()));
+            customCheatFoodMap.put("max", Integer.toString(customCheatFood.getMax()));
+
+            result.add(customCheatFoodMap);
         }
 
         return result;
