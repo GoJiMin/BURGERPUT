@@ -15,7 +15,7 @@ export default function CustomMachineTemp() {
   return (
     <section className={styles.section}>
       <div className={styles.title}>
-        <div className={styles.text}>기기 입력</div>
+        <div className={styles.text}>기기 범위</div>
       </div>
       {products &&
         products.map((product) => (
