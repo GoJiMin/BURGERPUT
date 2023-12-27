@@ -38,10 +38,12 @@ button {
 }
 
 .navbar__depth2 {
+  z-index: 998;
   animation: dropdown 0.4s ease;
 }
 
 .navbar__depth2__contact {
+  z-index: 998;
   animation: dropdownContact 0.4s ease;
 }
 

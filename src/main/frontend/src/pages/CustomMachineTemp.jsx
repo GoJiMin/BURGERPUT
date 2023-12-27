@@ -17,12 +17,14 @@ export default function CustomMachineTemp() {
       <div className={styles.title}>
         <div className={styles.text}>기기 범위</div>
       </div>
-      {products &&
-        products.map((product) => (
-          <li key={product.id}>
-            <SetTemp product={product} />
-          </li>
-        ))}
+      <form className={styles.form}>
+        {products &&
+          products.map((product) => (
+            <li key={product.id}>
+              <SetTemp product={product} />
+            </li>
+          ))}
+      </form>
     </section>
   );
 }

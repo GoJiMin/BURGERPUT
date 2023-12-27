@@ -17,20 +17,6 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
     <nav className={styles.navbar}>
       <section className={styles.navbar__wrapper}>
         <section className={styles.navbar__depth1}>
-          {cheat && (
-            <button
-              onClick={() => {
-                if (dropDown === "cheat") {
-                  setDropDown("");
-                  return;
-                }
-                handleDropDownVisibility("cheat");
-              }}
-              className={styles.menu}
-            >
-              &nbsp;&nbsp;Cheat
-            </button>
-          )}
           <Link to='/'>
             <button
               onClick={() => {
@@ -78,7 +64,51 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
           >
             &nbsp;&nbsp;Contact
           </button>
+          {cheat && (
+            <button
+              onClick={() => {
+                if (dropDown === "cheat") {
+                  setDropDown("");
+                  return;
+                }
+                handleDropDownVisibility("cheat");
+              }}
+              className={styles.menu}
+            >
+              &nbsp;&nbsp;Cheat
+            </button>
+          )}
         </section>
+        {dropDown === "cheat" && (
+          <section className={styles.navbar__depth2}>
+            <div className={styles.menu__depth2__contact__hidden}>hidden</div>
+            <div className={styles.menu__depth2__contact__hidden}>hidden</div>
+            <Link to='/cheat/help'>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                사용 방법
+              </button>
+            </Link>
+            <Link to='/cheat/machine'>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                기기 범위 지정
+              </button>
+            </Link>
+            <Link to='/zenput/machines' state={"PM"}>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                식품 범위 지정
+              </button>
+            </Link>
+          </section>
+        )}
         {dropDown === "1" && (
           <section className={styles.navbar__depth2}>
             <Link to='select/machines'>
@@ -189,34 +219,6 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
                 </p>
               </div>
             </div>
-          </section>
-        )}
-        {dropDown === "cheat" && (
-          <section className={styles.navbar__depth2}>
-            <Link to='/cheat/help'>
-              <button
-                className={styles.menu__depth2}
-                onClick={handleDropDownHidden}
-              >
-                사용 방법
-              </button>
-            </Link>
-            <Link to='/cheat/machine'>
-              <button
-                className={styles.menu__depth2}
-                onClick={handleDropDownHidden}
-              >
-                기기 범위 지정
-              </button>
-            </Link>
-            <Link to='/zenput/machines' state={"PM"}>
-              <button
-                className={styles.menu__depth2}
-                onClick={handleDropDownHidden}
-              >
-                식품 범위 지정
-              </button>
-            </Link>
           </section>
         )}
       </section>

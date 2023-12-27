@@ -36,7 +36,7 @@
 }
 
 .phone {
-  width: 600px;
+  width: 800px;
   height: 690px;
   border: 5px solid var(--navbar-background-color);
   background: var(--screen-border-color);

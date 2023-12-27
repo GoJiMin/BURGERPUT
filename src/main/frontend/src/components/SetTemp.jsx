@@ -13,20 +13,26 @@ export default function SetTemp({ product, product: { name, min, max } }) {
   }, [temp]);
 
   return (
-    <section>
+    <section className={styles.product}>
       <header className={styles.header}>
-        <p>{name}</p>
-        <p>{min}</p>
-        <p>{max}</p>
+        <p className={styles.name}>{name}</p>
+        <p className={styles.initTemp}>
+          ({initTemp.current[0]} ~ {initTemp.current[1]} ºF)
+        </p>
       </header>
-      <Slider
-        range
-        onChange={(event) => setTemp([event[0], event[1]])}
-        min={initTemp.current[0]}
-        max={initTemp.current[1]}
-        allowCross={false}
-        defaultValue={[initTemp.current[0], initTemp.current[1]]}
-      />
+      <article className={styles.slider}>
+        <p className={styles.temp}>{temp[0]} ºF</p>
+        <Slider
+          range
+          onChange={(event) => setTemp([event[0], event[1]])}
+          min={initTemp.current[0]}
+          max={initTemp.current[1]}
+          allowCross={false}
+          defaultValue={[initTemp.current[0], initTemp.current[1]]}
+        />
+
+        <p className={styles.temp}>{temp[1]} ºF</p>
+      </article>
     </section>
   );
 }
