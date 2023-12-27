@@ -1,0 +1,267 @@
+/* Global */
+:root {
+  /* color */
+  --color-white: #ffffff;
+  --color-light-white: #eeeeee;
+  --color-dark-white: #bdbdbd;
+  --color-pink: #fe918d;
+  --color-dark-pink: #ff6863;
+  --color-black: #4d4d4d;
+  --color-dark-grey: #4d4d4d;
+  --color-grey: #616161;
+  --color-light-grey: #7c7979;
+  --color-blue: #313daa;
+  --color-light-blue: #0079ff;
+  --color-yellow: #fff7d1;
+  --color-ornage: #feb546;
+  --color-black: #000000;
+  --color-border: #d9d9d9;
+
+  /* Font Size */
+  --font-xl: 3rem;
+  --font-lg: 2.5rem;
+  --font-tg: 2rem;
+  --font-md: 1.3rem;
+  --font-sm: 1.1rem;
+
+  /* Font Weight */
+  --weight-regular: 400;
+  --weight-semi-bold: 600;
+  --weight-bold: 700;
+
+  /* Size */
+  --size-border-radius: 10px;
+
+  /* Animation */
+  --animation-duration: 250ms;
+
+  /* System Color */
+  --font-base-color: #232327;
+  --background-color: #ffffff;
+  --screen-color: #454545;
+
+  /* searchBox height */
+  --searchBox-height: 2rem;
+  --searchIcon-size: 3.2rem;
+  --searchBox-width: 50rem;
+}
+
+/* System Fonts */
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-SemiBold.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-SemiBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-SemiBold.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-SemiBold.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-SemiBold.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #445d48 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 1.5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border: 1px solid var(--color-border);
+  border-radius: 40px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-light-blue);
+  border: 3px solid var(--color-light-blue);
+  border-radius: 40px;
+}
+
+/* Universal tags */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  cursor: default;
+  font-family: "Pretendard";
+  background-color: var(--background-color);
+}
+
+#root {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+input,
+textarea {
+  font-family: "Pretendard";
+  opacity: 0.8;
+}
+
+textarea:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+
+button {
+  background-color: transparent;
+  font-family: "Pretendard";
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 0;
+  color: var(--color-black);
+}
+
+input,
+textarea,
+button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 고해상도 노트북 (해상도 ~1480px)*/
+@media all and (max-width: 1480px) {
+  :root {
+  }
+}
+
+/* 노트북 & 테블릿 가로 (해상도 1024px ~ 1279px)*/
+@media all and (min-width: 1024px) and (max-width: 1279px) {
+  :root {
+  }
+}
+
+/* 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  :root {
+  }
+}
+
+/* 모바일 가로 & 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: 480px) and (max-width: 767px) {
+  :root {
+  }
+}
+
+/* 모바일 세로 (해상도 ~ 479px)*/
+@media all and (max-width: 479px) {
+  :root {
+    /* searchBox height */
+    --searchBox-height: 1.5rem;
+    --searchIcon-size: 2.8rem;
+    --searchBox-line-height: var(--searchBox-height);
+    --searchBox-width: 130%;
+  }
+
+  html,
+  body {
+    font-size: 72.5%;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+  }
+}
+
+@font-face {
+  font-family: "LOTTERIACHAB";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}

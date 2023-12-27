@@ -193,7 +193,7 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
         )}
         {dropDown === "cheat" && (
           <section className={styles.navbar__depth2}>
-            <Link to='/zenput/machines' state={"AM"}>
+            <Link to='/cheat/help'>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}

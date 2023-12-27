@@ -21,7 +21,7 @@
   text-align: center;
   padding: 0.7rem 0;
   font-size: xx-large;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   background-color: var(--navbar-background-color);
   color: var(--text-basic-color);

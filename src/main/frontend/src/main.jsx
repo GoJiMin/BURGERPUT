@@ -11,6 +11,7 @@ import SelectManagers from "./pages/SelectManagers";
 import InputMachines from "./pages/InputMachines";
 import InputFoods from "./pages/InputFoods";
 import NotFound from "./pages/NotFound";
+import Help from "./pages/Help";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "select/managers", element: <SelectManagers /> },
       { path: "zenput/machines", element: <InputMachines /> },
       { path: "zenput/foods", element: <InputFoods /> },
+      { path: "cheat/help", element: <Help /> },
     ],
   },
   {
