@@ -16,7 +16,7 @@
 .name {
   font-size: 1.3rem;
   margin-bottom: 0.3rem;
-  white-space: nowrap;
+  width: 18rem;
 }
 
 .initTemp {

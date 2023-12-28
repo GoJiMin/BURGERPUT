@@ -13,6 +13,7 @@ import InputFoods from "./pages/InputFoods";
 import NotFound from "./pages/NotFound";
 import Help from "./pages/Help";
 import CustomMachineTemp from "./pages/CustomMachineTemp";
+import CustomFoodTemp from "./pages/CustomFoodTemp";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: "zenput/foods", element: <InputFoods /> },
       { path: "cheat/help", element: <Help /> },
       { path: "cheat/machine", element: <CustomMachineTemp /> },
+      { path: "cheat/food", element: <CustomFoodTemp /> },
     ],
   },
   {

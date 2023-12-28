@@ -99,7 +99,7 @@ export default function Navbar({ setVisible, setHidden, cheat }) {
                 기기 범위 지정
               </button>
             </Link>
-            <Link to='/zenput/machines' state={"PM"}>
+            <Link to='/cheat/food'>
               <button
                 className={styles.menu__depth2}
                 onClick={handleDropDownHidden}
