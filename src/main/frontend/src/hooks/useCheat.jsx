@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getCustomMachines } from "../api/Products";
+import { getCustomFoods, getCustomMachines } from "../api/Products";
 import { useQuery } from "@tanstack/react-query";
 import { useRandomTemp } from "./useRandomTemp";
 
@@ -25,6 +25,12 @@ export function useCheatProducts() {
 
 export function useCheatMachines() {
   const { data } = useQuery(["customMachinesTemp"], () => getCustomMachines());
+
+  return { data };
+}
+
+export function useCheatFoods() {
+  const { data } = useQuery(["customMachinesTemp"], () => getCustomFoods());
 
   return { data };
 }
