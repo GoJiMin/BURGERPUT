@@ -14,9 +14,15 @@ export default function CustomMachineTemp() {
 
   const handleSave = (e) => {
     e.preventDefault();
+
+    console.log(JSON.stringify(products));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newProducts = generateRandomTemp(products);
 
-    console.log(newProducts);
+    console.log(e.target.value);
   };
 
   /**
@@ -29,7 +35,7 @@ export default function CustomMachineTemp() {
     products.forEach(({ id, name, min, max }) => {
       const randomTemp = rand(Number(min), Number(max));
 
-      randProducts.push({ id, name, randomTemp });
+      randProducts.push({ id, randomTemp });
     });
 
     return randProducts;
@@ -61,11 +67,23 @@ export default function CustomMachineTemp() {
           ))}
       </form>
       <section className={styles.btnContainer}>
-        <button onClick={handleSave} className={styles.submitBtn}>
+        <button
+          className={styles.submitBtn}
+          onClick={handleSubmit}
+          value={"AM"}
+        >
           오전 기기 제출
         </button>
-        <button className={styles.saveBtn}>범위 저장</button>
-        <button className={styles.submitBtn}>오후 기기 제출</button>
+        <button className={styles.saveBtn} onClick={handleSave}>
+          범위 저장
+        </button>
+        <button
+          className={styles.submitBtn}
+          onClick={handleSubmit}
+          value={"PM"}
+        >
+          오후 기기 제출
+        </button>
       </section>
     </section>
   );
