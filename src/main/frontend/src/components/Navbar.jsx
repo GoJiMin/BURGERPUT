@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
-export default function Navbar({ setVisible, setHidden }) {
+export default function Navbar({ setVisible, setHidden, cheat }) {
   const [dropDown, setDropDown] = useState("");
   const handleDropDownVisibility = (index) => {
     setDropDown(index);
@@ -64,7 +64,51 @@ export default function Navbar({ setVisible, setHidden }) {
           >
             &nbsp;&nbsp;Contact
           </button>
+          {cheat && (
+            <button
+              onClick={() => {
+                if (dropDown === "cheat") {
+                  setDropDown("");
+                  return;
+                }
+                handleDropDownVisibility("cheat");
+              }}
+              className={styles.menu}
+            >
+              &nbsp;&nbsp;Cheat
+            </button>
+          )}
         </section>
+        {dropDown === "cheat" && (
+          <section className={styles.navbar__depth2}>
+            <div className={styles.menu__depth2__contact__hidden}>hidden</div>
+            <div className={styles.menu__depth2__contact__hidden}>hidden</div>
+            <Link to='/cheat/help'>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                사용 방법
+              </button>
+            </Link>
+            <Link to='/cheat/machine'>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                기기 범위 지정
+              </button>
+            </Link>
+            <Link to='/cheat/food'>
+              <button
+                className={styles.menu__depth2}
+                onClick={handleDropDownHidden}
+              >
+                식품 범위 지정
+              </button>
+            </Link>
+          </section>
+        )}
         {dropDown === "1" && (
           <section className={styles.navbar__depth2}>
             <Link to='select/machines'>

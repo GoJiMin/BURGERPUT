@@ -1,0 +1,46 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  position: sticky;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  text-align: center;
+  padding: 0.7rem 0;
+  font-size: xx-large;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  background-color: var(--navbar-background-color);
+  color: var(--text-basic-color);
+}
+
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+  padding: 2rem 2.5rem;
+}
+
+.btnContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  color: var(--navbar-background-color);
+  width: 100%;
+  height: 5rem;
+}
+
+.btnContainer button {
+  font-size: 1.2rem;
+}
+
+.saveBtn {
+}
+
+.submitBtn {
+}
