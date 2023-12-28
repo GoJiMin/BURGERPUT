@@ -4,15 +4,15 @@ import SetTemp from "../components/SetTemp";
 import { useCheatFoods, useCheatProducts } from "../hooks/useCheat";
 
 export default function CustomMachineTemp() {
-  const { data } = useCheatFoods();
-  const { handleSave, handleSubmit, setProducts, products } =
-    useCheatProducts();
+  const { submitCustomTemp, data, setCustomTemp } = useCheatFoods();
+  const { handleSave, handleSubmit, setProducts, products } = useCheatProducts({
+    submitCustomTemp,
+    setCustomTemp,
+  });
 
   useEffect(() => {
     setProducts(data?.customFood);
   }, [data]);
-
-  console.log(products);
 
   return (
     <section className={styles.section}>
