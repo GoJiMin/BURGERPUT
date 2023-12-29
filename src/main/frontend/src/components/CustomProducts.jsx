@@ -10,6 +10,8 @@ export default function CustomProducts({
   const { checked, handleChange } = customProductsHook({
     setProducts,
     id,
+    min,
+    max,
     checkedIt,
   });
 

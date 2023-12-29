@@ -110,6 +110,7 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customCheatMachineDataSave(ArrayList<Map> param) {
         for (Map<String,String> map : param) {
+            log.info(param.toString());
             customMachineRepository.updateMy(Integer.parseInt(map.get("id")),
                     Integer.parseInt(map.get("min")),
                     Integer.parseInt(map.get("max")));

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function customProductsHook({ setProducts, id, checkedIt }) {
+export function customProductsHook({ setProducts, id, checkedIt, min, max }) {
   const [checked, setChecked] = useState(checkedIt);
   const handleChange = (e) => {
     setChecked((prev) => !prev);
@@ -11,7 +11,7 @@ export function customProductsHook({ setProducts, id, checkedIt }) {
   };
   const handleCheck = (isChecked) => {
     if (isChecked) {
-      setProducts((prev) => [...prev, { id, isChecked }]);
+      setProducts((prev) => [...prev, { id, min, max, isChecked }]);
     } else {
       deleteProducts(id);
     }
