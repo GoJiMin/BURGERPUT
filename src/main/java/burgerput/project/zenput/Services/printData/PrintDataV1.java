@@ -176,6 +176,8 @@ public class PrintDataV1 implements PrintData {
             customCheatMachineMap.put("name", foundCheatMachine.getName());
             customCheatMachineMap.put("min", Integer.toString(customCheatMachine.getMin()));
             customCheatMachineMap.put("max", Integer.toString(customCheatMachine.getMax()));
+            customCheatMachineMap.put("initMin", Integer.toString(foundCheatMachine.getMin()));
+            customCheatMachineMap.put("initMax", Integer.toString(foundCheatMachine.getMax()));
 
             result.add(customCheatMachineMap);
         }
@@ -199,6 +201,8 @@ public class PrintDataV1 implements PrintData {
             customCheatFoodMap.put("name", foundCheatFood.getName());
             customCheatFoodMap.put("min", Integer.toString(customCheatFood.getMin()));
             customCheatFoodMap.put("max", Integer.toString(customCheatFood.getMax()));
+            customCheatFoodMap.put("initMin", Integer.toString(foundCheatFood.getMin()));
+            customCheatFoodMap.put("initMap", Integer.toString(foundCheatFood.getMax()));
 
             result.add(customCheatFoodMap);
         }
