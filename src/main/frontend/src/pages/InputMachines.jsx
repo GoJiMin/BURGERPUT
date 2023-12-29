@@ -34,6 +34,8 @@ export default function InputMachines() {
     setProducts(data?.customMachine);
   }, [data]);
 
+  console.log(products);
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
