@@ -15,7 +15,7 @@ export default function CustomProducts({
 
   useEffect(() => {
     if (checked) {
-      setProducts((prev) => [...prev, { id, checked }]);
+      setProducts((prev) => [...prev, { id, min, max, checked }]);
     }
   }, []);
 

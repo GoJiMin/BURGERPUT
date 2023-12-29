@@ -25,7 +25,7 @@ export default function CustomFoodTemp() {
   });
 
   useEffect(() => {
-    setProducts(data?.customFood);
+    setProducts(data);
   }, [data]);
 
   return (
@@ -101,4 +101,3 @@ export default function CustomFoodTemp() {
     </section>
   );
 }
-

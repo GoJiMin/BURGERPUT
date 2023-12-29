@@ -74,7 +74,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
 }
 
 export function useCheatMachines() {
-  const { data } = useQuery(["customMachinesTemp"], () => getCustomMachines());
+  const { data } = useQuery(["customMachinesTemp"], getCustomTempMachine);
 
   const setCustomTemp = useMutation(
     ({ products }) => setCustomMachines(products),
@@ -96,7 +96,7 @@ export function useCheatMachines() {
 }
 
 export function useCheatFoods() {
-  const { data } = useQuery(["customFoodsTemp"], () => getCustomFoods());
+  const { data } = useQuery(["customFoodsTemp"], getCustomTempFood);
 
   const setCustomTemp = useMutation(
     ({ products }) => setCustomTempFood(products),
@@ -116,4 +116,3 @@ export function useCheatFoods() {
 
   return { data, setCustomTemp, submitCustomTemp };
 }
-

@@ -3,10 +3,13 @@ import Slider from "rc-slider";
 import styles from "./SetTemp.module.css";
 import "rc-slider/assets/index.css";
 
-export default function SetTemp({ product, product: { name, min, max } }) {
+export default function SetTemp({
+  product,
+  product: { name, min, max, initMin, initMax },
+}) {
   const [temp, setTemp] = useState([+min, +max]);
+  const initTemp = useRef([+initMin, +initMax]);
   const [disabled, setDisabled] = useState(false);
-  const initTemp = useRef([+min, +max]);
 
   const handleDisabled = () => {
     setDisabled((prev) => !prev);

@@ -25,8 +25,10 @@ export default function CustomMachineTemp() {
   });
 
   useEffect(() => {
-    setProducts(data?.customMachine);
+    setProducts(data);
   }, [data]);
+
+  console.log(data);
 
   return (
     <section className={styles.section}>
