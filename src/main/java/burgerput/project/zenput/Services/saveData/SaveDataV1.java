@@ -65,6 +65,8 @@ public class SaveDataV1 implements SaveData {
         for (Map<String, String> map : param) {
             CustomMachine selectedMachine = new CustomMachine();
             selectedMachine.setId(Integer.parseInt(map.get("id")));
+            selectedMachine.setMin(Integer.parseInt(map.get("min")));
+            selectedMachine.setMin(Integer.parseInt(map.get("max")));
             //log.info("what is id={},", map.get("id"));
             customMachineRepository.save(selectedMachine);
 
@@ -79,7 +81,8 @@ public class SaveDataV1 implements SaveData {
         for (Map<String, String> map : param) {
             CustomFood selectedFood = new CustomFood();
             selectedFood.setId(Integer.parseInt(map.get("id")));
-
+            selectedFood.setMin(Integer.parseInt(map.get("min")));
+            selectedFood.setMax(Integer.parseInt(map.get("max")));
             customFoodRepository.save(selectedFood);
         }
     }
