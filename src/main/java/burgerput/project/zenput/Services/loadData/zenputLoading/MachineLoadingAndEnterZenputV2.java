@@ -42,7 +42,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
         try {
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmMachine();
+            WebDriver driver = movePageService.clickAmMachine();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //li class group

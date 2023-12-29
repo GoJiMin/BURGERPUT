@@ -16,4 +16,7 @@ public class CustomFood {
 
     private int id;
 
+    private int min;
+    private int max;
+
 }

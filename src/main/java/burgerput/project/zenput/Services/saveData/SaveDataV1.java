@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -70,12 +71,10 @@ public class SaveDataV1 implements SaveData {
         }
     }
 
-
     @Override
     public void customFoodDataSave(ArrayList<Map> param) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
         customFoodRepository.deleteAllMine();
-
 
         for (Map<String, String> map : param) {
             CustomFood selectedFood = new CustomFood();
@@ -84,4 +83,36 @@ public class SaveDataV1 implements SaveData {
             customFoodRepository.save(selectedFood);
         }
     }
+
+    @Override
+    public void customCheatFoodDataSave(ArrayList<Map> param) {
+
+        for (Map<String,String> map : param) {
+            customFoodRepository.updateMy(Integer.parseInt(map.get("id")),
+                    Integer.parseInt(map.get("min")),
+                    Integer.parseInt(map.get("max")));
+        }
+
+        //새로운 인자를 만들어서 생성하는 코드 나는 수정을 원하는 건데 이러면 문제가 발생한다.
+//        for (Map<String, String> map : param) {
+//            CustomFood cheatFood = new CustomFood();
+//            cheatFood.setId(Integer.parseInt(map.get("id")));
+//            cheatFood.setMin(Integer.parseInt(map.get("min")));
+//            cheatFood.setMax(Integer.parseInt(map.get("max")));
+//
+//            customFoodRepository.save(cheatFood);
+//        }
+    }
+
+    @Override
+    public void customCheatMachineDataSave(ArrayList<Map> param) {
+        for (Map<String,String> map : param) {
+            customMachineRepository.updateMy(Integer.parseInt(map.get("id")),
+                    Integer.parseInt(map.get("min")),
+                    Integer.parseInt(map.get("max")));
+        }
+
+    }
+
+
 }

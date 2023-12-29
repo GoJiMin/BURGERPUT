@@ -17,4 +17,8 @@ public interface PrintData {
     public ArrayList<Map> customFood();
 
     public ArrayList<Map> mgrList();
+
+    public ArrayList<Map> customCheatMachine();
+
+    public ArrayList<Map> customCheatFood();
 }

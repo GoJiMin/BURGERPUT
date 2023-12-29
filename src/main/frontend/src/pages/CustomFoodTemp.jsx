@@ -6,7 +6,7 @@ import ManagerList from "../components/ManagerList";
 import Banner from "../components/Banner";
 import Modal from "../components/Modal";
 
-export default function CustomMachineTemp() {
+export default function CustomFoodTemp() {
   const { submitCustomTemp, data, setCustomTemp } = useCheatFoods();
   const {
     handleSave,
@@ -101,3 +101,4 @@ export default function CustomMachineTemp() {
     </section>
   );
 }
+

@@ -42,7 +42,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         try {
 
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmFood();
+            WebDriver driver = movePageService.clickAmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================

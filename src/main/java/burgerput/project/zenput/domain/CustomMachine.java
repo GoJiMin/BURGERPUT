@@ -16,5 +16,9 @@ public class CustomMachine {
 
     private int id;
 
+    private int min;
+
+    private int max;
+
 
 }

@@ -14,4 +14,8 @@ public interface SaveData {
     public void customMachineDataSave(ArrayList<Map> param);
 
     public void customFoodDataSave(ArrayList<Map> param);
+
+    public void customCheatFoodDataSave(ArrayList<Map> param);
+
+    public void customCheatMachineDataSave(ArrayList<Map> param);
 }
