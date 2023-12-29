@@ -7,9 +7,9 @@ export function useRandomTemp() {
   const generateRandomTemp = (products) => {
     let randProducts = [];
     products.forEach(({ id, name, min, max }) => {
-      const randomTemp = rand(Number(min), Number(max));
+      const temp = rand(Number(min), Number(max));
 
-      randProducts.push({ id, randomTemp });
+      randProducts.push({ id, temp });
     });
 
     return randProducts;

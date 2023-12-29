@@ -80,15 +80,15 @@ export default function CustomMachineTemp() {
           ))}
       </form>
       <section className={styles.btnContainer}>
+        <button className={styles.saveBtn} onClick={handleSave}>
+          범위 저장
+        </button>
         <button
           className={styles.submitBtn}
           onClick={handleSubmit}
           value={"AM"}
         >
           오전 기기 제출
-        </button>
-        <button className={styles.saveBtn} onClick={handleSave}>
-          범위 저장
         </button>
         <button
           className={styles.submitBtn}

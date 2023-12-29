@@ -2,6 +2,9 @@ import { useState } from "react";
 import {
   getCustomFoods,
   getCustomMachines,
+  getCustomTempFood,
+  getCustomTempMachine,
+  setCustomMachines,
   setCustomTempFood,
   setCustomTempMachine,
   submitFoods,
@@ -21,17 +24,18 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const handleSave = (e) => {
     e.preventDefault();
 
-    setCustomTemp.mutate(
-      { products },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(false);
-          }, 4000);
-        },
-      }
-    );
+    // setCustomTemp.mutate(
+    //   { products },
+    //   {
+    //     onSuccess: () => {
+    //       setSuccess(true);
+    //       setTimeout(() => {
+    //         setSuccess(false);
+    //       }, 4000);
+    //     },
+    //   }
+    // );
+    console.log(products);
   };
 
   const handleSubmit = (e) => {
@@ -43,9 +47,11 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     const manager = selectManager?.label;
     const time = e.target.value;
 
-    const result = { manager, newProducts, time };
-
-    submitCustomTemp(result)
+    submitCustomTemp({
+      manager,
+      newProducts,
+      time,
+    })
       .then((res) => {
         setResult(res.data);
       })
@@ -68,47 +74,45 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
 }
 
 export function useCheatMachines() {
-  const { data } = useQuery(["customMachines"], () => getCustomMachines());
+  const { data } = useQuery(["customMachinesTemp"], () => getCustomMachines());
 
   const setCustomTemp = useMutation(
-    ({ products }) => setCustomTempMachine(products),
+    ({ products }) => setCustomMachines(products),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["customMachines"]);
+        queryClient.invalidateQueries(["customMachinesTemp"]);
       },
     }
   );
 
-  const submitCustomTemp = ({ manager, newProducts, time }) => {
+  const submitCustomTemp = ({ manager, newProducts, time }) =>
     submitMachines({
       mgrname: manager,
       customMachine: newProducts,
       time: time,
     });
-  };
 
   return { data, setCustomTemp, submitCustomTemp };
 }
 
 export function useCheatFoods() {
-  const { data } = useQuery(["customFoods"], () => getCustomFoods());
+  const { data } = useQuery(["customFoodsTemp"], () => getCustomFoods());
 
   const setCustomTemp = useMutation(
     ({ products }) => setCustomTempFood(products),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["customFoods"]);
+        queryClient.invalidateQueries(["customFoodsTemp"]);
       },
     }
   );
 
-  const submitCustomTemp = ({ manager, newProducts, time }) => {
+  const submitCustomTemp = ({ manager, newProducts, time }) =>
     submitFoods({
       mgrname: manager,
       customFood: newProducts,
       time: time,
     });
-  };
 
   return { data, setCustomTemp, submitCustomTemp };
 }
