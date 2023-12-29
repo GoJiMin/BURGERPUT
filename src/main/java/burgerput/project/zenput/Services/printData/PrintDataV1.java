@@ -202,7 +202,7 @@ public class PrintDataV1 implements PrintData {
             customCheatFoodMap.put("min", Integer.toString(customCheatFood.getMin()));
             customCheatFoodMap.put("max", Integer.toString(customCheatFood.getMax()));
             customCheatFoodMap.put("initMin", Integer.toString(foundCheatFood.getMin()));
-            customCheatFoodMap.put("initMap", Integer.toString(foundCheatFood.getMax()));
+            customCheatFoodMap.put("initMax", Integer.toString(foundCheatFood.getMax()));
 
             result.add(customCheatFoodMap);
         }

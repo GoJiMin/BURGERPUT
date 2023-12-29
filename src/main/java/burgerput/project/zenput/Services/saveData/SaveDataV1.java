@@ -63,10 +63,12 @@ public class SaveDataV1 implements SaveData {
         // num 변수 재 설정
 
         for (Map<String, String> map : param) {
+
+            log.info("customMachine Data Save () ={}", map);
             CustomMachine selectedMachine = new CustomMachine();
             selectedMachine.setId(Integer.parseInt(map.get("id")));
             selectedMachine.setMin(Integer.parseInt(map.get("min")));
-            selectedMachine.setMin(Integer.parseInt(map.get("max")));
+            selectedMachine.setMax(Integer.parseInt(map.get("max")));
             //log.info("what is id={},", map.get("id"));
             customMachineRepository.save(selectedMachine);
 
