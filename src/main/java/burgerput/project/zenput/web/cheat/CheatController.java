@@ -21,10 +21,17 @@ public class CheatController {
     private final SaveData saveData;
 
     @GetMapping("back/cheatFood")
-    public ArrayList<Map> showCheatFood() {
+    public Map<String, ArrayList<Map>> showCheatFood() {
 
         ArrayList<Map> maps = printData.customCheatFood();
-        return maps;
+        ArrayList<Map> mgrMap = printData.mgrList();
+
+        Map<String, ArrayList<Map>> tempMap = new LinkedHashMap<>();
+
+        tempMap.put("customCheatFood", maps);
+        tempMap.put("mgrList", mgrMap);
+
+        return tempMap;
     }
 
     @PostMapping("back/cheatFood")
@@ -34,10 +41,17 @@ public class CheatController {
     }
 
     @GetMapping("back/cheatMachine")
-    public ArrayList<Map> showCheatMachine() {
+    public Map<String, ArrayList<Map>> showCheatMachine() {
 
         ArrayList<Map> maps = printData.customCheatMachine();
-        return maps;
+        ArrayList<Map> mgrMap = printData.mgrList();
+
+        Map<String, ArrayList<Map>> tempMap = new LinkedHashMap<>();
+
+        tempMap.put("customCheatMachine", maps);
+        tempMap.put("mgrList", mgrMap);
+
+        return tempMap;
     }
 
     @PostMapping("back/cheatMachine")

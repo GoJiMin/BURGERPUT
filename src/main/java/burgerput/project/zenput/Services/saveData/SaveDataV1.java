@@ -12,6 +12,8 @@ import burgerput.project.zenput.repository.machineRepository.CustomMachineReposi
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -94,9 +96,9 @@ public class SaveDataV1 implements SaveData {
 
         for (Map<String,String> map : param) {
             log.info("customCheatFoodDaetaSvae() = {}", map);
-            customFoodRepository.updateMy(Integer.parseInt(map.get("id")),
-                    Integer.parseInt(map.get("min")),
-                    Integer.parseInt(map.get("max")));
+            customFoodRepository.updateMy(Integer.parseInt(String.valueOf(map.get("id"))),
+                    Integer.parseInt(String.valueOf(map.get("min"))),
+                    Integer.parseInt(String.valueOf(map.get("max"))));
         }
 
         //새로운 인자를 만들어서 생성하는 코드 나는 수정을 원하는 건데 이러면 문제가 발생한다.
@@ -112,12 +114,14 @@ public class SaveDataV1 implements SaveData {
 
     @Override
     public void customCheatMachineDataSave(ArrayList<Map> param) {
-        for (Map<String,String> map : param) {
-                        log.info("CustomCheatMachineData Svae() = {}", map);
 
-            customMachineRepository.updateMy(Integer.parseInt(map.get("id")),
-                    Integer.parseInt(map.get("min")),
-                    Integer.parseInt(map.get("max")));
+        for (Map<String,String> map : param) {
+
+            log.info("CustomCheatMachineData Svae() = {}", map);
+
+            customMachineRepository.updateMy(Integer.parseInt(String.valueOf(map.get("id"))),
+                    Integer.parseInt(String.valueOf(map.get("min"))),
+                    Integer.parseInt(String.valueOf(map.get("max"))));
         }
 
     }
