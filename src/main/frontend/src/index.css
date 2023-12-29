@@ -123,6 +123,7 @@ body {
   --screen-border-color: #393e46;
   --screen-background-color: #323232;
   --text-basic-color: #1e2022;
+  --color-missing: rgb(232, 71, 71);
 }
 
 * {

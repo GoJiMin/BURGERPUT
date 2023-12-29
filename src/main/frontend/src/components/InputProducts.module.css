@@ -1,7 +1,3 @@
-:root {
-  --color-missing: rgb(232, 71, 71);
-}
-
 .product {
   margin-bottom: 2rem;
   display: flex;

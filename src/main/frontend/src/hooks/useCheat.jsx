@@ -10,7 +10,7 @@ import {
   submitFoods,
   submitMachines,
 } from "../api/Products";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRandomTemp } from "./useRandomTemp";
 
 export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
@@ -24,6 +24,8 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const handleSave = (e) => {
     e.preventDefault();
 
+    console.log(products);
+
     // setCustomTemp.mutate(
     //   { products },
     //   {
@@ -35,7 +37,6 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     //     },
     //   }
     // );
-    console.log(products);
   };
 
   const handleSubmit = (e) => {
@@ -75,9 +76,10 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
 
 export function useCheatMachines() {
   const { data } = useQuery(["customMachinesTemp"], getCustomTempMachine);
+  const queryClient = useQueryClient();
 
   const setCustomTemp = useMutation(
-    ({ products }) => setCustomMachines(products),
+    ({ products }) => setCustomTempMachine(products),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["customMachinesTemp"]);
@@ -97,6 +99,7 @@ export function useCheatMachines() {
 
 export function useCheatFoods() {
   const { data } = useQuery(["customFoodsTemp"], getCustomTempFood);
+  const queryClient = useQueryClient();
 
   const setCustomTemp = useMutation(
     ({ products }) => setCustomTempFood(products),

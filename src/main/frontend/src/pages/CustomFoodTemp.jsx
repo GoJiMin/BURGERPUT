@@ -28,6 +28,8 @@ export default function CustomFoodTemp() {
     setProducts(data);
   }, [data]);
 
+  console.log(products);
+
   return (
     <section className={styles.section}>
       <div className={styles.title}>

@@ -39,4 +39,9 @@
 
 .missing {
   margin-left: 10px;
+  color: var(--color-missing);
+}
+
+.disabled {
+  color: var(--color-missing);
 }
