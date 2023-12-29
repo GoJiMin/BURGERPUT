@@ -16,6 +16,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const [isOutletHidden, setIsOutletHidden] = useState(true);
+  const [hiddenCount, setHiddenCount] = useState(0);
 
   const handleHidden = () => {
     setIsOutletHidden(true);
@@ -28,7 +29,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <section className={styles.wrapper}>
-        <Navbar setHidden={handleHidden} setVisible={handleVisible} />
+        <Navbar
+          setHidden={handleHidden}
+          setVisible={handleVisible}
+          cheat={hiddenCount > 3 ? true : false}
+        />
         <div
           className={
             isOutletHidden ? `${styles.typeit}` : `${styles.typeit_hidden}`
@@ -50,6 +55,7 @@ function App() {
           <div className={styles.burger_image}>
             <img
               className={styles.image}
+              onClick={() => setHiddenCount((prev) => prev + 1)}
               src='/logo/burgerlogo2.png'
               alt='burger'
             />

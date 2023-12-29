@@ -29,13 +29,13 @@ export default function InputProducts({
             className={styles.missing}
             onClick={handleClick}
             type='button'
-            tabindex='-1'
+            tabIndex='-1'
           >
             결품
           </button>
           <input
             className={missing ? `${styles.input__missing}` : `${styles.input}`}
-            type='text'
+            type='number'
             value={temp}
             disabled={missing}
             onChange={handleChange}
