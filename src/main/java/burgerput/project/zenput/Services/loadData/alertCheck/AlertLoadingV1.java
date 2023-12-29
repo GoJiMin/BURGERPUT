@@ -157,7 +157,7 @@ public class AlertLoadingV1 implements AlertLoading {
             //repeat pre's id list
             for (int key : dbIdStore) {
                 //find db value
-                Food dbFood = foodRepository.findMachineById(Integer.toString(key));
+                Food dbFood = foodRepository.findFoodById(Integer.toString(key));
                 Food zenputFood = zenputFoodData.get(key);
 
 //                log.info("DbMachine ={}", dbMachine);
@@ -387,7 +387,7 @@ public class AlertLoadingV1 implements AlertLoading {
                 if (zenputFoodData.get(key) == null ? true : false) {
 //                    log.info("key value = {}", key);
                     //true -> it's deleted (zenputPage delete the entity)
-                    Food delFood = foodRepository.findMachineById(Integer.toString(key));
+                    Food delFood = foodRepository.findFoodById(Integer.toString(key));
                     tempMap.put("id", Integer.toString(delFood.getId()));
                     tempMap.put("name", delFood.getName());
                     tempMap.put("min", Integer.toString(delFood.getMin()));

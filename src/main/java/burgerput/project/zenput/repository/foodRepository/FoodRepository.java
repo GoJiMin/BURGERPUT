@@ -19,7 +19,7 @@ public interface FoodRepository extends JpaRepository<Food,Integer> {
 
 
     @Query(value = "select * from food where id = :id ", nativeQuery = true)
-    public Food findMachineById(@Param("id") String id);
+    public Food findFoodById(@Param("id") String id);
 }
 
 

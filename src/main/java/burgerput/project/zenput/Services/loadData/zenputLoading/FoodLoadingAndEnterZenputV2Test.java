@@ -119,6 +119,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
     @Override
     public Map<String,String> sendValueV2(String param) {
 
+        log.info("param = {}", param);
         Map<String, String> result = new LinkedHashMap<>();
         //choose am/pm list Start ==============================
         WebDriver driver= null;
