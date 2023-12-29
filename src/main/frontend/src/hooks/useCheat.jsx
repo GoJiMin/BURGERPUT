@@ -26,17 +26,17 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
 
     console.log(products);
 
-    // setCustomTemp.mutate(
-    //   { products },
-    //   {
-    //     onSuccess: () => {
-    //       setSuccess(true);
-    //       setTimeout(() => {
-    //         setSuccess(false);
-    //       }, 4000);
-    //     },
-    //   }
-    // );
+    setCustomTemp.mutate(
+      { products },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 4000);
+        },
+      }
+    );
   };
 
   const handleSubmit = (e) => {

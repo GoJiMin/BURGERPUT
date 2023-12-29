@@ -15,23 +15,20 @@ export default function SetTemp({
     setDisabled((prev) => !prev);
   };
 
-  console.log(initMin);
-  console.log(initMax);
+  useEffect(() => {
+    product.min = temp[0];
+    product.max = temp[1];
+  }, [temp]);
 
-  // useEffect(() => {
-  //   product.min = temp[0];
-  //   product.max = temp[1];
-  // }, [temp]);
-
-  // useEffect(() => {
-  //   if (disabled) {
-  //     product.min = 999;
-  //     product.max = 999;
-  //   } else {
-  //     product.min = temp[0];
-  //     product.max = temp[1];
-  //   }
-  // }, [disabled]);
+  useEffect(() => {
+    if (disabled) {
+      product.min = 999;
+      product.max = 999;
+    } else {
+      product.min = temp[0];
+      product.max = temp[1];
+    }
+  }, [disabled]);
 
   return (
     <section className={styles.product}>

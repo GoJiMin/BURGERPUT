@@ -93,6 +93,7 @@ public class SaveDataV1 implements SaveData {
     public void customCheatFoodDataSave(ArrayList<Map> param) {
 
         for (Map<String,String> map : param) {
+            log.info("customCheatFoodDaetaSvae() = {}", map);
             customFoodRepository.updateMy(Integer.parseInt(map.get("id")),
                     Integer.parseInt(map.get("min")),
                     Integer.parseInt(map.get("max")));
@@ -112,7 +113,8 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customCheatMachineDataSave(ArrayList<Map> param) {
         for (Map<String,String> map : param) {
-            log.info(param.toString());
+                        log.info("CustomCheatMachineData Svae() = {}", map);
+
             customMachineRepository.updateMy(Integer.parseInt(map.get("id")),
                     Integer.parseInt(map.get("min")),
                     Integer.parseInt(map.get("max")));
