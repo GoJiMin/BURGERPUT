@@ -16,48 +16,66 @@ import { useRandomTemp } from "./useRandomTemp";
 export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const [products, setProducts] = useState("");
   const [selectManager, setSelectManager] = useState("");
+  const [warning, setWarning] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(false);
   const { generateRandomTemp } = useRandomTemp();
 
+  const handleWarning = (type) => {
+    type === "missing" && setWarning("missing");
+    type === "manager" && setWarning("manager");
+    setTimeout(() => {
+      setWarning(null);
+    }, 1500);
+  };
+
   const handleSave = (e) => {
     e.preventDefault();
 
-    console.log(products);
+    const hasMissing = products.some((product) => product.min === 999);
 
-    setCustomTemp.mutate(
-      { products },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(false);
-          }, 4000);
-        },
-      }
-    );
+    if (hasMissing) {
+      handleWarning();
+      return;
+    } else {
+      setCustomTemp.mutate(
+        { products },
+        {
+          onSuccess: () => {
+            setSuccess(true);
+            setTimeout(() => {
+              setSuccess(false);
+            }, 4000);
+          },
+        }
+      );
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
     const newProducts = generateRandomTemp(products);
     const manager = selectManager?.label;
     const time = e.target.value;
 
-    submitCustomTemp({
-      manager,
-      newProducts,
-      time,
-    })
-      .then((res) => {
-        setResult(res.data);
+    if (!manager) {
+      handleWarning("manager");
+      return;
+    } else {
+      setLoading(true);
+      submitCustomTemp({
+        manager,
+        newProducts,
+        time,
       })
-      .finally(() => setLoading(false))
-      .catch(console.error);
+        .then((res) => {
+          setResult(res.data);
+        })
+        .finally(() => setLoading(false))
+        .catch(console.error);
+    }
   };
 
   return {
@@ -69,6 +87,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     selectManager,
     products,
     success,
+    warning,
     loading,
     result,
   };

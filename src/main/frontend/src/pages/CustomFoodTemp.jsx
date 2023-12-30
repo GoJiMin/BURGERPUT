@@ -17,6 +17,7 @@ export default function CustomFoodTemp() {
     selectManager,
     products,
     success,
+    warning,
     loading,
     result,
   } = useCheatProducts({
@@ -25,10 +26,8 @@ export default function CustomFoodTemp() {
   });
 
   useEffect(() => {
-    setProducts(data);
+    setProducts(data?.customCheatFood);
   }, [data]);
-
-  console.log(products);
 
   return (
     <section className={styles.section}>
@@ -45,6 +44,10 @@ export default function CustomFoodTemp() {
       </div>
       <form className={styles.form}>
         {success && <Banner text={"지정한 범위를 저장했습니다."} />}
+        {warning === "missing" && (
+          <Banner text={"결품 범위는 저장할 수 없습니다."} />
+        )}
+        {warning === "manager" && <Banner text={"매니저를 선택해주세요."} />}
         {loading && (
           <Banner
             type={"loading"}
@@ -82,12 +85,17 @@ export default function CustomFoodTemp() {
           ))}
       </form>
       <section className={styles.btnContainer}>
-        <button className={styles.saveBtn} onClick={handleSave}>
+        <button
+          className={styles.saveBtn}
+          onClick={handleSave}
+          disabled={success || warning}
+        >
           범위 저장
         </button>
         <button
           className={styles.submitBtn}
           onClick={handleSubmit}
+          disabled={success || warning}
           value={"AM"}
         >
           오전 식품 제출
@@ -95,6 +103,7 @@ export default function CustomFoodTemp() {
         <button
           className={styles.submitBtn}
           onClick={handleSubmit}
+          disabled={success || warning}
           value={"PM"}
         >
           오후 식품 제출

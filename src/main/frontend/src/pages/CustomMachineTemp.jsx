@@ -17,6 +17,7 @@ export default function CustomMachineTemp() {
     selectManager,
     products,
     success,
+    warning,
     loading,
     result,
   } = useCheatProducts({
@@ -25,7 +26,7 @@ export default function CustomMachineTemp() {
   });
 
   useEffect(() => {
-    setProducts(data);
+    setProducts(data?.customCheatMachine);
   }, [data]);
 
   console.log(data);
@@ -45,6 +46,10 @@ export default function CustomMachineTemp() {
       </div>
       <form className={styles.form}>
         {success && <Banner text={"지정한 범위를 저장했습니다."} />}
+        {warning === "missing" && (
+          <Banner text={"결품 범위는 저장할 수 없습니다."} />
+        )}
+        {warning === "manager" && <Banner text={"매니저를 선택해주세요."} />}
         {loading && (
           <Banner
             type={"loading"}
@@ -82,13 +87,18 @@ export default function CustomMachineTemp() {
           ))}
       </form>
       <section className={styles.btnContainer}>
-        <button className={styles.saveBtn} onClick={handleSave}>
+        <button
+          className={styles.saveBtn}
+          onClick={handleSave}
+          disabled={success || warning}
+        >
           범위 저장
         </button>
         <button
           className={styles.submitBtn}
           onClick={handleSubmit}
           value={"AM"}
+          disabled={success || warning}
         >
           오전 기기 제출
         </button>
@@ -96,6 +106,7 @@ export default function CustomMachineTemp() {
           className={styles.submitBtn}
           onClick={handleSubmit}
           value={"PM"}
+          disabled={success || warning}
         >
           오후 기기 제출
         </button>

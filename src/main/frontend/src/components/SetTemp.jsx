@@ -8,8 +8,8 @@ export default function SetTemp({
   product: { name, min, max, initMin, initMax },
 }) {
   const [temp, setTemp] = useState([Number(min), Number(max)]);
-  const initTemp = useRef([Number(initMin), Number(initMax)]);
   const [disabled, setDisabled] = useState(false);
+  const initTemp = useRef([Number(initMin), Number(initMax)]);
 
   const handleDisabled = () => {
     setDisabled((prev) => !prev);
@@ -75,7 +75,11 @@ export default function SetTemp({
           defaultValue={[temp[0], temp[1]]}
         />
 
-        <p className={disabled ? `${styles.disabledTemp}` : `${styles.temp}`}>
+        <p
+          className={
+            disabled ? `${styles.temp} ${styles.disabled}` : `${styles.temp}`
+          }
+        >
           {disabled ? 999 : temp[1]} ºF
         </p>
       </article>
