@@ -36,7 +36,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     const hasMissing = products.some((product) => product.min === 999);
 
     if (hasMissing) {
-      handleWarning();
+      handleWarning("missing");
       return;
     } else {
       setCustomTemp.mutate(
