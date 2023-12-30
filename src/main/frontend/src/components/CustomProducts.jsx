@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./CustomProducts.module.css";
 import { customProductsHook } from "../hooks/useCustomProducts";
 
