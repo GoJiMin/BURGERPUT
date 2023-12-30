@@ -27,6 +27,7 @@ export function useMachines() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["customMachines"]);
+        queryClient.invalidateQueries(["customMachinesTemp"]);
         queryClient.invalidateQueries(["machines"]);
       },
     }
@@ -65,6 +66,7 @@ export function useFoods() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["customFoods"]);
+        queryClient.invalidateQueries(["customFoodsTemp"]);
         queryClient.invalidateQueries(["foods"]);
       },
     }
