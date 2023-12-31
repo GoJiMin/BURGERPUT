@@ -32,7 +32,7 @@ function App() {
         <Navbar
           setHidden={handleHidden}
           setVisible={handleVisible}
-          cheat={hiddenCount > 3 ? true : false}
+          cheat={hiddenCount >= 3 ? true : false}
         />
         <div
           className={
