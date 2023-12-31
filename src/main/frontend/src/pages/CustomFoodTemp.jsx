@@ -63,7 +63,7 @@ export default function CustomFoodTemp() {
         {result.result === "true" && (
           <Modal
             title={"제출"}
-            machine={true}
+            food={true}
             setResult={setResult}
             component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
           />
