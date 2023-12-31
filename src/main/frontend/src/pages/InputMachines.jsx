@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useOutletContext, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useCustomMachines, useCustomProducts } from "./../hooks/useProducts";
 import InputProducts from "./../components/InputProducts";
 import Banner from "./../components/Banner";
@@ -7,10 +7,12 @@ import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
 import styles from "./InputMachines.module.css";
 import Modal from "../components/Modal";
+import { useGoHome } from "../hooks/useNavigator";
 
 export default function InputMachines() {
   const location = useLocation();
-  const { handleHidden } = useOutletContext();
+
+  const { handleClick } = useGoHome();
 
   const {
     productsQuery: { isLoading, error, data },
@@ -26,15 +28,12 @@ export default function InputMachines() {
     setProducts,
     selectManager,
     setSelectManager,
-    handleClick,
     setResult,
-  } = useCustomProducts({ location, handleHidden, setProductsTemp });
+  } = useCustomProducts({ location, setProductsTemp });
 
   useEffect(() => {
     setProducts(data?.customMachine);
   }, [data]);
-
-  console.log(products);
 
   return (
     <>
