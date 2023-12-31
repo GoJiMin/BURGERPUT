@@ -138,7 +138,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            options.addArguments("--headless=new");
+//            options.addArguments("--headless=new");
 
             driver = new ChromeDriver(options);
             driver.manage().window().setSize(new Dimension(1024, 9999));

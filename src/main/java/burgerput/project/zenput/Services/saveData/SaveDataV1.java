@@ -80,6 +80,7 @@ public class SaveDataV1 implements SaveData {
     @Override
     public void customFoodDataSave(ArrayList<Map> param) {
         //임시로 다지우고 시작 -> 변경해야하는 로직
+        // 해당 아이디를 찾아서 min , max 값 업로드하는 Modifying Query 제작
         customFoodRepository.deleteAllMine();
 
         for (Map<String, String> map : param) {

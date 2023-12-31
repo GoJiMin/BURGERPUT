@@ -34,7 +34,7 @@ public class MyJsonParserV1 implements MyJsonParser {
             Map<String, String> tempMap = new LinkedHashMap<>();
             tempMap.put("id", o.getString("id"));
             tempMap.put("name", o.getString("name"));
-            tempMap.put("temp", o.getString("temp"));
+            tempMap.put("temp", Integer.toString(o.getInt("temp")));
 
             result.add(tempMap);
         }
