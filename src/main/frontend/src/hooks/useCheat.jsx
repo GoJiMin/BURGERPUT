@@ -1,10 +1,7 @@
 import { useRef, useState } from "react";
 import {
-  getCustomFoods,
-  getCustomMachines,
   getCustomTempFood,
   getCustomTempMachine,
-  setCustomMachines,
   setCustomTempFood,
   setCustomTempMachine,
   submitFoods,
@@ -16,18 +13,23 @@ import { useRandomTemp } from "./useRandomTemp";
 export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const [products, setProducts] = useState("");
   const [selectManager, setSelectManager] = useState("");
-  const [warning, setWarning] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(false);
+  const [status, setStatus] = useState({
+    warning: null,
+    success: false,
+    loading: false,
+  });
+
   const setTime = useRef();
   const { generateRandomTemp } = useRandomTemp();
 
   const handleWarning = (type) => {
-    type === "missing" && setWarning("missing");
-    type === "manager" && setWarning("manager");
+    type === "missing" &&
+      setStatus((prev) => ({ ...prev, warning: "missing" }));
+    type === "manager" &&
+      setStatus((prev) => ({ ...prev, warning: "manager" }));
     setTimeout(() => {
-      setWarning(null);
+      setStatus((prev) => ({ ...prev, warning: null }));
     }, 1500);
   };
 
@@ -44,9 +46,9 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
         { products },
         {
           onSuccess: () => {
-            setSuccess(true);
+            setStatus((prev) => ({ ...prev, success: true }));
             setTimeout(() => {
-              setSuccess(false);
+              setStatus((prev) => ({ ...prev, success: false }));
             }, 4000);
           },
         }
@@ -65,7 +67,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
       handleWarning("manager");
       return;
     } else {
-      setLoading(true);
+      setStatus((prev) => ({ ...prev, loading: true }));
       submitCustomTemp({
         manager,
         newProducts,
@@ -74,7 +76,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
         .then((res) => {
           setResult(res.data);
         })
-        .finally(() => setLoading(false))
+        .finally(() => setStatus((prev) => ({ ...prev, loading: false })))
         .catch(console.error);
     }
   };
@@ -87,9 +89,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     setResult,
     selectManager,
     products,
-    success,
-    warning,
-    loading,
+    status,
     result,
     setTime,
   };

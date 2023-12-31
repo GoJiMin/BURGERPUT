@@ -16,9 +16,7 @@ export default function CustomFoodTemp() {
     setResult,
     selectManager,
     products,
-    success,
-    warning,
-    loading,
+    status: { success, loading, warning },
     result,
     setTime,
   } = useCheatProducts({
