@@ -20,6 +20,7 @@ export default function CustomMachineTemp() {
     warning,
     loading,
     result,
+    setTime,
   } = useCheatProducts({
     submitCustomTemp,
     setCustomTemp,
@@ -28,8 +29,6 @@ export default function CustomMachineTemp() {
   useEffect(() => {
     setProducts(data?.customCheatMachine);
   }, [data]);
-
-  console.log(data);
 
   return (
     <section className={styles.section}>
@@ -96,16 +95,20 @@ export default function CustomMachineTemp() {
         </button>
         <button
           className={styles.submitBtn}
-          onClick={handleSubmit}
-          value={"AM"}
+          onClick={(e) => {
+            setTime.current = "AM";
+            handleSubmit(e);
+          }}
           disabled={success || warning}
         >
           오전 기기 제출
         </button>
         <button
           className={styles.submitBtn}
-          onClick={handleSubmit}
-          value={"PM"}
+          onClick={(e) => {
+            setTime.current = "PM";
+            handleSubmit(e);
+          }}
           disabled={success || warning}
         >
           오후 기기 제출

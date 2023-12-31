@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   getCustomFoods,
   getCustomMachines,
@@ -20,6 +20,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(false);
+  const setTime = useRef();
   const { generateRandomTemp } = useRandomTemp();
 
   const handleWarning = (type) => {
@@ -54,11 +55,11 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
 
     const newProducts = generateRandomTemp(products);
     const manager = selectManager?.label;
-    const time = e.target.value;
+    const time = setTime?.current;
 
     if (!manager) {
       handleWarning("manager");
@@ -90,6 +91,7 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
     warning,
     loading,
     result,
+    setTime,
   };
 }
 

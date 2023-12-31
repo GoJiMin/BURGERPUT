@@ -20,6 +20,7 @@ export default function CustomFoodTemp() {
     warning,
     loading,
     result,
+    setTime,
   } = useCheatProducts({
     submitCustomTemp,
     setCustomTemp,
@@ -94,17 +95,21 @@ export default function CustomFoodTemp() {
         </button>
         <button
           className={styles.submitBtn}
-          onClick={handleSubmit}
+          onClick={(e) => {
+            setTime.current = "AM";
+            handleSubmit(e);
+          }}
           disabled={success || warning}
-          value={"AM"}
         >
           오전 식품 제출
         </button>
         <button
           className={styles.submitBtn}
-          onClick={handleSubmit}
+          onClick={(e) => {
+            setTime.current = "PM";
+            handleSubmit(e);
+          }}
           disabled={success || warning}
-          value={"PM"}
         >
           오후 식품 제출
         </button>

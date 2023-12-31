@@ -15,6 +15,7 @@ export default function Confirm({ title, content, close, confirm }) {
         <div className={styles.content}>{content}</div>
         <div className={styles.btnContainer}>
           <button
+            type='button'
             className={styles.confirmBtn}
             onClick={() => {
               confirm && confirm();
