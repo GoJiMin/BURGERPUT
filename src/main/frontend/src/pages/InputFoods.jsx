@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
-import { useOutletContext, useLocation } from "react-router-dom";
-import {
-  useCustomFoods,
-  useCustomMachines,
-  useCustomProducts,
-} from "./../hooks/useProducts";
+import { useLocation } from "react-router-dom";
+import { useCustomFoods, useCustomProducts } from "./../hooks/useProducts";
 import Banner from "./../components/Banner";
 import InputProducts from "./../components/InputProducts";
 import ManagerList from "./../components/ManagerList";
 import Button from "../components/Button";
 import styles from "./InputFoods.module.css";
 import Modal from "../components/Modal";
+import { useGoHome } from "../hooks/useNavigator";
 
 export default function InputFoods() {
   const location = useLocation();
-  const { handleHidden } = useOutletContext();
+
+  const { handleClick } = useGoHome();
 
   const {
     productsQuery: { isLoading, error, data },
@@ -31,8 +29,7 @@ export default function InputFoods() {
     setResult,
     selectManager,
     setSelectManager,
-    handleClick,
-  } = useCustomProducts({ location, handleHidden, setProductsTemp });
+  } = useCustomProducts({ location, setProductsTemp });
 
   useEffect(() => {
     setProducts(data?.customFood);

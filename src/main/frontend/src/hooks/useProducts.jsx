@@ -9,7 +9,6 @@ import {
   getCustomFoods,
   submitFoods,
 } from "../api/Products";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export function useMachines() {
@@ -90,18 +89,12 @@ export function useFoods() {
   return { productsQuery, setProducts, success, handleSubmit };
 }
 
-export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
+export function useCustomProducts({ location, setProductsTemp }) {
   const [selectManager, setSelectManager] = useState("");
   const [result, setResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [warning, setWarning] = useState(false);
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
 
   const handleWarning = () => {
     setWarning(true);
@@ -134,7 +127,6 @@ export function useCustomProducts({ location, handleHidden, setProductsTemp }) {
   };
 
   return {
-    handleClick,
     selectManager,
     setSelectManager,
     handleSubmit,

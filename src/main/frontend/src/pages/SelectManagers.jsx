@@ -1,13 +1,12 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
 import styles from "./SelectManagers.module.css";
 import { PiTrashBold } from "react-icons/pi";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { AiOutlineEnter } from "react-icons/ai";
 import { useManagers } from "./../hooks/useManagers";
+import { useGoHome } from "../hooks/useNavigator";
 
 export default function SelectManagers() {
-  const { handleHidden } = useOutletContext();
-  const navigate = useNavigate();
+  const { handleClick } = useGoHome();
 
   const {
     managersQuery: { isLoading, error, data: initialManagers },
@@ -16,11 +15,6 @@ export default function SelectManagers() {
     handleSubmit,
     handleDelete,
   } = useManagers();
-
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
 
   return (
     <>

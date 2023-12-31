@@ -1,19 +1,13 @@
 import React from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
 import styles from "./CustomMachines.module.css";
 import { useFoods } from "./../hooks/useProducts";
 import CustomProducts from "./../components/CustomProducts";
 import Banner from "./../components/Banner";
 import Button from "../components/Button";
+import { useGoHome } from "../hooks/useNavigator";
 
 export default function CustomFoods() {
-  const { handleHidden } = useOutletContext();
-
-  const navigate = useNavigate();
-  const handleClick = () => {
-    handleHidden();
-    navigate("/");
-  };
+  const { handleClick } = useGoHome();
 
   const {
     productsQuery: { isLoading, error, data: foods },
