@@ -1,10 +1,7 @@
 import { useRef, useState } from "react";
 import {
-  getCustomFoods,
-  getCustomMachines,
   getCustomTempFood,
   getCustomTempMachine,
-  setCustomMachines,
   setCustomTempFood,
   setCustomTempMachine,
   submitFoods,
@@ -16,7 +13,7 @@ import { useRandomTemp } from "./useRandomTemp";
 export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   const [products, setProducts] = useState("");
   const [selectManager, setSelectManager] = useState("");
-
+  const [result, setResult] = useState(false);
   const [status, setStatus] = useState({
     warning: null,
     success: false,
@@ -24,7 +21,6 @@ export function useCheatProducts({ setCustomTemp, submitCustomTemp }) {
   });
 
   const setTime = useRef();
-  const [result, setResult] = useState(false);
   const { generateRandomTemp } = useRandomTemp();
 
   const handleWarning = (type) => {
