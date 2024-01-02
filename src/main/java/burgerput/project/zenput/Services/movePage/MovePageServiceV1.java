@@ -5,14 +5,20 @@ import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,13 +30,14 @@ import static burgerput.project.zenput.Const.*;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MovePageServiceV1 implements MovePageService{
+public class MovePageServiceV1 implements MovePageService {
 
     private final ZenputAccountRepository zenputAccountRepository;
 
     private static String ZENPUTID;
     private static String RBIID;
     private static String RBIPW;
+
     private void zenputAccountSetting() {
 
         Accounts accounts = zenputAccountRepository.findAll().stream().findFirst().get();
@@ -62,7 +69,7 @@ public class MovePageServiceV1 implements MovePageService{
             log.info("error log ={}", e.toString());
         }
 
-            return null;
+        return null;
     }
 
     public WebDriver sampleFood() {
@@ -89,7 +96,7 @@ public class MovePageServiceV1 implements MovePageService{
     }
 
 
-     public WebDriver gotoList() {
+    public WebDriver gotoList() {
         System.setProperty("java.awt.headless", "false");
         try {
             System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
@@ -119,7 +126,7 @@ public class MovePageServiceV1 implements MovePageService{
 
 
     @Override
-     public WebDriver gotoListWithLogin() {
+    public WebDriver gotoListWithLogin() {
 
         //zenputAccoutns setup
         zenputAccountSetting();
@@ -133,12 +140,10 @@ public class MovePageServiceV1 implements MovePageService{
 
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});;
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+            ;
             //서버에서 돌려서 안돼서 추가한 옵션
-            options.addArguments("--no-sandbox");
-
             options.addArguments("--headless=new");
-
 
 //            options.addArguments("--disable-dev-shm-usage");
 //            options.addArguments("--single-process");
@@ -146,44 +151,97 @@ public class MovePageServiceV1 implements MovePageService{
 //            options.setBinary("/opt/google/chrome/");
             //서버에서 돌려서 어쩌구 옵션 끝
             WebDriver driver = new ChromeDriver(options);
-            driver.manage().window().setSize(new Dimension(1024, 9999));
-
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().window().setSize(new Dimension(1024, 4000));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //==============================Scrape LOGIC START============================
 
             //GO TO PAGE
             driver.get(zenputPageStart);
 
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            log.info("Zenput driver Start");
             Thread.sleep(3000);
-            //no thanks button click
-            WebElement oiwBtn = driver.findElement(By.id("oiw_btn"));
-            oiwBtn.click();
 
+//            File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//            File file = new File("/home/ubuntu/burgerput/ref/zenput.png");
+//            FileUtils.copyFile(screenshotAs, file);
+            //no thanks button click
             try {
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-                Thread.sleep(5000);
-                boolean loading =true;
+                log.info("Find no thankes button");
+                WebElement oiwBtn = driver.findElement(By.xpath("//*[@id=\"oiw_btn\"]"));
+                oiwBtn.click();
+
+            } catch (NoSuchElementException e) {
+                //then start 회사 이름 누르기
+                //회사 이름 누르기 없으면 그냥 넘어가기
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            try {
+                //then start 회사 이름 누르기
+                log.info("Enter company Id and click button page");
+//                    File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//                    File file = new File("/home/ubuntu/burgerput/ref/dirverpic.png");
+//                    FileUtils.copyFile(screenshotAs, file);
+                boolean loading = true;
                 while (loading) {
                     //input field - email 입력 필드
+//                        WebElement input = driver.findElement(By.xpath("//*[@id=\"login_form\"]/div[4]/div[1]/input[1]"));
                     WebElement loginSignupFields = driver.findElement(By.className("login_signup_fields"));
                     WebElement input = loginSignupFields.findElement(By.tagName("input"));
                     //zenput 회사 이메일 필요
                     input.sendKeys(ZENPUTID);
+
                     if (input.getAttribute("value").equals("")) {
 
-                    } else{
+                    } else {
                         loading = false;
                         Thread.sleep(1500); //1.5초 대기
 
+                        log.info("button click start");
+                        //input 에서 enter
+
                         //continue 버튼 클릭
                         WebElement loginContinue = driver.findElement(By.id("login_continue"));
+
+                        log.info("is Login enabled=[{}]", loginContinue.isEnabled());
+                        log.info("is Displayed  [{}]", loginContinue.isDisplayed());
+
                         loginContinue.click();
+//                        JavascriptExecutor executor = (JavascriptExecutor) driver;
+//                        executor.executeScript("arguments[0].click();", loginContinue);
+
+//                        log.info("It clicked!!!");
+//                            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
+//                            WebElement elementToClick = wait.until(ExpectedConditions. elementToBeClickable(loginContinue));
+//                            elementToClick.click();
+
+//                        File screenshotAs2 = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//                        File file2 = new File("/home/ubuntu/burgerput/ref/zenputLoginclick.png");
+//                        FileUtils.copyFile(screenshotAs2, file2);
 
                     }
+//
+//                Thread.sleep(3000);
+//                boolean loading =true;
+//                while (loading) {
+//                    //input field - email 입력 필드
+//                    WebElement loginSignupFields = driver.findElement(By.className("login_signup_fields"));
+//                    WebElement input = loginSignupFields.findElement(By.tagName("input"));
+//                    //zenput 회사 이메일 필요
+//                    input.sendKeys(ZENPUTID);
+//                    if (input.getAttribute("value").equals("")) {
+//
+//                    } else{
+//                        loading = false;
+//                        Thread.sleep(1500); //1.5초 대기
+//
+//                        //continue 버튼 클릭
+//                        WebElement loginContinue = driver.findElement(By.id("login_continue"));
+//                        loginContinue.click();
+
                 }
+                
             } catch (ElementNotInteractableException e) {
+                driver.quit();
                 log.info("error = {}", e);
             }
 
@@ -212,6 +270,7 @@ public class MovePageServiceV1 implements MovePageService{
             log.info("noSuchEletmet = {}", e);
 
         } catch (Exception e) {
+
             log.info("Thread.sleep error [{}]", e);
         }
         return null;
@@ -219,8 +278,8 @@ public class MovePageServiceV1 implements MovePageService{
 
     @Override
     public WebDriver clickAmFood() {
-       // BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC
-        String pmFood="BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC";
+        // BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC
+        String pmFood = "BK - 오전 AM 체크리스트를 작성합니다- (제품) - Product Quality Check (AM) - KO_APAC";
         WebDriver driver = getListClick(pmFood);
 
         return driver;
@@ -229,7 +288,7 @@ public class MovePageServiceV1 implements MovePageService{
     @Override
     public WebDriver clickPmFood() {
 //오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC,
-        String pmFood="BK - 오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC";
+        String pmFood = "BK - 오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC";
         log.info("why? ={}", pmFood);
         WebDriver driver = getListClick(pmFood);
 
@@ -240,7 +299,7 @@ public class MovePageServiceV1 implements MovePageService{
     public WebDriver clickAmMachine() {
         //BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC
 
-        String pmFood="BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC";
+        String pmFood = "BK - 오전 AM 체크리스트를 작성합니다- (기기장비) - Equipment Quality Check (AM) - KO_APAC";
         WebDriver driver = getListClick(pmFood);
 
         return driver;

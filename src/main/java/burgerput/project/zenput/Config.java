@@ -76,7 +76,7 @@ public class Config implements WebMvcConfigurer {
                                                     MyJsonParser myJsonParser,
                                                     MachineRepository machineRepository,
                                                     MachineDriverRepository machineDriverRepository) {
-        return new MachineLoadingAndEnterZenputV2Test(movePageService,myJsonParser,machineRepository, machineDriverRepository
+        return new MachineLoadingAndEnterZenputV2(movePageService,myJsonParser,machineRepository, machineDriverRepository
         );
     }
 
@@ -86,7 +86,7 @@ public class Config implements WebMvcConfigurer {
                                               MyJsonParser myJsonParser,
                                               FoodRepository foodRepository,
                                               FoodDriverRepository foodDriverRepository) {
-        return new FoodLoadingAndEnterZenputV2Test(movePageService, myJsonParser, foodRepository, foodDriverRepository);
+        return new FoodLoadingAndEnterZenputV2(movePageService, myJsonParser, foodRepository, foodDriverRepository);
     }
 
     @Bean

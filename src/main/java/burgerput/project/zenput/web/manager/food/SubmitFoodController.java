@@ -30,19 +30,19 @@ public class SubmitFoodController {
 
         log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
         driver.quit();
 
-        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
-
-        try {
-            FileUtils.copyFile(screenshotAs, file);
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-//            writer.write(source);
-//            writer.close();
-        } catch (IOException e) {
-//            e.printStackTrace();
-        }
+//        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
+//
+//        try {
+//            FileUtils.copyFile(screenshotAs, file);
+////            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+////            writer.write(source);
+////            writer.close();
+//        } catch (IOException e) {
+////            e.printStackTrace();
+//        }
 
     }
 }

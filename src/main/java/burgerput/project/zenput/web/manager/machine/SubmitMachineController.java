@@ -37,19 +37,13 @@ public class SubmitMachineController {
 
         //close the webPage
 
-        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+//        File file = new File("C:/Users/bbubb/Desktop/Burgerput/zenput.png");
+//        FileUtils.copyFile(screenshotAs, file);
         driver.quit();
 
-        File file = new File("C:/Users/bbubb/Desktop/test/machine.png");
 
-        try {
-            FileUtils.copyFile(screenshotAs, file);
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-//            writer.write(source);
-//            writer.close();
-        } catch (IOException e) {
-//            e.printStackTrace();
-        }
+
 
     }
 }

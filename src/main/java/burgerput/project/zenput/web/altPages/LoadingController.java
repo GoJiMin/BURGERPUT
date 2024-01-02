@@ -36,10 +36,11 @@ public class LoadingController {
 
     //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
     @GetMapping
-    public void loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         //Start Loading Logic
         //loading zenput Page's Data first
+
         Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
         Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
@@ -81,6 +82,8 @@ public class LoadingController {
         saveData.foodZenputDataSave(foodInfo);
 
         response.sendRedirect(BURGERPUTSITE);
+
+        return "loading/loading";
     }
 
     //@GetMapping("/test")
