@@ -83,7 +83,7 @@ public class LoadingController {
             saveData.machinezenputdatasave(machineInfo);
             saveData.foodZenputDataSave(foodInfo);
 
-            response.sendRedirect(BURGERPUTSITE);
+//            response.sendRedirect(BURGERPUTSITE);
 
         } catch (Exception e) {
             result =false;
