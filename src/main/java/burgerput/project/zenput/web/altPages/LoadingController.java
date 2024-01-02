@@ -47,6 +47,7 @@ public class LoadingController {
             Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
             if (machineInfo.size() == 1 || foodInfo.size() ==1) {
                 //false
+                log.info("FALSE RESULT RETURN");
                 result = false;
             }
 
