@@ -43,9 +43,12 @@ public class LoadingController {
         //loading zenput Page's Data first
         boolean result = true;
         try {
-
             Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
             Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+            if (machineInfo.size() == 1 || foodInfo.size() ==1) {
+                //false
+                result = false;
+            }
 
             log.info("loading Machine Map info : {}", machineInfo);
             log.info("Loading Food Map info : {}", foodInfo);
