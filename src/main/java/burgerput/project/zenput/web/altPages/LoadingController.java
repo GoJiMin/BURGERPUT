@@ -25,6 +25,7 @@ import static burgerput.project.zenput.Const.BURGERPUTSITE;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("loading")
 public class LoadingController {
     private final SaveData saveData;
@@ -36,54 +37,60 @@ public class LoadingController {
 
     //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
     @GetMapping
-    public String loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public boolean loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         //Start Loading Logic
         //loading zenput Page's Data first
+        boolean result = true;
+        try {
 
-        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
-        Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+            Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+            Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
 
-        log.info("loading Machine Map info : {}", machineInfo);
-        log.info("Loading Food Map info : {}", foodInfo);
+            log.info("loading Machine Map info : {}", machineInfo);
+            log.info("Loading Food Map info : {}", foodInfo);
 
-        log.info("request URL ={}", request.getRequestURL());
-        log.info("loading Controller={}", LocalTime.now());
+            log.info("request URL ={}", request.getRequestURL());
+            log.info("loading Controller={}", LocalTime.now());
 
-        //====================loading logic================================
+            //====================loading logic================================
 //        addMachine Logic=================================================
-        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+            ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
 //
 //        //del Machine logic
-        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+            ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
 //
 //        //editMachine logic=====================================
-        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+            ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
 //
 
-        //machine data를 로딩한 것으로 변경함
+            //machine data를 로딩한 것으로 변경함
 //      saveData.machinezenputdatasave(machineInfo);
 
-        //====================Food logic start===========================
-        ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
-        ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
-        ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
+            //====================Food logic start===========================
+            ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
+            ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
+            ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
 
-        ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
+            ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
 
 //
 //=============save result To DB
 //apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
-        alertFoodInfoToDb(delFoodMap);
-        alertMachineInfoToDb(delMap);
+            alertFoodInfoToDb(delFoodMap);
+            alertMachineInfoToDb(delMap);
 
+            saveData.machinezenputdatasave(machineInfo);
+            saveData.foodZenputDataSave(foodInfo);
 
-        saveData.machinezenputdatasave(machineInfo);
-        saveData.foodZenputDataSave(foodInfo);
+            response.sendRedirect(BURGERPUTSITE);
 
-        response.sendRedirect(BURGERPUTSITE);
-
-        return "loading/loading";
+        } catch (Exception e) {
+            result =false;
+            log.info("Error from loading Controller!!! ");
+            log.info(e.toString());
+        }
+        return result;
     }
 
     //@GetMapping("/test")

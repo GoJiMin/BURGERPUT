@@ -239,7 +239,7 @@ public class MovePageServiceV1 implements MovePageService {
 //                        loginContinue.click();
 
                 }
-                
+
             } catch (ElementNotInteractableException e) {
                 driver.quit();
                 log.info("error = {}", e);
