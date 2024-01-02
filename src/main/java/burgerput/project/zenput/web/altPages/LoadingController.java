@@ -64,6 +64,7 @@ public class LoadingController {
             ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
 //
 
+
             //machine data를 로딩한 것으로 변경함
 //      saveData.machinezenputdatasave(machineInfo);
 
@@ -75,6 +76,7 @@ public class LoadingController {
             ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
 
 //
+
 //=============save result To DB
 //apply to DB -//only execute deleteMap(delete from customMachine and save whole machine data
             alertFoodInfoToDb(delFoodMap);
@@ -82,6 +84,8 @@ public class LoadingController {
 
             saveData.machinezenputdatasave(machineInfo);
             saveData.foodZenputDataSave(foodInfo);
+
+            log.info("Db Set-up END ");
 
 //            response.sendRedirect(BURGERPUTSITE);
 
