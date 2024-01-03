@@ -10,10 +10,15 @@ export default defineConfig({
       usePolling: true,
     },
     port: 3000,
-    https: true,
+    // https: true,
     proxy: {
       "/back": {
-        target: "https://localhost:8080",
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: false,
+      },
+      "/loading": {
+        target: "http://localhost:8080",
         changeOrigin: true,
         secure: false,
       },

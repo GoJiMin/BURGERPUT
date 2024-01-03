@@ -64,6 +64,7 @@
 }
 
 .btnContainer button {
+  font-size: 16px;
   transition: all 250ms ease-out;
 }
 

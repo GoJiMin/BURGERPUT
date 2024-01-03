@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import TypeIt from "typeit-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { useDateCheck } from "./hooks/useDateCheck";
+import Banner from "./components/Banner";
+import Modal from "./components/Modal";
+import { useDisplay } from "./hooks/useOutletDisplay";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,16 +19,19 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const [isOutletHidden, setIsOutletHidden] = useState(true);
-  const [hiddenCount, setHiddenCount] = useState(0);
+  const {
+    handleHidden,
+    handleVisible,
+    handleCount,
+    isOutletHidden,
+    hiddenCount,
+  } = useDisplay();
 
-  const handleHidden = () => {
-    setIsOutletHidden(true);
-  };
+  const { checkDate, reLoad, setResult, result, loading } = useDateCheck();
 
-  const handleVisible = () => {
-    setIsOutletHidden(false);
-  };
+  useEffect(() => {
+    checkDate();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -52,10 +59,50 @@ function App() {
               return instance;
             }}
           />
+          {loading && (
+            <Banner
+              type={"loading"}
+              text={
+                <section
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src='/spinner/spinner.gif'
+                    width='35%'
+                    style={{ paddingTop: "2px" }}
+                  />
+                  <h1
+                    style={{
+                      color: `white`,
+                      whiteSpace: "nowrap",
+                      marginTop: "1rem",
+                      marginBottom: "5rem",
+                    }}
+                  >
+                    Loading Initial Data...
+                  </h1>
+                </section>
+              }
+            />
+          )}
+          {result && (
+            <Modal
+              title={"로딩 실패"}
+              component={"로딩에 실패했습니다. 다시 로딩하시겠습니까?"}
+              setResult={setResult}
+              error={true}
+              submit={reLoad}
+            />
+          )}
           <div className={styles.burger_image}>
             <img
               className={styles.image}
-              onClick={() => setHiddenCount((prev) => prev + 1)}
+              onClick={handleCount}
               src='/logo/burgerlogo2.png'
               alt='burger'
             />

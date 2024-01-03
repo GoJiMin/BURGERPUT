@@ -1,4 +1,10 @@
+import { useState } from "react";
+import { getCurrentItems } from "../api/Loading";
+
 export function useDateCheck() {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(false);
+
   // 현재 날짜 객체를 반환하는 함수
   function setCurrentDate() {
     return new Date();
@@ -32,9 +38,16 @@ export function useDateCheck() {
 
   // 로컬 스토리지에 현재 시간을 저장하고, loading 페이지로 이동하는 함수
   function saveCurrentDate() {
+    setLoading(true);
+
     const currentDate = getCurrentDate();
     localStorage.setItem("currentDate", JSON.stringify(currentDate));
-    location.replace("loading");
+
+    getCurrentItems()
+      .then((res) => {
+        !res && setResult(true);
+      })
+      .finally(() => setLoading(false));
   }
 
   // 날짜 비교 함수
@@ -66,5 +79,9 @@ export function useDateCheck() {
     }
   }
 
-  return { checkDate };
+  function reLoad() {
+    saveCurrentDate();
+  }
+
+  return { checkDate, reLoad, setResult, loading, result };
 }

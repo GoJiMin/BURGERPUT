@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-import { useDateCheck } from "./../hooks/useDateCheck";
+import React from "react";
 
 export default function Main() {
-  const { checkDate } = useDateCheck();
-
-  useEffect(() => {
-    checkDate();
-  }, []);
-
   return <div>Main</div>;
 }

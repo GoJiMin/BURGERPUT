@@ -12,12 +12,12 @@
   font-size: 120px;
   color: var(--navbar-background-color);
   padding: 2rem;
-  margin-top: 6rem;
+  margin-top: 15vh;
 }
 
 .burger_image {
-  margin-top: 7rem;
-  /* width: 250px; */
+  position: absolute;
+  bottom: 5vh;
 }
 
 .typeit_hidden {
