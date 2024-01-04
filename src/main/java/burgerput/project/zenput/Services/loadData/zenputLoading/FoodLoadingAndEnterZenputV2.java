@@ -40,9 +40,8 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
         System.setProperty("java.awt.headless", "false");
 
         try {
-
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickAmFood();
+            WebDriver driver = movePageService.clickPmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================
@@ -89,6 +88,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             driver.quit();
 
         } catch (Exception e) {
+            log.info("Food GetInfo Error occurred !");
             log.info(e.toString());
         }
 //         log.info("result = {}", result);

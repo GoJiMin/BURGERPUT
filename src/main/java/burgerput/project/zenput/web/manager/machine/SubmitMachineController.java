@@ -24,22 +24,28 @@ public class SubmitMachineController {
     private final MachineDriverRepository machineDriverRepository;
 
     @GetMapping("back/msubmit")
-    public void submitMachine() {
+    public void submitMachine() throws IOException {
         WebDriver driver = machineDriverRepository.getDriver();
 
 //        WebElement mgrName = driver.findElement(By.xpath("//*[@id=\"field_1\"]/div[2]/textarea"));
 //        mgrName.sendKeys("성공했다");
 
-        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
-        button.click();
+        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+        File file = new File("/home/ubuntu/burgerput/img/zenputMachine.png");
+        FileUtils.copyFile(screenshotAs, file);
 
-        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
+//        button.click();
+        log.info("V2 version button 주석처리했듬 사진만 찍어서 서버에 저장");
+
+//        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         //close the webPage
 
 //        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
 //        File file = new File("C:/Users/bbubb/Desktop/Burgerput/zenput.png");
 //        FileUtils.copyFile(screenshotAs, file);
+        log.info("quite the driver");
         driver.quit();
 
 

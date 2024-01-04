@@ -42,7 +42,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
         try {
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickAmMachine();
+            WebDriver driver = movePageService.clickPmMachine();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //li class group
@@ -83,6 +83,8 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             driver.quit();
 
         } catch (Exception e) {
+            log.info("Machine GetInfo Error occurred !");
+
             log.info(e.toString());
         }
         return result;

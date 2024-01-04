@@ -22,27 +22,23 @@ public class SubmitFoodController {
     private final FoodDriverRepository foodDriverRepository;
 
     @GetMapping("back/fsubmit")
-    public void submitFood() {
+    public void submitFood() throws IOException {
         WebDriver driver = foodDriverRepository.getDriver();
 
-        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
-        button.click();
+//        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
+//        button.click();
 
-        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        log.info("V2 version button 주석처리했듬 사진만 찍어서 서버에 저장");
 
-//        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+        File file = new File("/home/ubuntu/burgerput/img/zenputFood.png");
+        FileUtils.copyFile(screenshotAs, file);
+
+        log.info("quite the driver");
+
         driver.quit();
 
-//        File file = new File("C:/Users/bbubb/Desktop/test/food.png");
-//
-//        try {
-//            FileUtils.copyFile(screenshotAs, file);
-////            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-////            writer.write(source);
-////            writer.close();
-//        } catch (IOException e) {
-////            e.printStackTrace();
-//        }
+
 
     }
 }

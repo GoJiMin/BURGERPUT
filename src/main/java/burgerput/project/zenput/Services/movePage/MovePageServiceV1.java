@@ -137,13 +137,14 @@ public class MovePageServiceV1 implements MovePageService {
             //chrome driver use
             WebDriverManager.chromedriver().setup();
 
-
             //remove being controlled option information bar
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            ;
+
             //서버에서 돌려서 안돼서 추가한 옵션
             options.addArguments("--headless=new");
+            options.addArguments("--single-process");
+            options.addArguments("--no-sandbox");
 
 //            options.addArguments("--disable-dev-shm-usage");
 //            options.addArguments("--single-process");
@@ -151,9 +152,11 @@ public class MovePageServiceV1 implements MovePageService {
 //            options.setBinary("/opt/google/chrome/");
             //서버에서 돌려서 어쩌구 옵션 끝
             WebDriver driver = new ChromeDriver(options);
-            driver.manage().window().setSize(new Dimension(1024, 4000));
+            driver.manage().window().setSize(new Dimension(1024, 9999));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //==============================Scrape LOGIC START============================
+
+            log.info("driver get option");
 
             //GO TO PAGE
             driver.get(zenputPageStart);
@@ -201,10 +204,6 @@ public class MovePageServiceV1 implements MovePageService {
 
                         //continue 버튼 클릭
                         WebElement loginContinue = driver.findElement(By.id("login_continue"));
-
-                        log.info("is Login enabled=[{}]", loginContinue.isEnabled());
-                        log.info("is Displayed  [{}]", loginContinue.isDisplayed());
-
                         loginContinue.click();
 //                        JavascriptExecutor executor = (JavascriptExecutor) driver;
 //                        executor.executeScript("arguments[0].click();", loginContinue);
@@ -245,7 +244,8 @@ public class MovePageServiceV1 implements MovePageService {
                 log.info("error = {}", e);
             }
 
-            log.info("clicked time ={}", LocalDateTime.now());
+            log.info("continue button clicked time ={}", LocalDateTime.now());
+            log.info("okta login page start");
             //rbi 계정 필요
             //rbi username
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -289,7 +289,6 @@ public class MovePageServiceV1 implements MovePageService {
     public WebDriver clickPmFood() {
 //오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC,
         String pmFood = "BK - 오후 PM 체크리스트를 작성합니다- (제품) - Product Quality Check (PM) - KO_APAC";
-        log.info("why? ={}", pmFood);
         WebDriver driver = getListClick(pmFood);
 
         return driver;
