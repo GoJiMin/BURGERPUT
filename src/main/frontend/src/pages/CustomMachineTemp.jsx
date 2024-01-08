@@ -62,9 +62,8 @@ export default function CustomMachineTemp() {
         {result.result === "true" && (
           <Modal
             title={"제출"}
-            machine={true}
             setResult={setResult}
-            component={"값이 정상적으로 입력 되었습니다. 제출하시겠습니까?"}
+            component={"값을 정상적으로 제출했습니다."}
           />
         )}
         {result.result === "false" && (

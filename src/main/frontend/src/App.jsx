@@ -1,13 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import styles from "./App.module.css";
-import { useEffect, useState } from "react";
 import TypeIt from "typeit-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { useDateCheck } from "./hooks/useDateCheck";
-import Banner from "./components/Banner";
-import Modal from "./components/Modal";
 import { useDisplay } from "./hooks/useOutletDisplay";
 
 const queryClient = new QueryClient({
@@ -27,11 +23,12 @@ function App() {
     hiddenCount,
   } = useDisplay();
 
-  const { checkDate, reLoad, setResult, result, loading } = useDateCheck();
+  // 날짜 검사 후 로딩하는 로직을 서버에서 크론탭을 이용해 매일 오전 8시에 수행하기 때문에 더 이상 실행하지 않음
+  // const { checkDate, reLoad, setResult, result, loading } = useDateCheck();
 
-  useEffect(() => {
-    checkDate();
-  }, []);
+  // useEffect(() => {
+  //   checkDate();
+  // }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -59,7 +56,7 @@ function App() {
               return instance;
             }}
           />
-          {loading && (
+          {/* {loading && (
             <Banner
               type={"loading"}
               text={
@@ -98,7 +95,7 @@ function App() {
               error={true}
               submit={reLoad}
             />
-          )}
+          )} */}
           <div className={styles.burger_image}>
             <img
               className={styles.image}

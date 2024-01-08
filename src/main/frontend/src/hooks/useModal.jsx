@@ -1,13 +1,9 @@
-import { submitResultFoods, submitResultMachines } from "../api/Products";
-
-export function useModal({ machine, food, setResult }) {
+export function useModal({ setResult }) {
   const close = () => {
     setResult(false);
   };
 
   const confirm = () => {
-    machine && submitResultMachines();
-    food && submitResultFoods();
     setResult(false);
   };
 
