@@ -120,7 +120,7 @@ public class PrintDataV1 implements PrintData {
         List<CustomMachine> customId = customMachineRepository.findAll();
 
         for (CustomMachine customMachine : customId) {
-            log.info("custommachine id ={}", customMachine.getId());
+//            log.info("custommachine id ={}", customMachine.getId());
             Machine foundMachine = machineRepository.findMachineById(Integer.toString(customMachine.getId()));
             Map<String, String> customMachineMap = new LinkedHashMap<>();
             customMachineMap.put("id", Integer.toString(foundMachine.getId()));
@@ -144,7 +144,7 @@ public class PrintDataV1 implements PrintData {
         List<CustomFood> customId = customFoodRepository.findAll();
 
         for (CustomFood customFood : customId) {
-            log.info("custommachine id ={}", customFood.getId());
+//            log.info("custommachine id ={}", customFood.getId());
             Food foundFood = foodRepository.findFoodById(Integer.toString(customFood.getId()));
             Map<String, String> customFoodMap = new LinkedHashMap<>();
             customFoodMap.put("id", Integer.toString(foundFood.getId()));
@@ -167,7 +167,7 @@ public class PrintDataV1 implements PrintData {
         List<CustomMachine> customId = customMachineRepository.findAll();
 
         for (CustomMachine customCheatMachine : customId) {
-            log.info("customCheatMachine INFO ={}",customCheatMachine);
+//            log.info("customCheatMachine INFO ={}",customCheatMachine);
 
             Machine foundCheatMachine = machineRepository.findMachineById(Integer.toString(customCheatMachine.getId()));
             Map<String, String> customCheatMachineMap = new LinkedHashMap<>();
@@ -193,7 +193,7 @@ public class PrintDataV1 implements PrintData {
         List<CustomFood> customId = customFoodRepository.findAll();
 
         for (CustomFood customCheatFood : customId) {
-            log.info("customCheatFood INFO = {}", customCheatFood);
+//            log.info("customCheatFood INFO = {}", customCheatFood);
 
             Food foundCheatFood = foodRepository.findFoodById(Integer.toString(customCheatFood.getId()));
             Map<String, String> customCheatFoodMap = new LinkedHashMap<>();

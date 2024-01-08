@@ -68,6 +68,9 @@ dependencies {
     //thymeleaf
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+    //without tomcat reload
+    implementation group: 'org.springframework', name: 'springloaded', version: '1.2.6.RELEASE'
+
 
     //json
     implementation 'org.json:json:20211205'

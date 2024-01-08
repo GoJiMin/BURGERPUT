@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.timeout = 600 * 1000;
 
 // 달라진 목록을 받아오는 api
 export async function getDiffInven() {

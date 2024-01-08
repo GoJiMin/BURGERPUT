@@ -47,6 +47,7 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
 //            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
             //chrome driver use
             //automatic web driver management through webdrivermanager
+
             WebDriverManager.chromedriver().setup();
 
             //remove being controlled option information bar
@@ -93,12 +94,11 @@ public class FoodLoadingAndEnterZenputV2Test implements FoodLoadingAndEnterZenpu
                                 result.put(contents.getId(), contents);
 
                             }
-
                         }
                     }
-
                 }
             }
+            log.info("dirver quit");
             //End process
             driver.close();
             driver.quit();

@@ -132,27 +132,29 @@ public class MovePageServiceV1 implements MovePageService {
         zenputAccountSetting();
 
         System.setProperty("java.awt.headless", "false");
-        try {
-//            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
-            //chrome driver use
-            WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
 
-            //remove being controlled option information bar
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        //remove being controlled option information bar
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
-            //서버에서 돌려서 안돼서 추가한 옵션
-            options.addArguments("--headless=new");
-            options.addArguments("--single-process");
-            options.addArguments("--no-sandbox");
+        //서버에서 돌려서 안돼서 추가한 옵션
+        options.addArguments("--headless=new");
+        options.addArguments("--single-process");
+        options.addArguments("--no-sandbox");
 
 //            options.addArguments("--disable-dev-shm-usage");
 //            options.addArguments("--single-process");
 //            options.addArguments("--remote-allow-origins=*");
 //            options.setBinary("/opt/google/chrome/");
-            //서버에서 돌려서 어쩌구 옵션 끝
-            WebDriver driver = new ChromeDriver(options);
-            driver.manage().window().setSize(new Dimension(1024, 9999));
+        //서버에서 돌려서 어쩌구 옵션 끝
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+//            System.setProperty("webdriver.chrome.driver", DRIVERLOCATION);
+            //chrome driver use
+
+            driver.manage().window().setSize(new Dimension(1024, 6000));
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             //==============================Scrape LOGIC START============================
 
@@ -162,7 +164,7 @@ public class MovePageServiceV1 implements MovePageService {
             driver.get(zenputPageStart);
 
             log.info("Zenput driver Start");
-            Thread.sleep(3000);
+            Thread.sleep(1000);
 
 //            File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
 //            File file = new File("/home/ubuntu/burgerput/ref/zenput.png");
@@ -176,6 +178,7 @@ public class MovePageServiceV1 implements MovePageService {
             } catch (NoSuchElementException e) {
                 //then start 회사 이름 누르기
                 //회사 이름 누르기 없으면 그냥 넘어가기
+
             }
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             try {
@@ -191,6 +194,7 @@ public class MovePageServiceV1 implements MovePageService {
                     WebElement loginSignupFields = driver.findElement(By.className("login_signup_fields"));
                     WebElement input = loginSignupFields.findElement(By.tagName("input"));
                     //zenput 회사 이메일 필요
+//                    input.sendKeys("rgm21490@rest.whopper.com");
                     input.sendKeys(ZENPUTID);
 
                     if (input.getAttribute("value").equals("")) {
@@ -236,26 +240,28 @@ public class MovePageServiceV1 implements MovePageService {
 //                        //continue 버튼 클릭
 //                        WebElement loginContinue = driver.findElement(By.id("login_continue"));
 //                        loginContinue.click();
-
                 }
 
             } catch (ElementNotInteractableException e) {
                 driver.quit();
                 log.info("error = {}", e);
             }
+            Thread.sleep(2000); //2seconds
+
 
             log.info("continue button clicked time ={}", LocalDateTime.now());
             log.info("okta login page start");
             //rbi 계정 필요
             //rbi username
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-            Thread.sleep(5000);
 
             WebElement oktaLogin = driver.findElement(By.id("okta-signin-username"));
+//            oktaLogin.sendKeys("다이강000001");
+
             oktaLogin.sendKeys(RBIID);
-            Thread.sleep(500); //0.5초 대기
             //rbi password
             WebElement oktaPassword = driver.findElement(By.id("okta-signin-password"));
+//            oktaPassword.sendKeys("Axjalsjf123456");
             oktaPassword.sendKeys(RBIPW);
 
             //sign-in button
@@ -267,10 +273,11 @@ public class MovePageServiceV1 implements MovePageService {
 
 
         } catch (StaleElementReferenceException e) {
+            driver.quit();
             log.info("noSuchEletmet = {}", e);
 
         } catch (Exception e) {
-
+            driver.quit();
             log.info("Thread.sleep error [{}]", e);
         }
         return null;
@@ -312,27 +319,33 @@ public class MovePageServiceV1 implements MovePageService {
         WebDriver driver = getListClick(pmMachine);
 
         return driver;
-
     }
 
     private WebDriver getListClick(String listText) {
         WebDriver driver = gotoListWithLogin();
         List<WebElement> listTitles = driver.findElements(By.className("taskitem_title"));
 
-        for (WebElement listTitle : listTitles) {
-            String listName = listTitle.getAttribute("innerText");
-            log.info(listName);
+        try {
+            for (WebElement listTitle : listTitles) {
+                String listName = listTitle.getAttribute("innerText");
+                log.info(listName);
 
-            if (listText.equals(listName)) {
-                log.info("CLICKED CONTENTS = {}", listName);
-                listTitle.click();
-                //양식으로 이동
-                WebElement submitForm = driver.findElement(By.id("submit_form"));
-                submitForm.click();
-                return driver;
+                if (listText.equals(listName)) {
+                    log.info("CLICKED CONTENTS = {}", listName);
+                    listTitle.click();
+                    //양식으로 이동
+                    WebElement submitForm = driver.findElement(By.id("submit_form"));
+                    submitForm.click();
+                    return driver;
+                }
             }
+        } catch (Exception e) {
+            driver.quit();
+            log.info("Get List Click from MovePageServiceV1");
+            log.info("Error message " +"\n" + "{}",e.toString());
         }
         return driver;
+
     }
 
 

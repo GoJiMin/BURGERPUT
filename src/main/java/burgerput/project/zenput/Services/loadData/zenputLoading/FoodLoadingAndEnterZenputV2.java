@@ -4,17 +4,17 @@ import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Food;
 import burgerput.project.zenput.repository.driverRepository.FoodDriverRepository;
-import burgerput.project.zenput.repository.driverRepository.FoodDriverRepositoryV1;
 import burgerput.project.zenput.repository.foodRepository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,7 +41,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
         try {
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmFood();
+            WebDriver driver = movePageService.clickAmFood();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //==============================Scrape LOGIC START============================
@@ -83,6 +83,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
                 }
             }
+            log.info("quit the Food getInfo driver");
             //End process
             driver.close();
             driver.quit();
@@ -124,7 +125,6 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             } else if (time.equals("PM")) {
                 driver = movePageService.clickPmFood();
                 log.info("ENTER PM FOOD");
-
             }
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
@@ -135,8 +135,8 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             textarea.click();
             textarea.sendKeys(mgrName);
             Thread.sleep(30);
-
-            //dummyStore setup start ===============================
+//
+//            //dummyStore setup start ===============================
             ArrayList<Map<String, String>> dummyStore = dummyStoreMaker();
 
             //dummyMap changed
@@ -154,8 +154,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             }
             //===================dummy setup END =======================
 
-            log.info("dummyMap final ={}", dummyStore);
-
+//            log.info("dummyMap final ={}", dummyStore);
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
 
             for (WebElement fields : section) {
@@ -166,31 +165,41 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
                     String id = field.getAttribute("id");
                     if(!(id.equals("field_295") | id.equals("field_19") | id.equals("field_18"))){
-                        log.info("where's id?'{}", id);
+//                        log.info("where's id?'{}", id);
                         enterValue(field, dummyStore, result);
                     }
-
                 }
-
             }
 
-            //성공했을 시에 result에 true 값 저장
+            File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+            File file = new File("/home/ubuntu/burgerput/img/zenputFood.png"+ LocalDate.now()+".png");
+            FileUtils.copyFile(screenshotAs, file);
+
+            log.info("button clicked in the SendValue()");
+            WebElement button = driver.findElement(By.xpath("/html/body/div[7]/div/div[2]/section/div/div[2]/div/div[2]/div/div/div[1]/div[5]"));
+            button.click();
+
+//            //성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
             foodDriverRepository.setDriver(driver);
-//            saveButt
 
         } catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
-            log.info("errore errororororrorororororororororororororororororororororo");
+            log.info("Food sendValueV2 ElementNOtInteractableException");
             log.info(e.toString());
             //에러가 난 selenium driver 는 종료
             driver.quit();
             return result;
 
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
+
             log.info("runTime eXcpetion ");
             log.info(e.toString());
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            log.info("making img File exception");
             throw new RuntimeException(e);
         }
         return result;
@@ -238,9 +247,8 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                     //do nothing
                 }
             }
-
         } catch (Exception e) {
-            log.info("Error LoadFood={}", e.toString());
+//            log.info("Error LoadFood={}", e.toString());
         }
 
     }

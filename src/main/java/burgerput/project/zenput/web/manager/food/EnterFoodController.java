@@ -1,6 +1,7 @@
 package burgerput.project.zenput.web.manager.food;
 
 import burgerput.project.zenput.Services.loadData.zenputLoading.FoodLoadingAndEnterZenput;
+import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.Services.printData.PrintData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class EnterFoodController {
 
     private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final PrintData printData;
+    private final MovePageService movePageService;
 
     @GetMapping("/back/enter/foods")
     @ResponseBody
@@ -45,7 +47,7 @@ public class EnterFoodController {
     @PostMapping("/back/enter/foods")
     @ResponseBody
     public Map<String,String> submitZenputFood(@RequestBody String param) {
-        log.info("Foodparam = {}", param);
+log.info("Food SendValue logic Start");
         Map<String, String> resultMap = foodLoadingAndEnterZenput.sendValueV2(param);
 
         Map<String, String> result = new LinkedHashMap<>();

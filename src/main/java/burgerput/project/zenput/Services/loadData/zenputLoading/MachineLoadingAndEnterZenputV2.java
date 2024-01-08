@@ -8,10 +8,14 @@ import burgerput.project.zenput.repository.driverRepository.MachineDriverReposit
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.openqa.selenium.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,12 +46,11 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
         try {
             //test를 위해 pm으로 변경한다.
-            WebDriver driver = movePageService.clickPmMachine();
+            WebDriver driver = movePageService.clickAmMachine();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             //li class group
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
-
 
             if (section.size() == 0) {
                 Machine machine = new Machine();
@@ -78,13 +81,14 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                     }
                 }
             }
+            log.info("quit the Machine getInfo driver");
+
             //End process
             driver.close();
             driver.quit();
 
         } catch (Exception e) {
             log.info("Machine GetInfo Error occurred !");
-
             log.info(e.toString());
         }
         return result;
@@ -157,12 +161,19 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
                 }
             }
+
+            File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+            File file = new File("/home/ubuntu/burgerput/img/zenputMachine"+ LocalDate.now()+".png");
+            FileUtils.copyFile(screenshotAs, file);
+
+            WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
+            button.click();
+
             //성공했을 시에 driver 값 같이 리턴
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
             machineDriverRepository.setDriver(driver);
-
 
         }  catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
@@ -174,6 +185,9 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             return result;
 
         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            log.info("making img File exception");
             throw new RuntimeException(e);
         }
         return result;
@@ -207,7 +221,6 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                     dummyMap.put("temp", customMap.get("temp"));
                 }
             }
-
 //delete object from dummystore with delete key map values
             for (Map map : deletekey) {
                 dummyStore.remove(map);

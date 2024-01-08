@@ -45,11 +45,11 @@ export function useDateCheck() {
 
     getCurrentItems()
       .then((res) => {
+        console.log(res);
         !res && setResult(true);
       })
       .finally(() => setLoading(false));
   }
-
   // 날짜 비교 함수
   function checkDate() {
     const savedDate = JSON.parse(localStorage.getItem("currentDate"));
@@ -57,14 +57,14 @@ export function useDateCheck() {
 
     // 저장된 날짜 배열을 reduce로 순회함 현재 날짜가 저장된 날짜 보다 년,월,일 중 하나라도 클 경우 result에 1을 추가함
     const result = savedDate
-      ? savedDate.reduce((result, date, idx) => {
+        ? savedDate.reduce((result, date, idx) => {
           if (date < currentDate[idx]) {
             return (result += 1);
           }
 
           return result;
         }, 0)
-      : 1;
+        : 1;
 
     if (result === 0) {
       return;

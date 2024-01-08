@@ -29,7 +29,7 @@ class MachineLoadingAndEnterZenputV1TestTest {
 
     MovePageService movePageService = new MovePageServiceV1(zenputAccountRepository);
     MyJsonParser myJsonParser = new MyJsonParserV1();
-    MachineLoadingAndEnterZenput machineLoadingAndEnterZenput = new MachineLoadingAndEnterZenputV2Test(movePageService,myJsonParser, machineRepository);
+//    MachineLoadingAndEnterZenput machineLoadingAndEnterZenput = new MachineLoadingAndEnterZenputV2Test(movePageService,myJsonParser, machineRepository);
     @Test
     @DisplayName("정규표현식")
     public void regix() {
@@ -42,8 +42,8 @@ class MachineLoadingAndEnterZenputV1TestTest {
     @Test
     @DisplayName("getInfoOptimized")
     public void opti() {
-        Map<Integer, Machine> info = machineLoadingAndEnterZenput.getInfo();
+//        Map<Integer, Machine> info = machineLoadingAndEnterZenput.getInfo();
 
-        log.info(info.toString());
+//        log.info(info.toString());
     }
 }

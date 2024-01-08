@@ -19,8 +19,10 @@ import java.util.Map;
 @RestController
 public class InitController {
     private final MachineLoadingAndEnterZenput machineLoadingAndEnterZenput;
-    private final MachineRepository machineRepository;
     private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
+
+    private final MachineRepository machineRepository;
+//    private final FoodLoadingAndEnterZenput foodLoadingAndEnterZenput;
     private final FoodRepository foodRepository;
 
     //save Data -> Machine and Food

@@ -4,7 +4,6 @@ import burgerput.project.zenput.Services.jsonObject.MyJsonParser;
 import burgerput.project.zenput.Services.movePage.MovePageService;
 import burgerput.project.zenput.domain.Machine;
 import burgerput.project.zenput.repository.driverRepository.MachineDriverRepository;
-import burgerput.project.zenput.repository.driverRepository.MachineDriverRepositoryV1;
 import burgerput.project.zenput.repository.machineRepository.MachineRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;

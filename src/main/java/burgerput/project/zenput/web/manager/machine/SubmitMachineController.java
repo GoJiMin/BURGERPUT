@@ -34,11 +34,10 @@ public class SubmitMachineController {
         File file = new File("/home/ubuntu/burgerput/img/zenputMachine.png");
         FileUtils.copyFile(screenshotAs, file);
 
-//        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
-//        button.click();
-        log.info("V2 version button 주석처리했듬 사진만 찍어서 서버에 저장");
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
+        button.click();
 
-//        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        log.info("button Clicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         //close the webPage
 
