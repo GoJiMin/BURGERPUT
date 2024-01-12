@@ -32,9 +32,10 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
     private final FoodRepository foodRepository;
     private final FoodDriverRepository foodDriverRepository;
 
-
     @Override
     public Map<Integer, Food> getInfo() {//get from am info
+        log.info("Food Get Info Logic Start f rom FoodLoadingAndEnterZenputV2");
+
         Map<Integer, Food> result = new LinkedHashMap<>();
 
         System.setProperty("java.awt.headless", "false");
@@ -46,7 +47,7 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
 
             //==============================Scrape LOGIC START============================
 
-            //li class group
+            //li class groups
             List<WebElement> section = driver.findElements(By.className("form_container_wrapper"));
 
             if (section.isEmpty()) {
@@ -72,17 +73,15 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                             Food contents = extractIdTitle(field);
                             if (!(contents.getName() == null)) {
                                 //if map is empty then not save the data
-
                                 log.info("contents ={}", contents);
                                 result.put(contents.getId(), contents);
 
                             }
-
                         }
                     }
-
                 }
             }
+
             log.info("quit the Food getInfo driver");
             //End process
             driver.close();
@@ -179,10 +178,13 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
             WebElement button = driver.findElement(By.xpath("/html/body/div[7]/div/div[2]/section/div/div[2]/div/div[2]/div/div/div[1]/div[5]"));
             button.click();
 
-//            //성공했을 시에 result에 true 값 저장
+            log.info("quit the Driver ()");
+            driver.quit();
+
+//          성공했을 시에 result에 true 값 저장
             result.put("result", "true");
             //FoodDriverREpository memeroy repository에 해당 값 저장
-            foodDriverRepository.setDriver(driver);
+//            foodDriverRepository.setDriver(driver);
 
         } catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
@@ -235,7 +237,9 @@ public class FoodLoadingAndEnterZenputV2 implements FoodLoadingAndEnterZenput {
                         log.info("enter Map info {}", customMap);
 
                         input.sendKeys(customMap.get("temp"));
-                        Thread.sleep(450);
+                        input.sendKeys(Keys.TAB);
+
+                        Thread.sleep(250);
                         customMap.remove(id);
                         break;
                     }

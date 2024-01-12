@@ -4,6 +4,7 @@ import burgerput.project.zenput.domain.Accounts;
 import burgerput.project.zenput.repository.zenputAccount.ZenputAccountRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -147,6 +149,7 @@ public class MovePageServiceV1 implements MovePageService {
 //            options.addArguments("--single-process");
 //            options.addArguments("--remote-allow-origins=*");
 //            options.setBinary("/opt/google/chrome/");
+
         //서버에서 돌려서 어쩌구 옵션 끝
         WebDriver driver = new ChromeDriver(options);
 
@@ -187,6 +190,8 @@ public class MovePageServiceV1 implements MovePageService {
 //                    File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
 //                    File file = new File("/home/ubuntu/burgerput/ref/dirverpic.png");
 //                    FileUtils.copyFile(screenshotAs, file);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+                Thread.sleep(1500);
                 boolean loading = true;
                 while (loading) {
                     //input field - email 입력 필드
@@ -209,48 +214,19 @@ public class MovePageServiceV1 implements MovePageService {
                         //continue 버튼 클릭
                         WebElement loginContinue = driver.findElement(By.id("login_continue"));
                         loginContinue.click();
-//                        JavascriptExecutor executor = (JavascriptExecutor) driver;
-//                        executor.executeScript("arguments[0].click();", loginContinue);
-
-//                        log.info("It clicked!!!");
-//                            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
-//                            WebElement elementToClick = wait.until(ExpectedConditions. elementToBeClickable(loginContinue));
-//                            elementToClick.click();
-
-//                        File screenshotAs2 = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
-//                        File file2 = new File("/home/ubuntu/burgerput/ref/zenputLoginclick.png");
-//                        FileUtils.copyFile(screenshotAs2, file2);
-
                     }
-//
-//                Thread.sleep(3000);
-//                boolean loading =true;
-//                while (loading) {
-//                    //input field - email 입력 필드
-//                    WebElement loginSignupFields = driver.findElement(By.className("login_signup_fields"));
-//                    WebElement input = loginSignupFields.findElement(By.tagName("input"));
-//                    //zenput 회사 이메일 필요
-//                    input.sendKeys(ZENPUTID);
-//                    if (input.getAttribute("value").equals("")) {
-//
-//                    } else{
-//                        loading = false;
-//                        Thread.sleep(1500); //1.5초 대기
-//
-//                        //continue 버튼 클릭
-//                        WebElement loginContinue = driver.findElement(By.id("login_continue"));
-//                        loginContinue.click();
                 }
 
             } catch (ElementNotInteractableException e) {
                 driver.quit();
                 log.info("error = {}", e);
             }
-            Thread.sleep(2000); //2seconds
 
+            Thread.sleep(2000); //2seconds
 
             log.info("continue button clicked time ={}", LocalDateTime.now());
             log.info("okta login page start");
+
             //rbi 계정 필요
             //rbi username
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -321,29 +297,52 @@ public class MovePageServiceV1 implements MovePageService {
         return driver;
     }
 
-    private WebDriver getListClick(String listText) {
+    private WebDriver getListClick(String listText)  {
         WebDriver driver = gotoListWithLogin();
-        List<WebElement> listTitles = driver.findElements(By.className("taskitem_title"));
-
         try {
-            for (WebElement listTitle : listTitles) {
-                String listName = listTitle.getAttribute("innerText");
-                log.info(listName);
+            Thread.sleep(2000);
 
-                if (listText.equals(listName)) {
-                    log.info("CLICKED CONTENTS = {}", listName);
-                    listTitle.click();
-                    //양식으로 이동
-                    WebElement submitForm = driver.findElement(By.id("submit_form"));
-                    submitForm.click();
-                    return driver;
+            List<WebElement> listTitles = driver.findElements(By.className("taskitem_title"));
+            try {
+                for (WebElement listTitle : listTitles) {
+                    String listName = listTitle.getAttribute("innerText");
+                    log.info(listName);
+
+                    if (listText.equals(listName)) {
+                        listTitle.click();
+                        log.info("list Title Clicked = {} and sleep 2000", listName);
+
+                        log.info("list clicked pictrue created");
+                        File screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+                        File file = new File("/home/ubuntu/burgerput/img/move/Dirverpic:"+listName+LocalDateTime.now()+".png");
+                        FileUtils.copyFile(screenshotAs, file);
+
+                        Thread.sleep(1000);
+
+                        //양식으로 이동
+                        WebElement submitForm = driver.findElement(By.id("submit_form"));
+                        submitForm.click();
+
+                        Thread.sleep(1000);
+
+                        log.info("Clicked submitForm and take a screenshot");
+                        screenshotAs = ((TakesScreenshot) driver).getScreenshotAs((OutputType.FILE));
+                        file = new File("/home/ubuntu/burgerput/img/move/form:"+listName+LocalDateTime.now()+".png");
+                        FileUtils.copyFile(screenshotAs, file);
+
+                        return driver;
+                    }
                 }
+            } catch (Exception e) {
+                driver.quit();
+                log.info("Get List Click from MovePageServiceV1");
+                log.info("Error message " +"\n" + "{}",e.toString());
             }
-        } catch (Exception e) {
-            driver.quit();
-            log.info("Get List Click from MovePageServiceV1");
-            log.info("Error message " +"\n" + "{}",e.toString());
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
         return driver;
 
     }

@@ -13,11 +13,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static burgerput.project.zenput.Const.BURGERPUTSITE;
@@ -26,7 +30,8 @@ import static burgerput.project.zenput.Const.BURGERPUTSITE;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("loading")
+//@Transactional
+@RequestMapping(value="loading", method={RequestMethod.GET, RequestMethod.POST})
 public class LoadingController {
     private final SaveData saveData;
     private final AlertLoading alertLoading;
@@ -37,27 +42,29 @@ public class LoadingController {
 
     //ZenputPage loading 후에 달라진 값들을 Alert로 넘긴다.
     @GetMapping
-    public boolean loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Map<String,String> loading(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        log.info("Loading Logic Start  ={}", LocalDateTime.now());
         //Start Loading Logic
         //loading zenput Page's Data first
-        boolean result = true;
+        Map<String, String> resultMap = new LinkedHashMap<>();
+        resultMap.put("result", "true");
         try {
+            log.info("MACHINE DATA GET STASRT");
             Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+            log.info("loaded Machine Map info : {}", machineInfo);
+
+            log.info("FOOD DATA GET STASRT");
             Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+            log.info("Loaded Food Map info : {}", foodInfo);
+
             if (machineInfo.size() == 1 || foodInfo.size() ==1) {
                 //false
-                result = false;
-                log.info("FALSE RESULT RETURN = {}", result);
-                return result;
+                log.info("FALSE RESULT RETURN = false");
+                resultMap.put("result", "false");
+
+                return resultMap;
             }
-
-            log.info("loading Machine Map info : {}", machineInfo);
-            log.info("Loading Food Map info : {}", foodInfo);
-
-            log.info("request URL ={}", request.getRequestURL());
-            log.info("loading Controller={}", LocalTime.now());
-
             //====================loading logic================================
 //        addMachine Logic=================================================
             ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
@@ -68,7 +75,6 @@ public class LoadingController {
 //        //editMachine logic=====================================
             ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
 //
-
             //machine data를 로딩한 것으로 변경함
 //      saveData.machinezenputdatasave(machineInfo);
 
@@ -91,60 +97,75 @@ public class LoadingController {
 //            response.sendRedirect(BURGERPUTSITE);
 
         } catch (Exception e) {
-            result =false;
+            resultMap.put("result", "false");
             log.info("Error from loading Controller!!! ");
             log.info(e.toString());
         }
 
-        log.info("return value ={}", result);
-        return result;
+        log.info("return value ={}", resultMap.get("result"));
+        return resultMap;
     }
-
     //@GetMapping("/test")
     @ResponseBody
-    public void loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+    @GetMapping("/test")
+    public Map<String,String> loadingTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        Map<Integer, Machine> machineInfo = machineLoadingAndEnterZenput.getInfo();
+        log.info("LoadingTest Logic Start(only Food)  ={}", LocalDateTime.now());
+
+        Map<String, String> resultMap = new LinkedHashMap<>();
+        resultMap.put("result", "true");
+
         Map<Integer, Food> foodInfo = foodLoadingAndEnterZenput.getInfo();
+        log.info("Loaded Food Map info : {}", foodInfo);
 
-////        addMachine Logic=================================================
-        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+        if ( foodInfo.size() ==1) {
+            //false
+            log.info("FALSE RESULT RETURN = false");
+            resultMap.put("result", "false");
 
-        //del Machine logic
-        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
-
-        //editMachine logic=====================================
-        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
-
-        //machine data를 로딩한 것으로 변경함
-//        saveData.machinezenputdatasave(machineInfo);
-
-        ArrayList<Map> maps = alertInfo(addMap, delMap, editMap);
-
-        log.info("machine alert info list ={}", maps);
-
-//        //to Machine DB
-        alertMachineInfoToDb(delMap);
-
-        //machine data를 로딩한 것으로 변경함
-//      saveData.machinezenputdatasave(machineInfo);
-
-        //====================Food logic start===========================
-        ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
-        ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
-        ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
-
-        ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
-
-        alertFoodInfoToDb(delFoodMap);
-
-        if (!addMap.isEmpty()) {
-            saveData.machinezenputdatasave(machineInfo);
-        }
-        if (!addFoodMap.isEmpty()) {
-            saveData.foodZenputDataSave(foodInfo);
+            return resultMap;
         }
 
-
+//
+//////        addMachine Logic=================================================
+//        ArrayList<Map> addMap = alertLoading.addMachine(machineInfo);
+//
+//        //del Machine logic
+//        ArrayList<Map> delMap = alertLoading.delMachine(machineInfo);
+//
+//        //editMachine logic=====================================
+//        ArrayList<Map> editMap = alertLoading.editMachine(machineInfo);
+//
+//        //machine data를 로딩한 것으로 변경함
+////        saveData.machinezenputdatasave(machineInfo);
+//
+//        ArrayList<Map> maps = alertInfo(addMap, delMap, editMap);
+//
+//        log.info("machine alert info list ={}", maps);
+//
+////        //to Machine DB
+//        alertMachineInfoToDb(delMap);
+//
+//        //machine data를 로딩한 것으로 변경함
+////      saveData.machinezenputdatasave(machineInfo);
+//
+//        //====================Food logic start===========================
+//        ArrayList<Map> addFoodMap = alertLoading.addFood(foodInfo);
+//        ArrayList<Map> delFoodMap = alertLoading.delFood(foodInfo);
+//        ArrayList<Map> editFoodMap = alertLoading.editFood(foodInfo);
+//
+//        ArrayList<Map> foodMaps = alertInfo(addFoodMap, delFoodMap, editFoodMap);
+//
+//        alertFoodInfoToDb(delFoodMap);
+//
+//        if (!addMap.isEmpty()) {
+//            saveData.machinezenputdatasave(machineInfo);
+//        }
+//        if (!addFoodMap.isEmpty()) {
+//            saveData.foodZenputDataSave(foodInfo);
+//        }
+//
+        return resultMap;
     }
 
     private ArrayList<Map> alertInfo(ArrayList<Map> addMap, ArrayList<Map> delMap, ArrayList<Map> editMap) {
@@ -173,10 +194,8 @@ public class LoadingController {
                 result.add(map);
             }
         }
-
         return result;
     }
-
     private void alertFoodInfoToDb (ArrayList < Map > delMap) {
 
         for (Map<String, String> map : delMap) {

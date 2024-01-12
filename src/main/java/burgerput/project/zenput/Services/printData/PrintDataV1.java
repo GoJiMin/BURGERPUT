@@ -46,12 +46,11 @@ public class PrintDataV1 implements PrintData {
                 int idCustom = iterator.next().getId();
                 int idMachine = macihne.getId();
 
-                log.info("idCusomt's id ={}   |  idMachine 's id ={}", idCustom, idMachine);
-                if (idMachine == idCustom) {
+//                log.info("idCusomt's id ={}   |  idMachine 's id ={}", idCustom, idMachine);
 
+                if (idMachine == idCustom) {
                     machineMap.put("isChecked", "true");
                     iterator.remove();
-
                 }
             }
             result.add(machineMap);
@@ -181,8 +180,6 @@ public class PrintDataV1 implements PrintData {
 
             result.add(customCheatMachineMap);
         }
-
-
         return result;
     }
 

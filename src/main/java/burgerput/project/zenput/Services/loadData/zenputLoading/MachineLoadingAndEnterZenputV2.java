@@ -39,6 +39,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
     // Only am list
     @Override
     public Map<Integer, Machine> getInfo() {
+        log.info("Food Get Info Logic Start f rom MachineLoadingAndEnterZenputV2");
 
         Map<Integer, Machine> result = new LinkedHashMap<>();
 
@@ -81,6 +82,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                     }
                 }
             }
+
             log.info("quit the Machine getInfo driver");
 
             //End process
@@ -103,9 +105,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
         //selenium enter logic start ========================================
         System.setProperty("java.awt.headless", "false");
         try {
-
             // Enter the value
-
             // 1. Enter Manager Name
             //a. getManager info from json
             JSONObject paramO = new JSONObject(param);
@@ -169,15 +169,18 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
             WebElement button = driver.findElement(By.xpath("//*[@id=\"submit_form\"]"));
             button.click();
 
+            log.info("quit the Driver ()");
+            driver.quit();
+
             //성공했을 시에 driver 값 같이 리턴
             result.put("result", "true");
 
             //MachineDriverRepository에 저장
-            machineDriverRepository.setDriver(driver);
+//            machineDriverRepository.setDriver(driver);
 
         }  catch (ElementNotInteractableException e) {
             //에러나면 false 리턴
-            log.info("errororrororororororrrorrerrorerrorerror error error error ");
+            log.info("ElementNotInteractableExcpetion Occured form MachineLoadingAndEnterZenputV2");
             log.info(e.toString());
 
             //에러난 드라이버 종료
@@ -187,7 +190,7 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            log.info("making img File exception");
+            log.info("making img File exception from MachineLoadingAndEnterZenputV2");
             throw new RuntimeException(e);
         }
         return result;
@@ -300,11 +303,11 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
                         log.info("enter Map info {}", customMap);
 
-
                         input.sendKeys(customMap.get("temp"));
                         input.sendKeys(Keys.TAB);
-                        Thread.sleep(1000);
+                        Thread.sleep(250);
                         machineMap.remove(i);
+
                         break;
                     }
                 } catch (NullPointerException e) {
@@ -318,8 +321,6 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
 
                 }
             }
-
-
         } catch (Exception e) {
             log.info("Error LoadFood={}", e.toString());
         }
@@ -387,7 +388,6 @@ public class MachineLoadingAndEnterZenputV2 implements MachineLoadingAndEnterZen
                         break;
                 }
 //                log.info("name ={}", machine);
-
 
             } else if (temps.length == 2) {
                 int i = 0;

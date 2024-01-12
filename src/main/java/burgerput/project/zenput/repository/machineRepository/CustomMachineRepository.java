@@ -20,7 +20,6 @@ public interface CustomMachineRepository extends JpaRepository<CustomMachine,Int
     @Query(value = "truncate table custom_machine", nativeQuery = true)
     public void deleteAllMine();
 
-
     @Modifying(clearAutomatically = true)
     @Query(value = "update custom_machine set min = :min, max = :max where id = :id", nativeQuery = true)
     public void updateMy(@Param("id")int id, @Param("min") int min, @Param("max") int max);
