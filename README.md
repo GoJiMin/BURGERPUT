@@ -2,7 +2,7 @@
 <p align="center">
   <img width="180" alt="Frame 205" src="https://raw.githubusercontent.com/Burgerput/.github/main/images/logo.png">
 </p>
-<a href="https://github.com/GoJiMin/BURGERPUT">
+<a href="https://github.com/Burgerput">
   <p align="center" style="font-size: larger;">
     분리 이후의 레포지토리 바로가기
   </p>
